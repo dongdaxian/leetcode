@@ -27,7 +27,7 @@ public class Test {
 	    for(int i = 0; i < nums.length; i++)
 	    {
 //	        while(i > 0 && i < nums.length && nums[i] == nums[i - 1]) i++;  
-	    	if(i > 0 && nums[i] == nums[i - 1]) continue;					//因为此个操作是O(n)，所以一定有不嵌套for/while的做法
+	    	if(i > 0 && nums[i] == nums[i - 1]) continue;					//借助外层循环不嵌套for/while的做法
 	        beg = i + 1;
 	        end = nums.length - 1;
 	        while(beg < end)

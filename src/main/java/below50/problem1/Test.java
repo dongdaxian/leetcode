@@ -1,6 +1,8 @@
 package below50.problem1;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -48,10 +50,32 @@ public class Test {
 	
 	public int[] Two_Sum3(int[] nums, int target) 
 	{
-		//把nums每个元素对应键值对 (元素值, index)放入TreeMap，对key排序，然后首尾各设一个指针，往中间扫描
-		//行不通，因为元素值可能重复
-		//使用二维数组
-		return null;
+		//首尾各设一个指针，往中间扫描
+		List<int[]> ls = new ArrayList<>();
+		for (int i = 0; i < nums.length; i++) {
+			ls.add(new int[]{nums[i], i});
+		}
+		ls.sort((a, b) -> {
+			if (a[0] != b[0])
+				return a[0] - b[0];
+			else
+				return a[1] - b[1];
+		});
+		int i = 0;
+		int j = nums.length - 1;
+		int[] res = new int[2];
+		while(i < j) {
+			if (ls.get(i)[0] + ls.get(j)[0] > target) {
+				j--;
+			} else if (ls.get(i)[0] + ls.get(j)[0] < target) {
+				i++;
+			} else {
+				res[0] = ls.get(i)[1];
+				res[1] = ls.get(j)[1];
+				break;
+			}
+		}
+		return res;
 	}
 
 }
