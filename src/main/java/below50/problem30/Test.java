@@ -20,12 +20,12 @@ public class Test {
 
     public List<Integer> findSubstring(String s, String[] words) {
         if (s == null || words == null || words.length == 0 || words[0].length() == 0) return null;
-        HashMap<String, Integer> map1 = new HashMap<String, Integer>();
-        HashMap<String, Integer> map2 = new HashMap<String, Integer>();
+        HashMap<String, Integer> map1 = new HashMap<>();
+        HashMap<String, Integer> map2 = new HashMap<>();
         int slen = s.length(), arrlen = words.length, wordlen = words[0].length();
         for (int i = 0; i < arrlen; i++)
             map1.put(words[i], map1.getOrDefault(words[i], 0) + 1);
-        List<Integer> rs = new ArrayList<Integer>();
+        List<Integer> rs = new ArrayList<>();
 
         //时间复杂度是O(wordlen * (slen / wordlen))即O(slen)，使用了滑动窗口的思想
         //实际上如果不把wordLen看做常数的话，hash操作中的equals()时间复杂度是O(wordLen)，时间复杂度不应该是O(slen)
@@ -63,12 +63,12 @@ public class Test {
 
     public List<Integer> findSubstring2(String s, String[] words) {
         if (s == null || words == null || words.length == 0 || words[0].length() == 0) return null;
-        HashMap<String, Integer> map1 = new HashMap<String, Integer>();
-        HashMap<String, Integer> map2 = new HashMap<String, Integer>();
+        HashMap<String, Integer> map1 = new HashMap<>();
+        HashMap<String, Integer> map2 = new HashMap<>();
         int slen = s.length(), arrlen = words.length, wordlen = words[0].length();
         for (int i = 0; i < arrlen; i++)
             map1.put(words[i], map1.getOrDefault(words[i], 0) + 1);
-        List<Integer> rs = new ArrayList<Integer>();
+        List<Integer> rs = new ArrayList<>();
 
 
         for (int i = 0; i < wordlen; i++) {
