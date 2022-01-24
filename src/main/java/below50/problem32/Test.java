@@ -4,90 +4,88 @@ import java.util.Stack;
 
 public class Test {
 
-	public static void main(String[] args) {
-		String s = "()(()";
-		System.out.println(new Test().longestValidParentheses3(s));
-	}
-	
-	public int longestValidParentheses1(String s) {
-		boolean[] exist = new boolean[s.length()];                  //¼ÇÂ¼ÄÜÏûÈ¥µÄ'('µÄindex
-		Stack<Integer> rec = new Stack<Integer>();
-		for(int i = 0; i < s.length(); i++) {
-			if(s.charAt(i) == '(') {
-				rec.push(i);
-			} else if(rec.size() != 0) {
-				exist[rec.pop()] = true;
-			}
-		}
-		int slen = 0, tlen = 0;
-		Stack<Integer> st = new Stack<Integer>();
-		for(int i = 0; i < s.length(); i++) {
-			if(s.charAt(i) == '(') {
-				if(exist[i])
-					st.push(i);
-				else {
-					slen = slen >= tlen ? slen : tlen;
-					tlen = 0;
-				}
-				
-			}
-			else if(!st.isEmpty()) {
-				tlen++;
-				st.pop();
-			}
-			else {
-				slen = slen >= tlen ? slen : tlen;
-				tlen = 0;
-			}
-		}
-		slen = slen >= tlen ? slen : tlen;
-		return slen * 2;
+    public static void main(String[] args) {
+        String s = "()(()";
+        System.out.println(new Test().longestValidParentheses3(s));
     }
-	
-	public int longestValidParentheses2(String s) {  //ÒªÃ´°ÑÄÜÏûÈ¥µÄĞòºÅÈ«¼ÇÂ¼ÔÚÕ»ÖĞ£¬ÒªÃ´¼ÇÂ¼²»ÄÜÏûÈ¥µÄĞòºÅ£¬·½·¨Ò»recÖ»¼ÇÂ¼ÁËÃ»ÄÜÏûÈ¥µÄ²¿·ÖĞòºÅ£¬µ¼ÖÂĞòºÅÕâ¸öĞÅÏ¢Ã»·¨Ê¹ÓÃ
-		Stack<Integer> st = new Stack<Integer>();
-		for(int i = 0; i < s.length(); i++) {
-			if(s.charAt(i) == '(')
-				st.push(i);
-			else if(st.isEmpty() || s.charAt(st.peek()) == ')')
-				st.push(i);
-			else
-				st.pop();
-		}
-		if(st.isEmpty()) return s.length();
-		int longest = 0;
-		int temp1 = s.length();
-		int temp2 = 0;
-		while(!st.isEmpty()) {
-			temp2 = st.pop();
-			longest = longest >= (temp1 - temp2 - 1) ? longest : (temp1 - temp2 - 1);
-			temp1 = temp2;
-		}
-		longest = longest >= temp1 ? longest : temp1;
-		return longest;
-	}
 
-	public int longestValidParentheses3(String s) {  //Ô­ÎÊÌâÊÇÇóÕû¸ö×Ö·û´®µÄ×î´óÆ¥Åä³¤¶È£¬ÎÒÃÇÖ»ĞèÒªÇóÔÚÃ¿¸öÏÂ±ê´¦µÄÆ¥Åä³¤¶È£¬×îºó±éÀúÒ»´ÎÇó×î´óÖµ¼´¿É£¬ÕâÑùÎÊÌâ¾Í
-		int[] longest = new int[s.length() + 1];     //×ª»¯ÎªÇóÔÚÃ¿¸öÏÂ±ê´¦µÄÆ¥Åä³¤¶È£¬ÕâÑù´óÎÊÌâ¿ÉÒÔ»®·Ö³ÉĞ¡ÎÊÌâÇÒ¿ÉÒÔÊ¹ÓÃĞ¡ÎÊÌâµÄ½á¹û£¬¿ÉÒÔÊ¹ÓÃ¶¯Ì¬¹æ»®µÄË¼Ïë
+    public int longestValidParentheses1(String s) {
+        boolean[] exist = new boolean[s.length()];                  //è®°å½•èƒ½æ¶ˆå»çš„'('çš„index
+        Stack<Integer> rec = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                rec.push(i);
+            } else if (rec.size() != 0) {
+                exist[rec.pop()] = true;
+            }
+        }
+        int slen = 0, tlen = 0;
+        Stack<Integer> st = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                if (exist[i])
+                    st.push(i);
+                else {
+                    slen = Math.max(slen, tlen);
+                    tlen = 0;
+                }
+
+            } else if (!st.isEmpty()) {
+                tlen++;
+                st.pop();
+            } else {
+                slen = Math.max(slen, tlen);
+                tlen = 0;
+            }
+        }
+        slen = Math.max(slen, tlen);
+        return slen * 2;
+    }
+
+    public int longestValidParentheses2(String s) {  //è¦ä¹ˆæŠŠèƒ½æ¶ˆå»çš„åºå·å…¨è®°å½•åœ¨æ ˆä¸­ï¼Œè¦ä¹ˆè®°å½•ä¸èƒ½æ¶ˆå»çš„åºå·ï¼Œæ–¹æ³•ä¸€recåªè®°å½•äº†æ²¡èƒ½æ¶ˆå»çš„éƒ¨åˆ†åºå·ï¼Œå¯¼è‡´åºå·è¿™ä¸ªä¿¡æ¯æ²¡æ³•ä½¿ç”¨
+        Stack<Integer> st = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(')
+                st.push(i);
+            else if (st.isEmpty() || s.charAt(st.peek()) == ')')
+                st.push(i);
+            else
+                st.pop();
+        }
+        if (st.isEmpty()) return s.length();
+        int longest = 0;
+        int temp1 = s.length();
+        int temp2 = 0;
+        while (!st.isEmpty()) {
+            temp2 = st.pop();
+            longest = Math.max(longest, (temp1 - temp2 - 1));
+            temp1 = temp2;
+        }
+        longest = Math.max(longest, temp1);
+        return longest;
+    }
+
+    public int longestValidParentheses3(String s) {  //åŸé—®é¢˜æ˜¯æ±‚æ•´ä¸ªå­—ç¬¦ä¸²çš„æœ€å¤§åŒ¹é…é•¿åº¦ï¼Œæˆ‘ä»¬åªéœ€è¦æ±‚åœ¨æ¯ä¸ªä¸‹æ ‡å¤„çš„åŒ¹é…é•¿åº¦ï¼Œæœ€åéå†ä¸€æ¬¡æ±‚æœ€å¤§å€¼å³å¯ï¼Œè¿™æ ·é—®é¢˜å°±
+        int[] longest = new int[s.length() + 1];     //è½¬åŒ–ä¸ºæ±‚åœ¨æ¯ä¸ªä¸‹æ ‡å¤„çš„åŒ¹é…é•¿åº¦ï¼Œè¿™æ ·å¤§é—®é¢˜å¯ä»¥åˆ’åˆ†æˆå°é—®é¢˜ä¸”å¯ä»¥ä½¿ç”¨å°é—®é¢˜çš„ç»“æœï¼Œå¯ä»¥ä½¿ç”¨åŠ¨æ€è§„åˆ’çš„æ€æƒ³
 //		for(int i = 0; i < s.length(); i++) {        
-//			if(s.charAt(i) == ')' && i > 0)									 //longest[i]±íÊ¾ÒÔÔÚi´¦½áÊøµÄ×Ö·û´®µÄ×î´óÆ¥Åä³¤¶È
-		for(int i = 1; i < s.length(); i++) {        
-			if(s.charAt(i) == ')')					    				     //i = 0µÄÇé¿ö²»ÓÃ¿¼ÂÇ£¬Ò²¾ÍÉáÈ¥ÁËÌØÊâ´¦ÀíÕâÒ»²½
-				if(s.charAt(i - 1) == ')' && i - 1 - longest[i] >= 0 && s.charAt(i - 1 - longest[i]) == '(') {
-					longest[i + 1] = longest[i] + 2;
-					if(i - 2 - longest[i] >= 0)
-						longest[i + 1] += longest[i - 1 - longest[i]];
-				} else if(s.charAt(i - 1) == '(') {
-					longest[i + 1] = longest[i - 1] + 2;
-				}
-		}
-		
-		int maxInt = 0;
-		for(int temp: longest) {
-			maxInt = Integer.max(maxInt, temp);
-		}
-		
-		return maxInt;
-	}												//ÆäÊµ·½·¨¶şÊ¹ÓÃÕ»Ò²¿ÉÒÔÈÏÎªÊÇ¶¯Ì¬¹æ»®¡£Ô­ÎÊÌâÊÇÇóÕû¸ö×Ö·û´®µÄ×î´óÆ¥Åä³¤¶È£¬ÎÒÃÇÖ»ĞèÒªÇó³öÃ¿¸ö²»ÄÜÏûÈ¥µÄÀ¨ºÅĞòºÅ
-													//×îºó±éÀúÇó×î´ó²îÖµ¼´¿É£¬ÕâÑùÎÊÌâ¾Í×ª»¯ÎªÇó²»ÄÜÏûÈ¥µÄÀ¨ºÅĞòºÅ£¬ÕâÑù´óÎÊÌâ¾Í¿ÉÒÔÊ¹ÓÃĞ¡ÎÊÌâµÄ½á¹û
+//			if(s.charAt(i) == ')' && i > 0)									 //longest[i]è¡¨ç¤ºä»¥åœ¨iå¤„ç»“æŸçš„å­—ç¬¦ä¸²çš„æœ€å¤§åŒ¹é…é•¿åº¦
+        for (int i = 1; i < s.length(); i++) {
+            if (s.charAt(i) == ')')                                             //i = 0çš„æƒ…å†µä¸ç”¨è€ƒè™‘ï¼Œä¹Ÿå°±èˆå»äº†ç‰¹æ®Šå¤„ç†è¿™ä¸€æ­¥
+                if (s.charAt(i - 1) == ')' && i - 1 - longest[i] >= 0 && s.charAt(i - 1 - longest[i]) == '(') {
+                    longest[i + 1] = longest[i] + 2;
+                    if (i - 2 - longest[i] >= 0)
+                        longest[i + 1] += longest[i - 1 - longest[i]];
+                } else if (s.charAt(i - 1) == '(') {
+                    longest[i + 1] = longest[i - 1] + 2;
+                }
+        }
+
+        int maxInt = 0;
+        for (int temp : longest) {
+            maxInt = Integer.max(maxInt, temp);
+        }
+
+        return maxInt;
+    }                                                //å…¶å®æ–¹æ³•äºŒä½¿ç”¨æ ˆä¹Ÿå¯ä»¥è®¤ä¸ºæ˜¯åŠ¨æ€è§„åˆ’ã€‚åŸé—®é¢˜æ˜¯æ±‚æ•´ä¸ªå­—ç¬¦ä¸²çš„æœ€å¤§åŒ¹é…é•¿åº¦ï¼Œæˆ‘ä»¬åªéœ€è¦æ±‚å‡ºæ¯ä¸ªä¸èƒ½æ¶ˆå»çš„æ‹¬å·åºå·
+    //æœ€åéå†æ±‚æœ€å¤§å·®å€¼å³å¯ï¼Œè¿™æ ·é—®é¢˜å°±è½¬åŒ–ä¸ºæ±‚ä¸èƒ½æ¶ˆå»çš„æ‹¬å·åºå·ï¼Œè¿™æ ·å¤§é—®é¢˜å°±å¯ä»¥ä½¿ç”¨å°é—®é¢˜çš„ç»“æœ
 }

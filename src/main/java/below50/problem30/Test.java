@@ -7,11 +7,11 @@ import java.util.List;
 public class Test {
 
     public static void main(String[] args) {
-        //String s = "wordgoodgoodgoodbestword";
-        //String[] words = new String[]{"word", "good", "best", "good"};
-        String s = "barfoothefoobarman";
-        String[] words = new String[]{"foo","bar"};
-        List<Integer> rs = new Test().findSubstring2(s, words);
+        String s = "wordgoodgoodgoodbestword";
+        String[] words = new String[]{"word", "good", "best", "good"};
+        //String s = "barfoothefoobarman";
+        //String[] words = new String[]{"foo","bar"};
+        List<Integer> rs = new Test().findSubstring3(s, words);
         for (Integer a : rs) {
             System.out.println(a);
         }
@@ -27,10 +27,10 @@ public class Test {
             map1.put(words[i], map1.getOrDefault(words[i], 0) + 1);
         List<Integer> rs = new ArrayList<>();
 
-        //Ê±¼ä¸´ÔÓ¶ÈÊÇO(wordlen * (slen / wordlen))¼´O(slen)£¬Ê¹ÓÃÁË»¬¶¯´°¿ÚµÄË¼Ïë
-        //Êµ¼ÊÉÏÈç¹û²»°ÑwordLen¿´×ö³£ÊıµÄ»°£¬hash²Ù×÷ÖĞµÄequals()Ê±¼ä¸´ÔÓ¶ÈÊÇO(wordLen)£¬Ê±¼ä¸´ÔÓ¶È²»Ó¦¸ÃÊÇO(slen)
+        //æ—¶é—´å¤æ‚åº¦æ˜¯O(wordlen * (slen / wordlen))å³O(slen)ï¼Œä½¿ç”¨äº†æ»‘åŠ¨çª—å£çš„æ€æƒ³
+        //å®é™…ä¸Šå¦‚æœä¸æŠŠwordLençœ‹åšå¸¸æ•°çš„è¯ï¼Œhashæ“ä½œä¸­çš„equals()æ—¶é—´å¤æ‚åº¦æ˜¯O(wordLen)ï¼Œæ—¶é—´å¤æ‚åº¦ä¸åº”è¯¥æ˜¯O(slen)
         for (int i = 0; i < wordlen; i++) {
-            int count = 0;                                                        //¼ÇÂ¼¼ÓÈëmap2µÄword¸öÊı
+            int count = 0;                                                        //è®°å½•åŠ å…¥map2çš„wordä¸ªæ•°
             for (int end = i, beg = i; end + wordlen <= slen; end += wordlen) {
                 String temp = s.substring(end, end + wordlen);
 
@@ -74,6 +74,7 @@ public class Test {
         for (int i = 0; i < wordlen; i++) {
             int count = 0;
             for (int end = i, beg = i; end + wordlen <= slen; end += wordlen) {
+
                 String temp = s.substring(end, end + wordlen);
 
                 if (map2.getOrDefault(temp, 0) + 1 > map1.getOrDefault(temp, 0)) {
@@ -102,5 +103,49 @@ public class Test {
         }
         return rs;
     }
+
+    //ä¸æ–¹æ³•ä¸€åŒºåˆ«åœ¨äºåªç”¨äº†ä¸€ä¸ªmapï¼ˆmap2åªæ˜¯æ–¹ä¾¿æ“ä½œï¼‰
+    public List<Integer> findSubstring3(String s, String[] words) {
+        if (s == null || words == null || words.length == 0 || words[0].length() == 0) return null;
+        HashMap<String, Integer> map1 = new HashMap<>();
+
+        int slen = s.length(), arrlen = words.length, wordlen = words[0].length();
+        for (int i = 0; i < arrlen; i++)
+            map1.put(words[i], map1.getOrDefault(words[i], 0) + 1);
+        List<Integer> rs = new ArrayList<>();
+
+        for (int i = 0; i < wordlen; i++) {
+            int count = 0;                                                        //è®°å½•åŠ å…¥map2çš„wordä¸ªæ•°
+            HashMap<String, Integer> map2 = new HashMap<>(map1);
+            for (int end = i, beg = i; end + wordlen <= slen; end += wordlen) {
+                String temp = s.substring(end, end + wordlen);
+                if (map2.containsKey(temp)) {
+                    while (map2.get(temp) == 0) {
+                        String begstr = s.substring(beg, beg + wordlen);
+                        map2.put(begstr, map2.get(begstr) + 1);
+                        beg += wordlen;
+                        count--;
+                    }
+                    map2.put(temp, map2.get(temp) - 1);
+                    count++;
+                    if (count == arrlen) {
+                        rs.add(beg);
+                        count--;
+                        String begstr = s.substring(beg, beg + wordlen);
+                        map2.put(begstr, map2.get(begstr) + 1);
+                        beg += wordlen;
+                    }
+                } else {
+                    beg = end + wordlen;
+                    map2.clear();
+                    map2.putAll(map1);
+                    count = 0;
+                }
+            }
+        }
+        return rs;
+    }
+
+
 
 }

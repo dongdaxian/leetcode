@@ -2,38 +2,38 @@ package below50.problem10;
 
 public class Test {
 
-	public static void main(String[] args) {
-		String s = "abc";
-		String p = "c*a*b*c*";
-		System.out.print(new Test().isMatch(s, p));
-	}
-	
-	public boolean isMatch(String s, String p) {    //ÒòÎªsÓëpµÄmatch£¬Óës-1ºÍp-1µÄmatch¡¢sºÍp-1µÄmatch¡¢s-1ºÍpµÄmatchµÄ½á¹ûÓĞ¹Ø£¬ËùÒÔ¿ÉÒÔÓÃ¶¯Ì¬¹æ»®
-		if(s == null || p == null) return false;
-		boolean[][] dp = new boolean[s.length() + 1][p.length() + 1];
-		
-		dp[0][0] = true;
-		for(int j = 0; j < p.length(); j++) {
-			if(p.charAt(j) == '*' && dp[0][j - 1])
-				dp[0][j + 1] = true;
-		}
-		
-		for(int i = 0; i < s.length(); i++) {
-			for(int j = 0; j < p.length(); j++) {
-				if(p.charAt(j) == '.' || s.charAt(i) == p.charAt(j))
-					dp[i + 1][j + 1] = dp[i][j];       							//Èç¹ûÊı×éÎ¬¶ÈÃ»ÓĞ¶àÉêÇë1£¬Ó¦ÊÇdp[i][j]=dp[i-1][j-1]£¬ĞèÒª´¦Àíi=0ºÍj=0µÄÇé¿ö
-				else if(p.charAt(j) == '*') {
-					if(p.charAt(j - 1) != s.charAt(i) && p.charAt(j - 1) != '.')
-						dp[i + 1][j + 1] = dp[i + 1][j - 1];                               		  //*±íÊ¾Ç°ÔªËØÓĞ0¸ö
-					else {
-						dp[i + 1][j + 1] = (dp[i + 1][j - 1] || dp[i + 1][j] || dp[i][j + 1]);    //*±íÊ¾Ç°ÔªËØÓĞ0¸ö/Ç°ÔªËØÓĞ1¸ö/Ç°ÔªËØÔÙ¼Ó1¸ö
-					}
-				}
-			}
-		}
-		
-		return dp[s.length()][p.length()];
-		
+    public static void main(String[] args) {
+        String s = "abc";
+        String p = "c*a*b*c*";
+        System.out.print(new Test().isMatch(s, p));
+    }
+
+    public boolean isMatch(String s, String p) {    //å› ä¸ºsä¸pçš„matchï¼Œä¸s-1å’Œp-1çš„matchã€så’Œp-1çš„matchã€s-1å’Œpçš„matchçš„ç»“æœæœ‰å…³ï¼Œæ‰€ä»¥å¯ä»¥ç”¨åŠ¨æ€è§„åˆ’
+        if (s == null || p == null) return false;
+        boolean[][] dp = new boolean[s.length() + 1][p.length() + 1];
+
+        dp[0][0] = true;
+        for (int j = 0; j < p.length(); j++) {
+            if (p.charAt(j) == '*' && dp[0][j - 1])
+                dp[0][j + 1] = true;
+        }
+
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = 0; j < p.length(); j++) {
+                if (p.charAt(j) == '.' || s.charAt(i) == p.charAt(j))
+                    dp[i + 1][j + 1] = dp[i][j];                                //å¦‚æœæ•°ç»„ç»´åº¦æ²¡æœ‰å¤šç”³è¯·1ï¼Œåº”æ˜¯dp[i][j]=dp[i-1][j-1]ï¼Œéœ€è¦å¤„ç†i=0å’Œj=0çš„æƒ…å†µ
+                else if (p.charAt(j) == '*') {
+                    if (p.charAt(j - 1) != s.charAt(i) && p.charAt(j - 1) != '.')
+                        dp[i + 1][j + 1] = dp[i + 1][j - 1];                                      //*è¡¨ç¤ºå‰å…ƒç´ æœ‰0ä¸ª
+                    else {
+                        dp[i + 1][j + 1] = (dp[i + 1][j - 1] || dp[i + 1][j] || dp[i][j + 1]);    //*è¡¨ç¤ºå‰å…ƒç´ æœ‰0ä¸ª/å‰å…ƒç´ æœ‰1ä¸ª/å‰å…ƒç´ å†åŠ 1ä¸ª
+                    }
+                }
+            }
+        }
+
+        return dp[s.length()][p.length()];
+
     }
 
 }

@@ -17,7 +17,7 @@ public class Test {
 		
 //		int i = 1, j = n - 2;
 //		int record = 0;
-//		while(i < n) {										//Ö»±éÀúÒ»´Î£¬Ò»¶¨ÄÜÔÚÒ»¸öwhile/forÖÐÍê³É£¬²»ÐèÒªÔÚwhileÀïÔÙÇ¶Ì×for(ËäÈ»Ê±¼ä¸´ÔÓ¶È²»±ä)
+//		while(i < n) {										//åªéåŽ†ä¸€æ¬¡ï¼Œä¸€å®šèƒ½åœ¨ä¸€ä¸ªwhile/forä¸­å®Œæˆï¼Œä¸éœ€è¦åœ¨whileé‡Œå†åµŒå¥—for(è™½ç„¶æ—¶é—´å¤æ‚åº¦ä¸å˜)
 //			record = height[i - 1];
 //			for(; i < n && record > height[i]; i++);
 //			if(i < n)
@@ -56,10 +56,10 @@ public class Test {
     }
 	
 	
-	public int trap2(int[] height) {			//¶¯Ì¬¹æ»®µÄË¼Ïë£¬´Ë´¦²»ÊÇ±ê¼ÇÃ¿Ò»¸ö°¼²ÛµÄ×óÓÒ×ø±ê£¬¶øÊÇ¶ÔÓÚÃ¿Ò»¸ö×ø±êËüµÄ×óÓÒÇ½±ÚµÄ¸ß¶È
+	public int trap2(int[] height) {			//åŠ¨æ€è§„åˆ’çš„æ€æƒ³ï¼Œæ­¤å¤„ä¸æ˜¯æ ‡è®°æ¯ä¸€ä¸ªå‡¹æ§½çš„å·¦å³åæ ‡ï¼Œè€Œæ˜¯å¯¹äºŽæ¯ä¸€ä¸ªåæ ‡å®ƒçš„å·¦å³å¢™å£çš„é«˜åº¦
 		if(height.length < 3) return 0;    
 		int n = height.length;
-		int[] leftMax = new int[n];//leftMax[i]±íÊ¾¶ÔÓÚ×ø±êi£¬ËûµÄ×óÇ½±Ú¸ß¶È
+		int[] leftMax = new int[n];//leftMax[i]è¡¨ç¤ºå¯¹äºŽåæ ‡iï¼Œä»–çš„å·¦å¢™å£é«˜åº¦
 		int[] rightMax = new int[n];
 		for(int i = 1; i < n - 1; i++) leftMax[i] = Math.max(leftMax[i - 1], height[i - 1]);
 		for(int i = n - 2; i > 0; i--) rightMax[i] = Math.max(rightMax[i + 1], height[i + 1]);
@@ -73,10 +73,27 @@ public class Test {
 		
 		return sum;
 	}
+	public int trap2_new (int[] height) {
+		if(height.length < 3) return 0;
+		int n = height.length;
+		int[] leftMax = new int[n];//leftMax[i]è¡¨ç¤ºå¯¹äºŽåæ ‡iï¼Œä»–çš„å·¦å¢™å£é«˜åº¦
+		int[] rightMax = new int[n];
+		leftMax[0] = height[0];
+		rightMax[n - 1] = height[n - 1];
+		for(int i = 1; i < n - 1; i++) leftMax[i] = Math.max(leftMax[i - 1], height[i]);
+		for(int i = n - 2; i > 0; i--) rightMax[i] = Math.max(rightMax[i + 1], height[i]);
+
+		int sum = 0;
+		for(int i = 1; i < n - 1; i++) {
+			int temp = Math.min(leftMax[i], rightMax[i]);
+			sum += temp - height[i];
+		}
+
+		return sum;
+	}
 	
-	
-	public int trap3(int[] height) {			//¶Ô·½·¨¶þµÄ¸Ä½ø£¬Èç¹ûÁ½¸öÖ¸ÕëÍùÖÐ¼äÉ¨£¬¿ÉÒÔÖ»ÓÃÒ»¸öÊý×é£¬ÒòÎªÖ»ÐèÒª¼ÇÂ¼×óÓÒÇ½±Ú¸ß¶ÈµÄ×îÐ¡Öµ
-		if(height.length < 3) return 0;    		//Ö»ÒªÏÖÓÐ×óÇ½±ÚÐ¡ÓÚÓÒÇ½±Ú£¬ÄÇÒ»¶¨ÊÇÍùÓÒÉ¨£¬ÒòÎª×ø±êi×îÖÕµÄÓÒÇ½±ÚÖ»ÓÐ¿ÉÄÜ¸ü´ó
+	public int trap3(int[] height) {			//å¯¹æ–¹æ³•äºŒçš„æ”¹è¿›ï¼Œå¦‚æžœä¸¤ä¸ªæŒ‡é’ˆå¾€ä¸­é—´æ‰«ï¼Œå¯ä»¥åªç”¨ä¸€ä¸ªæ•°ç»„ï¼Œå› ä¸ºåªéœ€è¦è®°å½•å·¦å³å¢™å£é«˜åº¦çš„æœ€å°å€¼
+		if(height.length < 3) return 0;    		//åªè¦çŽ°æœ‰å·¦å¢™å£å°äºŽå³å¢™å£ï¼Œé‚£ä¸€å®šæ˜¯å¾€å³æ‰«ï¼Œå› ä¸ºåæ ‡iæœ€ç»ˆçš„å³å¢™å£åªæœ‰å¯èƒ½æ›´å¤§
 		int n = height.length;
 		int[] wall = new int[n];
 		int leftWall = height[0], rightWall = height[n - 1];
@@ -97,7 +114,7 @@ public class Test {
 		return sum;
 	}
 	
-	public int trap4(int[] height) { 				//·½·¨ÈýµÄ¸Ä½ø°æ£¬°Ñ¶ÔÓ¦´¦Àí¹ý³ÌºÏÔÚÒ»ÆðÁË
+	public int trap4(int[] height) { 				//æ–¹æ³•ä¸‰çš„æ”¹è¿›ç‰ˆï¼ŒæŠŠå¯¹åº”å¤„ç†è¿‡ç¨‹åˆåœ¨ä¸€èµ·äº†
         if(height.length < 3) return 0;             
         int sum = 0;
 		int i = 0, j = height.length - 1;
@@ -113,8 +130,8 @@ public class Test {
 		return sum;
 	}
 	
-	public int trap5(int[] height) { 				//Ë¼Â·ÊÇ¼ÆËãÃ¿¸öÄÜÊ¢Ë®µÄ¿Õ´¦
-        if(height.length < 3) return 0;             //ÕâÀïÊ¹ÓÃÕ»
+	public int trap5(int[] height) { 				//æ€è·¯æ˜¯è®¡ç®—æ¯ä¸ªèƒ½ç››æ°´çš„ç©ºå¤„
+        if(height.length < 3) return 0;             //è¿™é‡Œä½¿ç”¨æ ˆ
         int sum = 0;
 		Stack<Integer> st = new Stack<>();
 		for(int i = 0; i < height.length; i++) {

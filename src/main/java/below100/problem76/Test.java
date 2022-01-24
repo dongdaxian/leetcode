@@ -9,7 +9,7 @@ public class Test {
 
 	}
 	
-	public String minWindow(String s, String t) {	//Óë30ÌâÒ»Ñù£¬¶¼ÊÇ»¬¶¯´°¿ÚµÄË¼Ïë£¬µ±Æ¥Åä³É¹¦Ê±²»ÊÇÖ±½ÓÇå¿Õµ±Ç°map£¬¶øÖ»ÊÇÇåÀí²¿·Ö½Ó×ÅÓÃÊ£ÏÂ²¿·Ö
+	public String minWindow(String s, String t) {	//ä¸30é¢˜ä¸€æ ·ï¼Œéƒ½æ˜¯æ»‘åŠ¨çª—å£çš„æ€æƒ³ï¼Œå½“åŒ¹é…æˆåŠŸæ—¶ä¸æ˜¯ç›´æ¥æ¸…ç©ºå½“å‰mapï¼Œè€Œåªæ˜¯æ¸…ç†éƒ¨åˆ†æ¥ç€ç”¨å‰©ä¸‹éƒ¨åˆ†
 		if(s == null || s.length() < t.length() || s.length() == 0)	return "";
 		
 		HashMap<Character, Integer> map = new HashMap<>();
