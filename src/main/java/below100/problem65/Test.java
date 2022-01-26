@@ -5,124 +5,123 @@ import java.util.TreeSet;
 
 public class Test {
 
-	public static void main(String[] args) {
-		System.out.println(new Test().isNumber2(" .  "));
-	}
-	
-	public boolean isNumber1(String s) {
-		if(s == null) return false;
-		s = s.trim();					//È¥³ıÊ×Î²¿Õ¸ñ
-		if(s.isEmpty() || "dDfF".contains(s.substring(s.length() - 1)))    //ÕâµÀÌâµÄºÏ·¨ÊäÈë£¬°üÀ¨'.1','1.'ÕâÖÖ,ÆäÊµ¶¼¶ÔÓ¦Double.parseDouble()µÄºÏ·¨ÊäÈë£¬ 
-			return false;												   //³ıÁËÊı×ÖÄ©Î²¼ÓÉÏdDfFÈÎÒ»¸ö
-		try{
-			Double.parseDouble(s);							//µÚ°ËÌâµÄÊı×Ö³¬³ö×î´óÖµ²¢²»·µ»Ø0£¬¶øÊÇ·µ»Ø¸Ã×î´óÖµ£¬ËùÒÔ²»ÄÜÓÃInteger.parseInteger()
-			return true;
-		}catch (Exception e) {
-			return false;
-		}
-	}
-	
-	public boolean isNumber2(String s) {                    //×Ô¶¯»úÔÚleetcode±Ê¼ÇÖĞ
-		s = s.trim();
-		if(s.isEmpty()) return false;
-		int i = 0, state = 0;
-		for(i = 0, state = 0; i < s.length(); i++) {
-			switch(s.charAt(i)) {
-			case '+':
-			case '-':
-				if(state == 0)
-					state = 1;
-				else if(state == 4)
-					state = 6;
-				else
-					return false;
-				break;
-			case '0':
-			case '1':
-			case '2':
-			case '3':
-			case '4':
-			case '5':
-			case '6':
-			case '7':
-			case '8':
-			case '9':
-				if(state == 0 || state == 1 || state == 2)
-					state = 2;
-				else if(state == 7 || state == 8)
-					state = 8;
-				else if(state == 4 || state == 5 || state == 6)
-					state = 5;
-				else if(state == 3)
-					state = 3;
-				else
-					return false;
-				break;
-			case '.':
-				if(state == 0 || state == 1)
-					state = 7;
-				else if(state == 2)
-					state = 3;
-				else
-					return false;
-				break;
-			case 'e':
-				if(state == 2 || state == 3 || state == 8)
-					state = 4;
-				else
-					return false;
-				break;
-			default:
-				return false;
-					
-			}
-			
-		}
-		return state == 2 || state == 3 || state == 5 || state == 8;
-	}
-	
-	public boolean isNumber3(String s) {				//Ò»°ãµÄË¼Â·ÊÇ±éÀú£¬²»·ûºÏÊ±¾Íreturn false£¬µ±±éÀúµ½Ä©Î²Ê±ËµÃ÷×Ö·û´®·ûºÏ¸ñÊ½£¬ÆäÊµÕâ¾ÍÊÇ×Ô¶¯»úµÄÒ»ÖÖ¡£
-		s = s.trim();									//²»¹ıÕâÖÖÒªÇóÖ»ÄÜÓĞÒ»ÖÖ½áÊø×´Ì¬£¬ÊµÏÖÌ«Âé·³¡£ÎÒÃÇ¿ÉÒÔÈÃ½áÊø×´Ì¬¶à¼¸ÖÖ£¬±ÈÈç·½·¨2µÄ½áÊø×´Ì¬ÓĞ¶à¸ö		
-	    boolean pointSeen = false;						//·½·¨3ÓÖÊÇ·½·¨2µÄ¼ò»¯
-	    boolean eSeen = false;							
-	    boolean numberSeen = false;
-	    boolean numberAfterE = true;
-	    for(int i = 0; i < s.length(); i++) {
-	        if('0' <= s.charAt(i) && s.charAt(i) <= '9') {
-	            numberSeen = true;
-	            numberAfterE = true;
-	        } else if(s.charAt(i) == '.') {
-	            if(eSeen || pointSeen) {
-	                return false;
-	            }
-	            pointSeen = true;
-	        } else if(s.charAt(i) == 'e') {
-	            if(eSeen || !numberSeen) {
-	                return false;
-	            }
-	            numberAfterE = false;
-	            eSeen = true;
-	        } else if(s.charAt(i) == '-' || s.charAt(i) == '+') {
-	            if(i != 0 && s.charAt(i-1) != 'e') {
-	                return false;
-	            }
-	        } else {
-	            return false;
-	        }
-	    }
-	    
-	    return numberSeen && numberAfterE;
-	}
-	
-	
-	
-	public boolean isNumber4(String s) {								  //ÓÃÕıÔò±í´ïÊ½µÄ·½·¨
-		s = s.trim();
-		if(s.isEmpty()) return false;
-		String regex = "[-+]?((\\d+\\.?|\\.\\d+)\\d*(e[-+]?\\d+)?)";		//²»ÄÜÓÃ \\d*\\.?\\d* £¬·ÀÖ¹ÊäÈëÎª . 
-		if(s.matches(regex))
-			return true;
-		return false;
-	}
+    public static void main(String[] args) {
+        System.out.println(new Test().isNumber2(" .  "));
+    }
+
+    public boolean isNumber1(String s) {
+        if (s == null) return false;
+        s = s.trim();                    //å»é™¤é¦–å°¾ç©ºæ ¼
+        if (s.isEmpty() || "dDfF".contains(s.substring(s.length() - 1)))    //è¿™é“é¢˜çš„åˆæ³•è¾“å…¥ï¼ŒåŒ…æ‹¬'.1','1.'è¿™ç§,å…¶å®éƒ½å¯¹åº”Double.parseDouble()çš„åˆæ³•è¾“å…¥ï¼Œ
+            return false;                                                   //é™¤äº†æ•°å­—æœ«å°¾åŠ ä¸ŠdDfFä»»ä¸€ä¸ª
+        try {
+            Double.parseDouble(s);                            //ç¬¬å…«é¢˜çš„æ•°å­—è¶…å‡ºæœ€å¤§å€¼å¹¶ä¸è¿”å›0ï¼Œè€Œæ˜¯è¿”å›è¯¥æœ€å¤§å€¼ï¼Œæ‰€ä»¥ä¸èƒ½ç”¨Integer.parseInteger()
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean isNumber2(String s) {                    //è‡ªåŠ¨æœºåœ¨leetcodeç¬”è®°ä¸­
+        s = s.trim();
+        if (s.isEmpty()) return false;
+        int i = 0, state = 0;
+        for (i = 0, state = 0; i < s.length(); i++) {
+            switch (s.charAt(i)) {
+                case '+':
+                case '-':
+                    if (state == 0)
+                        state = 1;
+                    else if (state == 4)
+                        state = 6;
+                    else
+                        return false;
+                    break;
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                    if (state == 0 || state == 1 || state == 2)
+                        state = 2;
+                    else if (state == 7 || state == 8)
+                        state = 8;
+                    else if (state == 4 || state == 5 || state == 6)
+                        state = 5;
+                    else if (state == 3)
+                        state = 3;
+                    else
+                        return false;
+                    break;
+                case '.':
+                    if (state == 0 || state == 1)
+                        state = 7;
+                    else if (state == 2)
+                        state = 3;
+                    else
+                        return false;
+                    break;
+                case 'e':
+                    if (state == 2 || state == 3 || state == 8)
+                        state = 4;
+                    else
+                        return false;
+                    break;
+                default:
+                    return false;
+
+            }
+
+        }
+        return state == 2 || state == 3 || state == 5 || state == 8;
+    }
+
+    public boolean isNumber3(String s) {                //ä¸€èˆ¬çš„æ€è·¯æ˜¯éå†ï¼Œä¸ç¬¦åˆæ—¶å°±return falseï¼Œå½“éå†åˆ°æœ«å°¾æ—¶è¯´æ˜å­—ç¬¦ä¸²ç¬¦åˆæ ¼å¼ï¼Œå…¶å®è¿™å°±æ˜¯è‡ªåŠ¨æœºçš„ä¸€ç§ã€‚
+        s = s.trim();                                    //ä¸è¿‡è¿™ç§è¦æ±‚åªèƒ½æœ‰ä¸€ç§ç»“æŸçŠ¶æ€ï¼Œå®ç°å¤ªéº»çƒ¦ã€‚æˆ‘ä»¬å¯ä»¥è®©ç»“æŸçŠ¶æ€å¤šå‡ ç§ï¼Œæ¯”å¦‚æ–¹æ³•2çš„ç»“æŸçŠ¶æ€æœ‰å¤šä¸ª
+        boolean pointSeen = false;                        //æ–¹æ³•3åˆæ˜¯æ–¹æ³•2çš„ç®€åŒ–
+        boolean eSeen = false;
+        boolean numberSeen = false;
+        boolean numberAfterE = true;
+        for (int i = 0; i < s.length(); i++) {
+            if ('0' <= s.charAt(i) && s.charAt(i) <= '9') {
+                numberSeen = true;
+                numberAfterE = true;
+            } else if (s.charAt(i) == '.') {
+                if (eSeen || pointSeen) {
+                    return false;
+                }
+                pointSeen = true;
+            } else if (s.charAt(i) == 'e') {
+                if (eSeen || !numberSeen) {
+                    return false;
+                }
+                numberAfterE = false;
+                eSeen = true;
+            } else if (s.charAt(i) == '-' || s.charAt(i) == '+') {
+                if (i != 0 && s.charAt(i - 1) != 'e') {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
+        return numberSeen && numberAfterE;
+    }
+
+
+    public boolean isNumber4(String s) {                                  //ç”¨æ­£åˆ™è¡¨è¾¾å¼çš„æ–¹æ³•
+        s = s.trim();
+        if (s.isEmpty()) return false;
+        String regex = "[-+]?((\\d+\\.?|\\.\\d+)\\d*(e[-+]?\\d+)?)";        //ä¸èƒ½ç”¨ \\d*\\.?\\d* ï¼Œé˜²æ­¢è¾“å…¥ä¸º .
+        if (s.matches(regex))
+            return true;
+        return false;
+    }
 
 }
