@@ -2,46 +2,46 @@ package below50.problem12;
 
 public class Test {
 
-	public static void main(String[] args) {
-		System.out.println(new Test().intToRoman2(44));
-	}
-	
-	public String intToRoman1(int num) {									
-		char[] charsym = new char[]{'M', 'D', 'C', 'L', 'X', 'V', 'I'};
-		int[] intsym = new int[]{1000, 500, 100, 50, 10, 5, 1};
-		String rs = "";
-		for(int i = 0, times = 0; i < 7; i++, times = 0) {
-			times = num/intsym[i];
-			num = num%intsym[i];
-			if(times == 4 && (i == 2 || i == 4 || i == 6)){
-				if(rs.length() > 0 && rs.charAt(rs.length() - 1) == charsym[i -1])
-					rs = rs.substring(0, rs.length() - 1) + charsym[i] + charsym[i - 2];
-				else
-					rs = rs + charsym[i] + charsym[i - 1];
-			} else {
-				for(int j = 0; j < times; j++)
-					rs += charsym[i];
-			}
-		}
-		
-		return rs;
+    public static void main(String[] args) {
+        System.out.println(new Test().intToRoman2(44));
     }
-	
-	public String intToRoman2(int num) {			
-		//×î³õË¼Â·ÊÇÖ»ÓÃ±éÀúÒ»´Î£¬ËùÒÔÔÚº¯ÊýÀïÐ´Æß¿é£¬Ã¿Ò»¿é´¦Àí¶ÔÓ¦ÂÞÂíÊý×Ö£¬È»ºó·¢ÏÖÃ¿Ò»¿éµÄ´¦Àí¶¼ÀàËÆ£¬ËùÒÔÏëµ½ÓÃÒ»¸öforÑ­»·¿ÉÒÔ¼õÉÙÖØ¸´´úÂë£¬µ±È»Òª´¦ÀíÌØÊâÇé¿ö
-		//·½·¨2Ö±½Ó°ÑÌØÊâÇé¿öÈ¥µôÁË¡£ÕâËµÃ÷²»Ò»¶¨Òª°´ÕÕÌâÖÐ¸øµÄË¼Â·×ß
-		int[] values = {1000,900,500,400,100,90,50,40,10,9,5,4,1};
-	    String[] strs = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
-	    
-	    StringBuilder sb = new StringBuilder();
-	    for(int i=0;i<values.length;i++) {
-	        while(num >= values[i]) {
-	            num -= values[i];
-	            sb.append(strs[i]);
-	        }
-	    }
-	    return sb.toString();
-		
-	}
+
+    public String intToRoman1(int num) {
+        char[] charsym = new char[]{'M', 'D', 'C', 'L', 'X', 'V', 'I'};
+        int[] intsym = new int[]{1000, 500, 100, 50, 10, 5, 1};
+        String rs = "";
+        for (int i = 0, times = 0; i < 7; i++, times = 0) {
+            times = num / intsym[i];
+            num = num % intsym[i];
+            if (times == 4 && (i == 2 || i == 4 || i == 6)) {
+                if (rs.length() > 0 && rs.charAt(rs.length() - 1) == charsym[i - 1])
+                    rs = rs.substring(0, rs.length() - 1) + charsym[i] + charsym[i - 2];
+                else
+                    rs = rs + charsym[i] + charsym[i - 1];
+            } else {
+                for (int j = 0; j < times; j++)
+                    rs += charsym[i];
+            }
+        }
+
+        return rs;
+    }
+
+    public String intToRoman2(int num) {
+        //æœ€åˆæ€è·¯æ˜¯åªç”¨éåŽ†ä¸€æ¬¡ï¼Œæ‰€ä»¥åœ¨å‡½æ•°é‡Œå†™ä¸ƒå—ï¼Œæ¯ä¸€å—å¤„ç†å¯¹åº”ç½—é©¬æ•°å­—ï¼Œç„¶åŽå‘çŽ°æ¯ä¸€å—çš„å¤„ç†éƒ½ç±»ä¼¼ï¼Œæ‰€ä»¥æƒ³åˆ°ç”¨ä¸€ä¸ªforå¾ªçŽ¯å¯ä»¥å‡å°‘é‡å¤ä»£ç ï¼Œå½“ç„¶è¦å¤„ç†ç‰¹æ®Šæƒ…å†µ
+        //æ–¹æ³•2ç›´æŽ¥æŠŠç‰¹æ®Šæƒ…å†µåŽ»æŽ‰äº†ã€‚è¿™è¯´æ˜Žä¸ä¸€å®šè¦æŒ‰ç…§é¢˜ä¸­ç»™çš„æ€è·¯èµ°
+        int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        String[] strs = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < values.length; i++) {
+            while (num >= values[i]) {
+                num -= values[i];
+                sb.append(strs[i]);
+            }
+        }
+        return sb.toString();
+
+    }
 
 }

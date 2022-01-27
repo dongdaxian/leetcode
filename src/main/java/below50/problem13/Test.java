@@ -4,43 +4,43 @@ import java.util.HashMap;
 
 public class Test {
 
-	public static void main(String[] args) {
-		System.out.println(new Test().romanToInt("III"));
+    public static void main(String[] args) {
+        System.out.println(new Test().romanToInt("III"));
 
-	}
-	
-	public int romanToInt(String s) {
-		HashMap<String, Integer> map = new HashMap<>();				//12Ìâ²»ÓÃHashMapµÄÖ÷ÒªÔ­ÒòÊÇ°¢À­²®Êı×ÖºÍÂŞÂíÊı×Ö¹¹³É·½Ê½²»Í¬
-		map.put("M", 1000);											//Ç°Õß¿ÉÒÔ¼ÓÔÚÒ»Æğ£¬ºóÕßÆ´½ÓÔÚÒ»Æğ
-		map.put("CM", 900);
-		map.put("D", 500);
-		map.put("CD", 400);
-		map.put("C", 100);
-		map.put("XC", 90);
-		map.put("L", 50);
-		map.put("XL", 40);
-		map.put("X", 10);
-		map.put("IX", 9);
-		map.put("V", 5);
-		map.put("IV", 4);
-		map.put("I", 1);
-		
-		String temp = "";
-		int rs = 0;
-		int i = 0;
-		for(i = 0; i < s.length() - 1; i++) {
-			temp = s.substring(i, i + 2);
-			if(map.containsKey(temp)) {
-				rs += map.get(temp);
-				i++;
-			}else {
-				temp = s.substring(i, i + 1);
-				rs += map.get(temp);
-			}
-		}
-		if(i < s.length())
-			rs += map.get(String.valueOf(s.charAt(s.length() - 1)));
-		return rs;
+    }
+
+    public int romanToInt(String s) {
+        HashMap<String, Integer> map = new HashMap<>();                //12é¢˜ä¸ç”¨HashMapçš„ä¸»è¦åŸå› æ˜¯é˜¿æ‹‰ä¼¯æ•°å­—å’Œç½—é©¬æ•°å­—æ„æˆæ–¹å¼ä¸åŒ
+        map.put("M", 1000);                                            //å‰è€…å¯ä»¥åŠ åœ¨ä¸€èµ·ï¼Œåè€…æ‹¼æ¥åœ¨ä¸€èµ·
+        map.put("CM", 900);
+        map.put("D", 500);
+        map.put("CD", 400);
+        map.put("C", 100);
+        map.put("XC", 90);
+        map.put("L", 50);
+        map.put("XL", 40);
+        map.put("X", 10);
+        map.put("IX", 9);
+        map.put("V", 5);
+        map.put("IV", 4);
+        map.put("I", 1);
+
+        String temp = "";
+        int rs = 0;
+        int i = 0;
+        for (i = 0; i < s.length() - 1; i++) {
+            temp = s.substring(i, i + 2);
+            if (map.containsKey(temp)) {
+                rs += map.get(temp);
+                i++;
+            } else {
+                temp = s.substring(i, i + 1);
+                rs += map.get(temp);
+            }
+        }
+        if (i < s.length())
+            rs += map.get(String.valueOf(s.charAt(s.length() - 1)));
+        return rs;
     }
 
 }
