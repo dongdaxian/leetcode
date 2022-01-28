@@ -27,6 +27,7 @@ public class Test {
             res.add(new ArrayList<>(list));
             return;
         }
+        //采用DFS/回溯的选择
         for (int i = x; i <= n; i++) {
             list.add(i);
             combineX(i + 1, n, k, res, list);

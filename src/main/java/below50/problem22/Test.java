@@ -30,8 +30,8 @@ public class Test {
             generatePare(left, rig - 1, pare + ")", ls);
     }
 
-
-    public List<String> generateParenthesis2(int n) {                    //分治法
+    //与46题都使用递归，但46题属于DFS，本题求解最优解可以利用子问题解，属于分治法
+    public List<String> generateParenthesis2(int n) {
         List<String> result = new ArrayList<>();
         if (n == 0) {
             result.add("");
