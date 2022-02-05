@@ -2,112 +2,113 @@ package below50.problem34;
 
 public class Test {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	public int[] searchRange(int[] nums, int target) {
-        if(nums == null || nums.length == 0)
+    public int[] searchRange(int[] nums, int target) {
+        if (nums == null || nums.length == 0)
             return new int[]{-1, -1};
         int[] res = search(nums, 0, nums.length - 1, target);
-        return res != null ? res : new int[] {-1, -1};
+        return res != null ? res : new int[]{-1, -1};
     }
-	
-	//Ò»°ãÀ´Ëµ£¬µİ¹é¶ş·Ö·¨»áÊ¹ÓÃmidÀ´·ÖÇé¿öÅĞ¶Ï£¬ÏÂÃæÕâÖÖĞ´·¨ÄÜ¹ıµ«ÊÇ²»¹»±ê×¼
+
+    //ä¸€èˆ¬æ¥è¯´ï¼Œé€’å½’äºŒåˆ†æ³•ä¼šä½¿ç”¨midæ¥åˆ†æƒ…å†µåˆ¤æ–­ï¼Œä¸‹é¢è¿™ç§å†™æ³•èƒ½è¿‡ä½†æ˜¯ä¸å¤Ÿæ ‡å‡†
     public int[] search(int[] nums, int begin, int end, int target) {
-        if(target > nums[end] || target < nums[begin]){
+        if (target > nums[end] || target < nums[begin]) {
             return null;
         }
-        if(begin == end && nums[begin] == target)
+        if (begin == end && nums[begin] == target)
             return new int[]{begin, begin};
         int mid = (begin + end) / 2;
         int[] res1 = search(nums, begin, mid, target);
         int[] res2 = search(nums, mid + 1, end, target);
-        if(res1 == null){
+        if (res1 == null) {
             return res2;
-        } else if(res2 == null){
+        } else if (res2 == null) {
             return res1;
-        } else{
+        } else {
             return new int[]{res1[0], res2[1]};
         }
     }
-    
-    //±ê×¼µİ¹é
+
+    //æ ‡å‡†é€’å½’
     public int[] search2(int[] nums, int begin, int end, int target) {
-    	if(begin > end)
-    		return null;
-    	int mid = (begin + end) / 2;
-    	if(nums[mid] == target) {
-    		int[] res1 = search2(nums, begin, mid - 1, target);
-    		int[] res2 = search2(nums, mid + 1, end, target);
-    		int left, right;
-    		if(res1 == null)
-    			left = mid;
-    		else
-    			left = Math.min(mid, res1[0]);
-    		
-    		if(res2 == null)
-    			right = mid;
-    		else
-    			right = Math.max(mid, res2[1]);
-    		return new int[] {left, right};
-    	} else if(nums[mid] < target) {
-    		return search2(nums, mid + 1, end, target);
-    	} else {
-    		return search2(nums, begin, mid - 1, target);
-    	}
+        if (begin > end)
+            return null;
+        int mid = (begin + end) / 2;
+        if (nums[mid] == target) {
+            int[] res1 = search2(nums, begin, mid - 1, target);
+            int[] res2 = search2(nums, mid + 1, end, target);
+            int left, right;
+            if (res1 == null)
+                left = mid;
+            else
+                left = Math.min(mid, res1[0]);
+
+            if (res2 == null)
+                right = mid;
+            else
+                right = Math.max(mid, res2[1]);
+            return new int[]{left, right};
+        } else if (nums[mid] < target) {
+            return search2(nums, mid + 1, end, target);
+        } else {
+            return search2(nums, begin, mid - 1, target);
+        }
     }
-    
+
     public int[] searchRange2(int[] nums, int target) {
         int find = searchRangeHelper(nums, target);
-        if(find == -1)
-        	return new int[] {-1, -1};
+        if (find == -1)
+            return new int[]{-1, -1};
         int left = find - 1;
         int right = find + 1;
-        while(left > -1 && nums[left] == target)
-        	left--;
-        while(right < nums.length && nums[right] == target)
-        	right++;
-        return new int[] {left + 1, right - 1};
+        while (left > -1 && nums[left] == target)
+            left--;
+        while (right < nums.length && nums[right] == target)
+            right++;
+        return new int[]{left + 1, right - 1};
     }
+
     public int searchRangeHelper(int[] nums, int target) {
-    	int low = 0;
-    	int high = nums.length - 1;
-    	//¶ş·Ö²éÕÒÖĞ£¬´Ë´¦±ØĞëÊÇ<=£¬·ñÔòµ±Êı×éÖ»ÓĞÒ»¸öÔªËØÊ±»á³ö´í
-    	while(low <= high) {
-    		int mid = (low + high) / 2;
-    		if(nums[mid] == target) {
-    			return mid;
-    		} else if(nums[mid] > target) {
-    			high = mid - 1;
-    		} else {
-    			low = mid + 1;
-    		}
-    	}
-    	return -1;
+        int low = 0;
+        int high = nums.length - 1;
+        //äºŒåˆ†æŸ¥æ‰¾ä¸­ï¼Œæ­¤å¤„å¿…é¡»æ˜¯<=ï¼Œå¦åˆ™å½“æ•°ç»„åªæœ‰ä¸€ä¸ªå…ƒç´ æ—¶ä¼šå‡ºé”™
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] > target) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return -1;
     }
-	
+
     public int[] searchRange3(int[] nums, int target) {
-    	int first = searchFirst(nums, target);
-    	if(first < nums.length && nums[first] == target) {
-    		return new int[] {first, searchFirst(nums, target + 1) - 1}; 
-    	} else {
-    		return new int[] {-1, -1};
-    	}    	
+        int first = searchFirst(nums, target);
+        if (first < nums.length && nums[first] == target) {
+            return new int[]{first, searchFirst(nums, target + 1) - 1};
+        } else {
+            return new int[]{-1, -1};
+        }
     }
-    
-    //¸ÄÔì¹ıµÄ¶ş·Ö²éÕÒ,·µ»ØµÚÒ»¸ö³öÏÖtargetµÄÏÂ±ê£¬ÈçÃ»ÓĞtargetÔò·µ»ØµÚÒ»¸ö´óÓÚtargetµÄÏÂ±ê£¬¿ÉÒÔ·µ»Ø³¬³ö½çÏŞµÄÏÂ±ê
+
+    //æ”¹é€ è¿‡çš„äºŒåˆ†æŸ¥æ‰¾,è¿”å›ç¬¬ä¸€ä¸ªå‡ºç°targetçš„ä¸‹æ ‡ï¼Œå¦‚æ²¡æœ‰targetåˆ™è¿”å›ç¬¬ä¸€ä¸ªå¤§äºtargetçš„ä¸‹æ ‡ï¼Œå¯ä»¥è¿”å›è¶…å‡ºç•Œé™çš„ä¸‹æ ‡
     public int searchFirst(int[] nums, int target) {
-    	int low = 0, high = nums.length - 1;
-    	while(low <= high) {
-    		int mid = (low + high) / 2;
-    		if(nums[mid] >= target)
-    			high = mid - 1;
-    		else
-    			low = mid + 1;
-    	}
-    	return low;
+        int low = 0, high = nums.length - 1;
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (nums[mid] >= target)
+                high = mid - 1;
+            else
+                low = mid + 1;
+        }
+        return low;
     }
-    
+
 }
