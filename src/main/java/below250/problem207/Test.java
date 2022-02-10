@@ -6,24 +6,24 @@ import java.util.List;
 import java.util.Queue;
 
 public class Test {
-	public static void main(String[] args) {
-		
-		System.out.print(new Test().canFinish(2, new int[][] {{1, 0}}));
-	}
-	
-	//ÆäÊµ¾ÍÊÇ¼ì²éÊÇ·ñ´æÔÚÓĞÏòÎŞ»·Í¼£¬ËùÒÔ¿ÉÒÔÓ¦ÓÃÍØÆËÅÅĞò£¬ËùÒÔĞèÒªÓÃµ½ÁÚ½Ó±í£¨´Ë´¦²»ÓÃÁ´±íµÄĞÎÊ½×îÎª·½±ã£©
-	
-	public boolean canFinish(int numCourses, int[][] prerequisites) {
-		List<List<Integer>> adjacency = new ArrayList<>();	//ÁÚ½Ó±í
-		for(int i = 0; i < numCourses; i++)
-			adjacency.add(new ArrayList<>());
-		int[] indegrees = new int[numCourses];	//Èë¶È±í
-		for(int[] arr: prerequisites) {
-			indegrees[arr[0]]++;
-			adjacency.get(arr[1]).add(arr[0]);
-		}
-		
-		//BFS1
+    public static void main(String[] args) {
+
+        System.out.print(new Test().canFinish(2, new int[][]{{1, 0}}));
+    }
+
+    //å…¶å®å°±æ˜¯æ£€æŸ¥æ˜¯å¦å­˜åœ¨æœ‰å‘æ— ç¯å›¾ï¼Œæ‰€ä»¥å¯ä»¥åº”ç”¨æ‹“æ‰‘æ’åºï¼Œæ‰€ä»¥éœ€è¦ç”¨åˆ°é‚»æ¥è¡¨ï¼ˆæ­¤å¤„ä¸ç”¨é“¾è¡¨çš„å½¢å¼æœ€ä¸ºæ–¹ä¾¿ï¼‰
+
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        List<List<Integer>> adjacency = new ArrayList<>();    //é‚»æ¥è¡¨
+        for (int i = 0; i < numCourses; i++)
+            adjacency.add(new ArrayList<>());
+        int[] indegrees = new int[numCourses];    //å…¥åº¦è¡¨
+        for (int[] arr : prerequisites) {
+            indegrees[arr[0]]++;
+            adjacency.get(arr[1]).add(arr[0]);
+        }
+
+        //BFS1
 //		boolean[] flag = new boolean[numCourses];
 //		int count = 0;
 //		while(true) {
@@ -38,9 +38,9 @@ public class Test {
 //				flag[i] = true;
 //			}
 //		}
-		
-		//BFS2
-		//²ÉÈ¡¼¯ºÏµÄ·½Ê½£¬ÒòÎª²»´æÔÚÏÈºóË³Ğò£¬Ö»ÒªÇóÄÜÒÆ³ıÔªËØ£¬ËùÒÔList¡¢Set¡¢Queue¶¼¿ÉÒÔ
+
+        //BFS2
+        //é‡‡å–é›†åˆçš„æ–¹å¼ï¼Œå› ä¸ºä¸å­˜åœ¨å…ˆåé¡ºåºï¼Œåªè¦æ±‚èƒ½ç§»é™¤å…ƒç´ ï¼Œæ‰€ä»¥Listã€Setã€Queueéƒ½å¯ä»¥
 //		Queue<Integer> queue = new LinkedList<>();
 //		for(int i = 0; i < numCourses; i++) {
 //			if(indegrees[i] == 0) {
@@ -57,25 +57,25 @@ public class Test {
 //			}
 //		}
 //		return numCourses == 0;
-		
-		//DFS
-		int[] flags = new int[numCourses];
-		for(int i = 0; i < numCourses; i++) {
-			if(!dfs(adjacency, flags, i)) return false;
-		}
-		return true;	
+
+        //DFS
+        int[] flags = new int[numCourses];
+        for (int i = 0; i < numCourses; i++) {
+            if (!dfs(adjacency, flags, i)) return false;
+        }
+        return true;
     }
-	
-	public boolean dfs(List<List<Integer>> adjacency, int[] flags, int i) {
-		if(flags[i] == 1) return false;
-		if(flags[i] == -1) return true;
-		flags[i] = 1;
-		for(int j: adjacency.get(i)) 
-			if(!dfs(adjacency, flags, j))
-				return false;
-		flags[i] = -1;
-		return true;
-	}
-	
-	
+
+    public boolean dfs(List<List<Integer>> adjacency, int[] flags, int i) {
+        if (flags[i] == 1) return false;
+        if (flags[i] == -1) return true;
+        flags[i] = 1;
+        for (int j : adjacency.get(i))
+            if (!dfs(adjacency, flags, j))
+                return false;
+        flags[i] = -1;
+        return true;
+    }
+
+
 }

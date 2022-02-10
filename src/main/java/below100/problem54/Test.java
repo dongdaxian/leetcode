@@ -6,8 +6,8 @@ import java.util.List;
 public class Test {
 
 
-//    °ì·¨¶ş£¬·½ÏòÉèÖÃÎªint[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}}£¬dirIndex´ú±í¶ÔÓ¦ÏÂ±ê£¬
-//    curRowºÍcurColĞŞ¸Äºó£¬Èç³¬³ö±ß½ç»òÒÑ¾­·ÃÎÊ¹ı¸ÃÎ»ÖÃ£¬ÔòdirIndex¼ÓÒ»²¢ÖØĞÂ¼ÆËãcurRowºÍcurCol
+    //    åŠæ³•äºŒï¼Œæ–¹å‘è®¾ç½®ä¸ºint[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}}ï¼ŒdirIndexä»£è¡¨å¯¹åº”ä¸‹æ ‡ï¼Œ
+//    curRowå’ŒcurColä¿®æ”¹åï¼Œå¦‚è¶…å‡ºè¾¹ç•Œæˆ–å·²ç»è®¿é—®è¿‡è¯¥ä½ç½®ï¼Œåˆ™dirIndexåŠ ä¸€å¹¶é‡æ–°è®¡ç®—curRowå’ŒcurCol
     public List<Integer> spiralOrder(int[][] matrix) {
         int row = matrix.length;
         int col = matrix[0].length;
@@ -15,22 +15,22 @@ public class Test {
         int curRow = 0;
         int curCol = -1;
         List<Integer> res = new ArrayList<>();
-        while(row > 0 && col > 0) {
-            for(int i = 0; i < col; i++) {
+        while (row > 0 && col > 0) {
+            for (int i = 0; i < col; i++) {
                 curCol++;
                 res.add(matrix[curRow][curCol]);
             }
-            for(int i = 0; i < row - 1; i++) {
+            for (int i = 0; i < row - 1; i++) {
                 curRow++;
                 res.add(matrix[curRow][curCol]);
             }
-            if(row == 1 || col == 1)
+            if (row == 1 || col == 1)
                 break;
-            for(int i = 0; i < col - 1; i++) {
+            for (int i = 0; i < col - 1; i++) {
                 curCol--;
                 res.add(matrix[curRow][curCol]);
             }
-            for(int i = 0; i < row - 2; i++) {
+            for (int i = 0; i < row - 2; i++) {
                 curRow--;
                 res.add(matrix[curRow][curCol]);
             }

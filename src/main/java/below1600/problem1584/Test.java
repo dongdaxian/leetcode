@@ -49,13 +49,13 @@ public class Test {
 
         Set<Integer> addSet = new HashSet<>();
         addSet.add(0);
-//        ¼ÇÂ¼½Úµãµ½µ±Ç°ÒÑÉú³ÉÍ¼µÄ×î¶Ì¾àÀë£¬µ±È»£¬½Úµã²»ÄÜÔÚaddSetÖĞ
+//        è®°å½•èŠ‚ç‚¹åˆ°å½“å‰å·²ç”Ÿæˆå›¾çš„æœ€çŸ­è·ç¦»ï¼Œå½“ç„¶ï¼ŒèŠ‚ç‚¹ä¸èƒ½åœ¨addSetä¸­
         int[] pdis = new int[n];
         Arrays.fill(pdis, Integer.MAX_VALUE);
         for(int i = 1; i < n; i++) {
             pdis[i] = Math.min(pdis[i], dis[0][i]);
         }
-//        ¿ÉÒÔÓÃtoAddSetÊÇ·ñÎª¿ÕÀ´ÅĞ¶Ï£¬Ò²¿ÉÒÔÑ­»·n - 1´Î£¬Ñ­»·½áÊøÒâÎ¶×ÅËùÓĞ½Úµã¶¼ÒÑÌí¼Ó
+//        å¯ä»¥ç”¨toAddSetæ˜¯å¦ä¸ºç©ºæ¥åˆ¤æ–­ï¼Œä¹Ÿå¯ä»¥å¾ªç¯n - 1æ¬¡ï¼Œå¾ªç¯ç»“æŸæ„å‘³ç€æ‰€æœ‰èŠ‚ç‚¹éƒ½å·²æ·»åŠ 
         for(int i = 1; i < n; i++) {
             int disRecord = Integer.MAX_VALUE;
             int pointRecord = 0;
@@ -69,7 +69,7 @@ public class Test {
             }
             addSet.add(pointRecord);
             minDis += disRecord;
-//            Ïà±ÈÓÚÉÏÃæµÄÊµÏÖ·½·¨£¬±ÜÃâÁËÃ¿´Î¶¼±éÀúÒÑÓĞ¼¯ºÏÖĞËùÓĞ½Úµã
+//            ç›¸æ¯”äºä¸Šé¢çš„å®ç°æ–¹æ³•ï¼Œé¿å…äº†æ¯æ¬¡éƒ½éå†å·²æœ‰é›†åˆä¸­æ‰€æœ‰èŠ‚ç‚¹
             for(int j = 0; j < n; j++) {
                 if(addSet.contains(j))
                     continue;
@@ -114,8 +114,8 @@ class UnionFind {
         size = new int[n];
         for(int i = 0; i < n; i++) {
             parent[i] = i;
-            size[i] = i;
         }
+        Arrays.fill(size, 1);
     }
     public int find(int ta) {
         if(parent[ta] != ta) {

@@ -29,7 +29,7 @@ public class Test {
             res.add(new ArrayList<>(list));
             return;
         }
-//		for(int i = k; i < nums.length; i++) {}			//当要区分排列顺序时，就需要用for
+//		for(int i = 0; i < k; i++)  			//当要区分排列顺序时，就需要用for
         list.add(nums[k]);
         getRes(res, list, k + 1, nums);
         list.remove(list.size() - 1);

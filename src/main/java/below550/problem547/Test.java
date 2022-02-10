@@ -4,84 +4,84 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Test {
-	public static void main(String[] args) {
-		Set<Integer> set = new HashSet<>();
-		set.add(1);
-		set.add(3);
-		set.remove(2);
-		for(int temp: set) {
-			System.out.println(temp);
-		}
-	}
-	
-	public int findCircleNum(int[][] isConnected) {
-		//Ò²¿ÉÒÔÓÃ boolean[] visitedÀ´´úÌæset
+    public static void main(String[] args) {
+        Set<Integer> set = new HashSet<>();
+        set.add(1);
+        set.add(3);
+        set.remove(2);
+        for (int temp : set) {
+            System.out.println(temp);
+        }
+    }
+
+    public int findCircleNum(int[][] isConnected) {
+        //ä¹Ÿå¯ä»¥ç”¨ boolean[] visitedæ¥ä»£æ›¿set
         Set<Integer> set = new HashSet<>();
         int len = isConnected.length;
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             set.add(i);
         }
+        int circles = 0;
         for(int i = 0; i < len; i++) {
-            if(dfs(set, i, isConnected)) {
-            	//Ê¹ÓÃcircles¼ÇÂ¼»·Êı£¬¿ÉÒÔÊ¡µôÕâÒ»²½£¬ÇÒdfsÒ²¿ÉÒÔÃ»ÓĞ·µ»ØÖµ
-                set.add(i);
+            if (set.contains(i)) {
+                dfs(set, i, isConnected);
+                circles++;
             }
         }
-        return set.size();
+        return circles;
     }
-	//dfsÒ²¿ÉÒÔÉè¼Æ³ÉÃ»ÓĞ·µ»ØÖµ£¬µ«ĞèÒª±£Ö¤´«ÈëdfsµÄi£¬Ò»¶¨ÓĞset.contains(i)£¬ÇÒdfsÄÚ²¿ÔÚµİ¹éµ÷ÓÃÊ±Ò²Òª±£Ö¤set.contains(j)
-    public boolean dfs(Set<Integer> set, int i, int[][] con) {
-        if(!set.contains(i)) return false;
+
+    public void dfs(Set<Integer> set, int i, int[][] con) {
         set.remove(i);
         for(int j = 0; j < con.length; j++) {
-            if(con[i][j] == 1) {
+            if(con[i][j] == 1 && set.contains(j)) {
                 dfs(set, j, con);
             }
         }
-        return true;
     }
-    
-    //ÓÃ²¢²é¼¯
+
+    //ç”¨å¹¶æŸ¥é›†
     public int findCircleNum2(int[][] isConnected) {
-    	int len = isConnected.length;
-    	UnionFind uf = new UnionFind(len);
-    	for(int i = 0; i < len; i++) {
-    		for(int j = i + 1; j < len; j++) {
-    			if(isConnected[i][j] == 1) {
-    				uf.union(i, j);
-    			}
-    		}
-    	}
-    	return uf.size;
+        int len = isConnected.length;
+        UnionFind uf = new UnionFind(len);
+        for (int i = 0; i < len; i++) {
+            for (int j = i + 1; j < len; j++) {
+                if (isConnected[i][j] == 1) {
+                    uf.union(i, j);
+                }
+            }
+        }
+        return uf.size;
     }
-    
+
 }
 
 class UnionFind {
-	int[] parent;
-	int size;
-	public UnionFind(int n) {
-		parent = new int[n];
-		for(int i = 0; i < n; i++) {
-			parent[i] = i;
-			size = n;
-		}
-	}
-	
-	public void union(int a, int b) {
-		//Õı³£²¢²é¼¯Ö»ĞèÒª parent[find(b)] = find(a)
-		int roota = find(a);
-		int rootb = find(b);
-		if(roota != rootb) {
-			parent[rootb] = roota;
-			size--;
-		}
-	}
-	
-	public int find(int tar) {
-		if(parent[tar] != tar) {
-			parent[tar] = find(parent[tar]);
-		}
-		return parent[tar];
-	}
+    int[] parent;
+    int size;
+
+    public UnionFind(int n) {
+        parent = new int[n];
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+            size = n;
+        }
+    }
+
+    public void union(int a, int b) {
+        //æ­£å¸¸å¹¶æŸ¥é›†åªéœ€è¦ parent[find(b)] = find(a)
+        int roota = find(a);
+        int rootb = find(b);
+        if (roota != rootb) {
+            parent[rootb] = roota;
+            size--;
+        }
+    }
+
+    public int find(int tar) {
+        if (parent[tar] != tar) {
+            parent[tar] = find(parent[tar]);
+        }
+        return parent[tar];
+    }
 }

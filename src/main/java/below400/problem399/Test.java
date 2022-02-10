@@ -7,155 +7,156 @@ import java.util.List;
 import java.util.Map;
 
 public class Test {
-	
-	
-	public static void main(String[] args) {
-		List<List<String>> equations = new ArrayList<>();
-		List<List<String>> queries = new ArrayList<>();
-		equations.add(Arrays.asList(new String[] {"a","b"}));
-		equations.add(Arrays.asList(new String[] {"b","c"}));
 
-		queries.add(Arrays.asList(new String[] {"a","c"}));
-		queries.add(Arrays.asList(new String[] {"b","a"}));
-		queries.add(Arrays.asList(new String[] {"a","e"}));
-		queries.add(Arrays.asList(new String[] {"a","a"}));
-		queries.add(Arrays.asList(new String[] {"x","x"}));
-	}
-	
-	//queriesÖĞµÄÃ¿Ò»¶Ô£¬ÓÃdfs¡¢bfs¶¼¿ÉÒÔ
-	//²¢²é¼¯
-	public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
-		int len = values.length;
-		Map<String, Integer> map = new HashMap<>();
-		//°´¿ÉÄÜµÄ×î´ó³¤¶ÈÀ´
-		UnionFind uf = new UnionFind(2 * len);
-		double[] res = new double[queries.size()];
-		int index = 0;
-		for(int i = 0; i < len; i++) {
-			List<String> ls = equations.get(i);
-			String temp1 = ls.get(0);
-			String temp2 = ls.get(1);
-			if(!map.containsKey(temp1)) {
-				map.put(temp1, index++);
-			}
-			if(!map.containsKey(temp2)) {
-				map.put(temp2, index++);
-			}
-			int num1 = map.get(temp1);
-			int num2 = map.get(temp2);
-			uf.union(num1, num2, values[i]);
-		}
-		index = 0;
-		for(List<String> ls: queries) {
-			String temp1 = ls.get(0);
-			String temp2 = ls.get(1);
-			if(!map.containsKey(temp1) || !map.containsKey(temp2)) {
-				res[index] = -1;
-			} else {
-				res[index] = uf.isConnected(map.get(temp1), map.get(temp2));
-			}
-			index++;
-		}
-		
-		return res;
-	}
-	
-	//¸¥ÂåÒÁµÂËã·¨
-	public double[] calcEquation2(List<List<String>> equations, double[] values, List<List<String>> queries) {
-		double[] res = new double[queries.size()];
-		int index = 0;
-		Map<String, Integer> map = new HashMap<>();
-		for(List<String> ls: equations) {
-			String temp1 = ls.get(0);
-			String temp2 = ls.get(1);
-			if(!map.containsKey(temp1)) {
-				map.put(temp1, index++);
-			}
-			if(!map.containsKey(temp2)) {
-				map.put(temp2, index++);
-			}
-		}
-		int size = map.size();
-		double[][] val = new double[size][size];
-		for(int i = 0; i < size; i++) {
-			Arrays.fill(val[i], -1);
-			val[i][i] = 1;
-		}
-		
-		//Èç¹û²»ÔÚÒâ¿Õ¼äÏûºÄµÄ»°£¬¿ÉÒÔ°ÑvalÎ¬¶ÈÉèÖÃ³É2 * equations.size()£¬ÕâÒ»²½¾Í¿ÉÒÔºÍµÚÒ»²½ºÏ²¢
-		int len = values.length;
-		for(int i = 0; i < len; i++) {
-			List<String> ls = equations.get(i); 
-			int index1 = map.get(ls.get(0));
-			int index2 = map.get(ls.get(1));
-			val[index1][index2] = values[i];
-			val[index2][index1] = 1 / values[i];
-		}
-		for(int k = 0; k < size; k++) {
-			for(int i = 0; i < size; i++)
-				for(int j = 0; j < size; j++) {
-					if(val[i][k] > 0 && val[k][j] > 0) {
-						val[i][j] = val[i][k] * val[k][j];
-					}
-				}
-		}
-		index = 0;
-		for(List<String> ls: queries) {
-			String temp1 = ls.get(0);
-			String temp2 = ls.get(1);
-			if(!map.containsKey(temp1) || !map.containsKey(temp2)) {
-				res[index] = -1;
-			} else {
-				res[index] = val[map.get(temp1)][map.get(temp2)];
-			}
-			index++;
-		}
-		
-		return res;
-	}
-	
+
+    public static void main(String[] args) {
+        List<List<String>> equations = new ArrayList<>();
+        List<List<String>> queries = new ArrayList<>();
+        equations.add(Arrays.asList(new String[]{"a", "b"}));
+        equations.add(Arrays.asList(new String[]{"b", "c"}));
+
+        queries.add(Arrays.asList(new String[]{"a", "c"}));
+        queries.add(Arrays.asList(new String[]{"b", "a"}));
+        queries.add(Arrays.asList(new String[]{"a", "e"}));
+        queries.add(Arrays.asList(new String[]{"a", "a"}));
+        queries.add(Arrays.asList(new String[]{"x", "x"}));
+    }
+
+    //queriesä¸­çš„æ¯ä¸€å¯¹ï¼Œç”¨dfsã€bfséƒ½å¯ä»¥
+    //å¹¶æŸ¥é›†
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        int len = values.length;
+        Map<String, Integer> map = new HashMap<>();
+        //æŒ‰å¯èƒ½çš„æœ€å¤§é•¿åº¦æ¥
+        UnionFind uf = new UnionFind(2 * len);
+        double[] res = new double[queries.size()];
+        int index = 0;
+        for (int i = 0; i < len; i++) {
+            List<String> ls = equations.get(i);
+            String temp1 = ls.get(0);
+            String temp2 = ls.get(1);
+            if (!map.containsKey(temp1)) {
+                map.put(temp1, index++);
+            }
+            if (!map.containsKey(temp2)) {
+                map.put(temp2, index++);
+            }
+            int num1 = map.get(temp1);
+            int num2 = map.get(temp2);
+            uf.union(num1, num2, values[i]);
+        }
+        index = 0;
+        for (List<String> ls : queries) {
+            String temp1 = ls.get(0);
+            String temp2 = ls.get(1);
+            if (!map.containsKey(temp1) || !map.containsKey(temp2)) {
+                res[index] = -1;
+            } else {
+                res[index] = uf.isConnected(map.get(temp1), map.get(temp2));
+            }
+            index++;
+        }
+
+        return res;
+    }
+
+    //å¼—æ´›ä¼Šå¾·ç®—æ³•
+    public double[] calcEquation2(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        double[] res = new double[queries.size()];
+        int index = 0;
+        Map<String, Integer> map = new HashMap<>();
+        for (List<String> ls : equations) {
+            String temp1 = ls.get(0);
+            String temp2 = ls.get(1);
+            if (!map.containsKey(temp1)) {
+                map.put(temp1, index++);
+            }
+            if (!map.containsKey(temp2)) {
+                map.put(temp2, index++);
+            }
+        }
+        int size = map.size();
+        double[][] val = new double[size][size];
+        for (int i = 0; i < size; i++) {
+            Arrays.fill(val[i], -1);
+            val[i][i] = 1;
+        }
+
+        //å¦‚æœä¸åœ¨æ„ç©ºé—´æ¶ˆè€—çš„è¯ï¼Œå¯ä»¥æŠŠvalç»´åº¦è®¾ç½®æˆ2 * equations.size()ï¼Œè¿™ä¸€æ­¥å°±å¯ä»¥å’Œç¬¬ä¸€æ­¥åˆå¹¶
+        int len = values.length;
+        for (int i = 0; i < len; i++) {
+            List<String> ls = equations.get(i);
+            int index1 = map.get(ls.get(0));
+            int index2 = map.get(ls.get(1));
+            val[index1][index2] = values[i];
+            val[index2][index1] = 1 / values[i];
+        }
+        for (int k = 0; k < size; k++) {
+            for (int i = 0; i < size; i++)
+                for (int j = 0; j < size; j++) {
+                    if (val[i][k] > 0 && val[k][j] > 0) {
+                        val[i][j] = val[i][k] * val[k][j];
+                    }
+                }
+        }
+        index = 0;
+        for (List<String> ls : queries) {
+            String temp1 = ls.get(0);
+            String temp2 = ls.get(1);
+            if (!map.containsKey(temp1) || !map.containsKey(temp2)) {
+                res[index] = -1;
+            } else {
+                res[index] = val[map.get(temp1)][map.get(temp2)];
+            }
+            index++;
+        }
+
+        return res;
+    }
+
 }
 
 class UnionFind {
-	int[] parent;
-	double[] val;
-	
-	public UnionFind(int n) {
-		parent = new int[n];
-		val = new double[n];
-		for(int i = 0; i < n; i++) {
-			parent[i] = i;
-		}
-		Arrays.fill(val, 1);
-	}
-	//²¢²é¼¯ÖĞ£¬ÔÚÊ¹ÓÃÒ»¸öÔªËØÇ°Ò»¶¨»á¸üĞÂ¹ØÏµ£¬ËùÒÔÎÒÃÇÓÃµ½µÄÔªËØµÄvalÖµÒ»¶¨ÄÜµÃµ½¸üĞÂ
-	public int find(int tar) {
-		if(parent[tar] != tar) {
-			int temp = parent[tar];
-			parent[tar] = find(temp);
-			val[tar] *= val[temp];
-		}
-		return parent[tar];
-	}
-	
-	public void union(int i, int j, double value) {
-		int rooti = find(i);
-		int rootj = find(j);
-		if(rooti != rootj) {
-			parent[rooti] = rootj;
-			//ÒªÊ¹µÃÂú×ãval[i] / val[j] = value
-			//ÏÈ¸üĞÂ¸¸½Úµã£¬µ±ÒªÓÃµ½i½ÚµãÊ±ÔÙ¸üĞÂvalÖµ
-			val[rooti] = val[j] * value / val[i];
-		}
-	}
-	
-	public double isConnected(int x, int y) {
-		int rootx = find(x);
-		int rooty = find(y);
-		if(rootx != rooty) {
-			return 1.0; 
-		}
-		return val[x] / val[y];
-	}
-	
+    int[] parent;
+    double[] val;
+
+    public UnionFind(int n) {
+        parent = new int[n];
+        val = new double[n];
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+        Arrays.fill(val, 1);
+    }
+
+    //å¹¶æŸ¥é›†ä¸­ï¼Œåœ¨ä½¿ç”¨ä¸€ä¸ªå…ƒç´ å‰ä¸€å®šä¼šæ›´æ–°å…³ç³»ï¼Œæ‰€ä»¥æˆ‘ä»¬ç”¨åˆ°çš„å…ƒç´ çš„valå€¼ä¸€å®šèƒ½å¾—åˆ°æ›´æ–°
+    public int find(int tar) {
+        if (parent[tar] != tar) {
+            int temp = parent[tar];
+            parent[tar] = find(temp);
+            val[tar] *= val[temp];
+        }
+        return parent[tar];
+    }
+
+    public void union(int i, int j, double value) {
+        int rooti = find(i);
+        int rootj = find(j);
+        if (rooti != rootj) {
+            parent[rooti] = rootj;
+            //è¦ä½¿å¾—æ»¡è¶³val[i] / val[j] = value
+            //å…ˆæ›´æ–°çˆ¶èŠ‚ç‚¹ï¼Œå½“è¦ç”¨åˆ°ièŠ‚ç‚¹æ—¶å†æ›´æ–°valå€¼
+            val[rooti] = val[j] * value / val[i];
+        }
+    }
+
+    public double isConnected(int x, int y) {
+        int rootx = find(x);
+        int rooty = find(y);
+        if (rootx != rooty) {
+            return 1.0;
+        }
+        return val[x] / val[y];
+    }
+
 }

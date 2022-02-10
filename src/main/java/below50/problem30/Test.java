@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Test {
 
+    private int count;
+
     public static void main(String[] args) {
         String s = "wordgoodgoodgoodbestword";
         String[] words = new String[]{"word", "good", "best", "good"};

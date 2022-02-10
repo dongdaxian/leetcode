@@ -2,55 +2,55 @@ package below50.problem41;
 
 public class Test {
 
-	public static void main(String[] args) {
-		int[] nums = new int[]{1, 1};
-		System.out.println(new Test().firstMissingPositive3(nums));
-	}
-	
-	public int firstMissingPositive1(int[] nums) {                //ËùÓÃ¿Õ¼ä²»ÊÇO(1)
-		boolean[] flag = new boolean[nums.length + 1];
-		int i = 0;
-		for(i = 0; i < nums.length; i++) {
-			if(nums[i] > -1 && nums[i] < nums.length + 1)
-				flag[nums[i]] = true;
-		}
-		for(i = 1; i < nums.length + 1 && flag[i]; i++);
-		return i;
+    public static void main(String[] args) {
+        int[] nums = new int[]{1, 1};
+        System.out.println(new Test().firstMissingPositive3(nums));
     }
 
-	public int firstMissingPositive2(int[] nums) {             //°´ĞòÅÅÁĞi + 1¶ÔÓ¦indexÎªi£¬ÓÖ¿Õ¼ä¸´ÔÓ¶ÈO(1)£¬Ö»ÄÜÔÚÔ­Êı×éÉÏ½øĞĞ±ê¼Ç£¬·½·¨2¡¢3²ÉÓÃ±ê¼Ç·½Ê½ÂÔÎ¢²»Í¬
-		int i = 0;
-		for(i = 0; i < nums.length; i++)
-			if(nums[i] > 0 && nums[i] < nums.length + 1 && nums[i] != i + 1)
-				if(nums[nums[i] - 1] != nums[i])   //·ÀÖ¹Á½¸öÔªËØÏàÍ¬£¬µ¼ÖÂÖØ¸´½»»»
-				{
-					int temp = nums[nums[i] - 1];
-					nums[nums[i] - 1] = nums[i];
-					nums[i] = temp;
-					i--;
-				}
-		
-		for(i = 0; i < nums.length && nums[i] == i + 1; i++);
-		return i + 1;
+    public int firstMissingPositive1(int[] nums) {                //æ‰€ç”¨ç©ºé—´ä¸æ˜¯O(1)
+        boolean[] flag = new boolean[nums.length + 1];
+        int i = 0;
+        for (i = 0; i < nums.length; i++) {
+            if (nums[i] > -1 && nums[i] < nums.length + 1)
+                flag[nums[i]] = true;
+        }
+        for (i = 1; i < nums.length + 1 && flag[i]; i++) ;
+        return i;
     }
-	
-	public int firstMissingPositive3(int[] nums) {			//±¾ÖÊºÍµÚÒ»ÖÖÒ»Ñù£¬µ«½ÚÊ¡ÁË¿Õ¼ä
-		int n = nums.length;
-		int i = 0;
-		int temp = 0;
-		for(i = 0; i < n; i++)
-			if(nums[i] < 1 || nums[i] > n)
-				nums[i] = n + 1;
-		for(i = 0; i < n; i++) {
-			temp = Math.abs(nums[i]);
-			if(temp > n) continue;
-			
-			temp--;
-			if(nums[temp] > 0)                     //·ÀÖ¹numsÖĞÁ½¸öÔªËØÏàÍ¬£¬µ¼ÖÂnums[temp]ÓÖ±ä³ÉÕıµÄ
-				nums[temp] = -1 * nums[temp];
-		}
-		
-		for(i = 0; i < n && nums[i] < 0; i++);
-		return i + 1;
+
+    public int firstMissingPositive2(int[] nums) {             //æŒ‰åºæ’åˆ—i + 1å¯¹åº”indexä¸ºiï¼Œåˆç©ºé—´å¤æ‚åº¦O(1)ï¼Œåªèƒ½åœ¨åŸæ•°ç»„ä¸Šè¿›è¡Œæ ‡è®°ï¼Œæ–¹æ³•2ã€3é‡‡ç”¨æ ‡è®°æ–¹å¼ç•¥å¾®ä¸åŒ
+        int i = 0;
+        for (i = 0; i < nums.length; i++)
+            if (nums[i] > 0 && nums[i] < nums.length + 1 && nums[i] != i + 1)
+                if (nums[nums[i] - 1] != nums[i])   //é˜²æ­¢ä¸¤ä¸ªå…ƒç´ ç›¸åŒï¼Œå¯¼è‡´é‡å¤äº¤æ¢
+                {
+                    int temp = nums[nums[i] - 1];
+                    nums[nums[i] - 1] = nums[i];
+                    nums[i] = temp;
+                    i--;
+                }
+
+        for (i = 0; i < nums.length && nums[i] == i + 1; i++) ;
+        return i + 1;
+    }
+
+    public int firstMissingPositive3(int[] nums) {            //æœ¬è´¨å’Œç¬¬ä¸€ç§ä¸€æ ·ï¼Œä½†èŠ‚çœäº†ç©ºé—´
+        int n = nums.length;
+        int i = 0;
+        int temp = 0;
+        for (i = 0; i < n; i++)
+            if (nums[i] < 1 || nums[i] > n)
+                nums[i] = n + 1;
+        for (i = 0; i < n; i++) {
+            temp = Math.abs(nums[i]);
+            if (temp > n) continue;
+
+            temp--;
+            if (nums[temp] > 0)                     //é˜²æ­¢numsä¸­ä¸¤ä¸ªå…ƒç´ ç›¸åŒï¼Œå¯¼è‡´nums[temp]åˆå˜æˆæ­£çš„
+                nums[temp] = -1 * nums[temp];
+        }
+
+        for (i = 0; i < n && nums[i] < 0; i++) ;
+        return i + 1;
     }
 }
