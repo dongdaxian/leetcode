@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.stream.IntStream;
 
 
-//    °¢Àï2021-4-16±ÊÊÔ
+//    é˜¿é‡Œ2021-4-16ç¬”è¯•
 public class Solution1 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);

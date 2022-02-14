@@ -21,14 +21,11 @@ public class Test {
     public int firstMissingPositive2(int[] nums) {             //按序排列i + 1对应index为i，又空间复杂度O(1)，只能在原数组上进行标记，方法2、3采用标记方式略微不同
         int i = 0;
         for (i = 0; i < nums.length; i++)
-            if (nums[i] > 0 && nums[i] < nums.length + 1 && nums[i] != i + 1)
-                if (nums[nums[i] - 1] != nums[i])   //防止两个元素相同，导致重复交换
-                {
-                    int temp = nums[nums[i] - 1];
-                    nums[nums[i] - 1] = nums[i];
-                    nums[i] = temp;
-                    i--;
-                }
+            while (nums[i] > 0 && nums[i] < nums.length + 1 && nums[i] != nums[nums[i] - 1]) {
+                int tmp = nums[i];
+                nums[i] = nums[tmp - 1];
+                nums[tmp - 1] = tmp;
+            }
 
         for (i = 0; i < nums.length && nums[i] == i + 1; i++) ;
         return i + 1;

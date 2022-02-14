@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 public class Solution2 {
 
 
-//    dfsÖĞÔËÓÃ¼ôÖ¦·¨µÄÇ°ÌáÊÇ£¬´Ó¸ù½ÚµãÁ¬µ½Ò¶½ÚµãµÄÃ¿ÌõÂ·¾¶¶¼²»¾­¹ıÆäËûÒ¶½Úµã£¬´ËÌâÓÃ²»ÁË
+//    dfsä¸­è¿ç”¨å‰ªææ³•çš„å‰ææ˜¯ï¼Œä»æ ¹èŠ‚ç‚¹è¿åˆ°å¶èŠ‚ç‚¹çš„æ¯æ¡è·¯å¾„éƒ½ä¸ç»è¿‡å…¶ä»–å¶èŠ‚ç‚¹ï¼Œæ­¤é¢˜ç”¨ä¸äº†
     static long ret = 0;
     public static void dfs(int[][] cost, int leftTime, int[] salary, long val, int beg) {
         boolean flag = false;
@@ -32,8 +32,8 @@ public class Solution2 {
         }
     }
 
-//    dfsÊµÏÖÊ÷ĞÎdp
-//    t´Ó´óµ½Ğ¡ÊÇÎªÁË±ÜÃâÖØ¸´Ïû·ÑÄ³Ò»¿Å×ÓÊ÷
+//    dfså®ç°æ ‘å½¢dp
+//    tä»å¤§åˆ°å°æ˜¯ä¸ºäº†é¿å…é‡å¤æ¶ˆè´¹æŸä¸€é¢—å­æ ‘
     public static void dfs(int[][] dp, int[] timeCost, Map<Integer, Set<Integer>> map, int beg, int time) {
         if (map.containsKey(beg)) {
             for (int tmp: map.get(beg)) {
