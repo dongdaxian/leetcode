@@ -29,7 +29,7 @@ public class Test {
         }
 
         for (int i = 0; i < nums.length; ++i) {
-            if (visit[i] || (i > 0 && nums[i] == nums[i - 1] && !visit[i - 1]))    //当出现visit[i - 1]为false，说明这两个相同元素已经以原顺序遍历过了
+            if (visit[i] || (i > 0 && nums[i] == nums[i - 1] && !visit[i - 1]))    //褰撳嚭鐜皏isit[i - 1]涓篺alse锛岃鏄庤繖涓や釜鐩稿悓鍏冪礌宸茬粡浠ュ師椤哄簭閬嶅巻杩囦簡
                 continue;
             ls.add(nums[i]);
             visit[i] = true;
