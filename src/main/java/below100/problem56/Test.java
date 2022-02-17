@@ -9,113 +9,116 @@ import java.util.TreeMap;
 
 public class Test {
 
-	public static void main(String[] args) {
-		int[][] intervals = new int[][]{{1,4},{4,5}};
-		intervals = new Test().merge3(intervals);
-		for(int i = 0; i < intervals.length; i++) {
-			System.out.println(intervals[i][0] + " " + intervals[i][1]);
-		}
-	}
-	
-	public int[][] merge1(int[][] intervals) {
-		Arrays.sort(intervals, new Comparator<int[]>() {
-			@Override
-			public int compare(int[] o1, int[] o2) {
-				return o1[0] - o2[0];
-			}});
-
-        TreeMap<Integer, Integer> map = new TreeMap<Integer, Integer>();
-        int[] arr;
-        Integer record = null;
-        for(int i = 0; i < intervals.length; i++) {
-        	arr = intervals[i];
-        	
-        	try{                                               
-        		record = map.lastKey();
-        	}catch (Exception e) {
-        		record = null;
-			}
-        	
-        	if(record != null && record >= arr[0]) {
-        		if(record < arr[1]) {
-	        		map.put(arr[1], map.get(record));
-	        		map.remove(record);
-        		}
-        	}else {
-        		map.put(arr[1], arr[0]);
-        	}
+    public static void main(String[] args) {
+        int[][] intervals = new int[][]{{1, 4}, {4, 5}};
+        intervals = new Test().merge3(intervals);
+        for (int i = 0; i < intervals.length; i++) {
+            System.out.println(intervals[i][0] + " " + intervals[i][1]);
         }
-        
-        int[][] res = new int[map.size()][2];
-        int i = 0;
-        for(Map.Entry<Integer, Integer> entry: map.entrySet()) {
-        	res[i][0] = entry.getValue();
-        	res[i][1] = entry.getKey();
-        	i++;
-        }
-		return res;
     }
-	
-	
-	public int[][] merge2(int[][] intervals) {
-		if(intervals.length < 2) return intervals;
-        Arrays.sort(intervals, new Comparator<int[]>() {
-			@Override
-			public int compare(int[] o1, int[] o2) {
-				return o1[0] - o2[0];
-			}});
 
-        TreeMap<Integer, Integer> map = new TreeMap<Integer, Integer>();
+    public int[][] merge1(int[][] intervals) {
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] - o2[0];
+            }
+        });
+
+        TreeMap<Integer, Integer> map = new TreeMap<>();
         int[] arr;
         Integer record = null;
-        map.put(intervals[0][1], intervals[0][0]);          //ÏÈ´¦Àíi=0£¬»¹¿ÉÒÔÍ¨¹ıÅĞ¶ÏiÊÇ·ñµÈÓÚ0£¬»òÕßÔÚÃ¿´ÎÑ­»·½áÊøÇ°ÔÙ¸ørecord¸³ÖµµÄ·½Ê½
-        for(int i = 1; i < intervals.length; i++) {         //ÆäÊµ¶ÔÓ¦forÑ­»·ÖĞ¶ÔÌØÊâÇé¿öµÄÈıÖÖ´¦Àí·½Ê½£¬ÔÚÑ­»·Íâµ¥¶À´¦Àí£¬
-        	arr = intervals[i];								//ÔÚÑ­»·ÄÚ´¦Àí·ÖÎª¶ÔÓ¦±¾´ÎÑ­»·£¬ºÍ¶ÔÓ¦ÏÂ´ÎÑ­»·
-        	record = map.lastKey();
-        	if(record >= arr[0]) {
-        		if(record < arr[1]) {
-	        		map.put(arr[1], map.get(record));
-	        		map.remove(record);
-        		}
-        	}else {
-        		map.put(arr[1], arr[0]);
-        	}
+        for (int i = 0; i < intervals.length; i++) {
+            arr = intervals[i];
+
+            try {
+                record = map.lastKey();
+            } catch (Exception e) {
+                record = null;
+            }
+
+            if (record != null && record >= arr[0]) {
+                if (record < arr[1]) {
+                    map.put(arr[1], map.get(record));
+                    map.remove(record);
+                }
+            } else {
+                map.put(arr[1], arr[0]);
+            }
         }
-        
+
         int[][] res = new int[map.size()][2];
         int i = 0;
-        for(Map.Entry<Integer, Integer> entry: map.entrySet()) {
-        	res[i][0] = entry.getValue();
-        	res[i][1] = entry.getKey();
-        	i++;
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            res[i][0] = entry.getValue();
+            res[i][1] = entry.getKey();
+            i++;
         }
-		return res;
-	}
-	
-	public int[][] merge3(int[][] intervals) {            //Ê¹ÓÃListÒ»Ñù¿ÉÒÔ´æ´¢Ò»¶ÔÊı¾İ£¬ÇÒ¸ü·ûºÏÂß¼­£¬ÒòÎªÕâÁ½¸öint²¢²»ÊÇkeyºÍvalueµÄ¹ØÏµ£¬
-		if(intervals.length < 2) return intervals;		  //Ò²¸ü·½±ãÊ¹ÓÃ£¬Ò»ÊÇÍùlistÖĞ´æÊı×éÒıÓÃ£¬¿ÉÒÔÖ±½ÓÔÚÍâÃæ¸ÄÊı×é¶ø²»ÓÃÔÙÍ¨¹ılist°ÑÔªËØÈ¡³öÀ´£¬
-        Arrays.sort(intervals, new Comparator<int[]>() {  //¶şÊÇÍ¨¹ıListµÄtoArray×ª³ÉÊı×éºÜ·½±ã
-			@Override
-			public int compare(int[] o1, int[] o2) {
-				return o1[0] - o2[0];
-			}});												
-		
-        
-        List<int[]> ls = new ArrayList<int[]>();
+        return res;
+    }
+
+
+    public int[][] merge2(int[][] intervals) {
+        if (intervals.length < 2) return intervals;
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] - o2[0];
+            }
+        });
+
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+        int[] arr;
+        Integer record = null;
+        map.put(intervals[0][1], intervals[0][0]);          //å…ˆå¤„ç†i=0ï¼Œè¿˜å¯ä»¥é€šè¿‡åˆ¤æ–­iæ˜¯å¦ç­‰äº0ï¼Œæˆ–è€…åœ¨æ¯æ¬¡å¾ªç¯ç»“æŸå‰å†ç»™recordèµ‹å€¼çš„æ–¹å¼
+        for (int i = 1; i < intervals.length; i++) {         //å…¶å®å¯¹åº”forå¾ªç¯ä¸­å¯¹ç‰¹æ®Šæƒ…å†µçš„ä¸‰ç§å¤„ç†æ–¹å¼ï¼Œåœ¨å¾ªç¯å¤–å•ç‹¬å¤„ç†ï¼Œ
+            arr = intervals[i];                                //åœ¨å¾ªç¯å†…å¤„ç†åˆ†ä¸ºå¯¹åº”æœ¬æ¬¡å¾ªç¯ï¼Œå’Œå¯¹åº”ä¸‹æ¬¡å¾ªç¯
+            record = map.lastKey();
+            if (record >= arr[0]) {
+                if (record < arr[1]) {
+                    map.put(arr[1], map.get(record));
+                    map.remove(record);
+                }
+            } else {
+                map.put(arr[1], arr[0]);
+            }
+        }
+
+        int[][] res = new int[map.size()][2];
+        int i = 0;
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            res[i][0] = entry.getValue();
+            res[i][1] = entry.getKey();
+            i++;
+        }
+        return res;
+    }
+
+    public int[][] merge3(int[][] intervals) {            //ä½¿ç”¨Listä¸€æ ·å¯ä»¥å­˜å‚¨ä¸€å¯¹æ•°æ®ï¼Œä¸”æ›´ç¬¦åˆé€»è¾‘ï¼Œå› ä¸ºè¿™ä¸¤ä¸ªintå¹¶ä¸æ˜¯keyå’Œvalueçš„å…³ç³»ï¼Œ
+        if (intervals.length < 2) return intervals;          //ä¹Ÿæ›´æ–¹ä¾¿ä½¿ç”¨ï¼Œä¸€æ˜¯å¾€listä¸­å­˜æ•°ç»„å¼•ç”¨ï¼Œå¯ä»¥ç›´æ¥åœ¨å¤–é¢æ”¹æ•°ç»„è€Œä¸ç”¨å†é€šè¿‡listæŠŠå…ƒç´ å–å‡ºæ¥ï¼Œ
+        Arrays.sort(intervals, new Comparator<int[]>() {  //äºŒæ˜¯é€šè¿‡Listçš„toArrayè½¬æˆæ•°ç»„å¾ˆæ–¹ä¾¿
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] - o2[0];
+            }
+        });
+
+
+        List<int[]> ls = new ArrayList<>();
         int[] pre = intervals[0];
         ls.add(pre);
         int[] cur;
-        for(int i = 1; i < intervals.length; i++) {
-        	cur = intervals[i];
-        	if(cur[0] <= pre[1]) {
-        		if(cur[1] > pre[1])
-        			pre[1] = cur[1];
-        	}else {
-        		pre = cur;
-        		ls.add(cur);
-        	}
+        for (int i = 1; i < intervals.length; i++) {
+            cur = intervals[i];
+            if (cur[0] <= pre[1]) {
+                if (cur[1] > pre[1])
+                    pre[1] = cur[1];
+            } else {
+                pre = cur;
+                ls.add(cur);
+            }
         }
-		return ls.toArray(new int[ls.size()][2]);
-	}
+        return ls.toArray(new int[ls.size()][2]);
+    }
 
 }

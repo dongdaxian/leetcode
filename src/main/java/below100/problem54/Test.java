@@ -5,8 +5,7 @@ import java.util.List;
 
 public class Test {
 
-
-    //    办法二，方向设置为int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}}，dirIndex代表对应下标，
+//    办法二，方向设置为int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}}，dirIndex代表对应下标，
 //    curRow和curCol修改后，如超出边界或已经访问过该位置，则dirIndex加一并重新计算curRow和curCol
     public List<Integer> spiralOrder(int[][] matrix) {
         int row = matrix.length;
