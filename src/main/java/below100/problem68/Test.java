@@ -6,59 +6,55 @@ import java.util.List;
 
 public class Test {
 
-	public static void main(String[] args) {
-		List<String> res = new Test().fullJustify(new String[]{"This", "is", "an", "example", "of", "text", "justification."}, 16);
-		for(String temp: res)
-			System.out.println(temp);
+    public static void main(String[] args) {
+        List<String> res = new Test().fullJustify(new String[]{"This", "is", "an", "example", "of", "text", "justification."}, 16);
+        for (String temp : res)
+            System.out.println(temp);
 
-	}
-	
-	public List<String> fullJustify(String[] words, int maxWidth) {
-		int nowWidth = maxWidth;
-		List<String> ls = new ArrayList<String>();				//¿ÉÒÔÓÃÁ½¸öÖ¸ÕëleftºÍright´úÌælsµÄ×÷ÓÃ
-		List<String> res = new ArrayList<String>();
-		for(int i = 0; i < words.length;) {
-			if(words[i].length() <= nowWidth) {
-				nowWidth = nowWidth - words[i].length() - 1;
-				ls.add(words[i]);
-				i++;
-			} else {
-				StringBuilder temp = new StringBuilder();		//String¸ÄÓÃStringBuilder
-				nowWidth++;
-				if(ls.size() == 1){								//Èç¹ûÖ»ÓĞÒ»¸ö£¬×ó¶ÔÆë
-					temp.append(ls.get(0));
-					char[] ch = new char[nowWidth];
-					Arrays.fill(ch, ' ');
-					temp.append(ch);
-					res.add(temp.toString());
-				} else {			
-					int size = ls.size();
-					for(int j = 0; j < size - 1; j++) {
-						temp.append(ls.get(j) + " ");
-						char[] ch = new char[(nowWidth + size - j - 2) / (size - 1)];
-						Arrays.fill(ch, ' ');
-						temp.append(ch);
-					}
-					temp.append(ls.get(size - 1));
-					res.add(temp.toString());
-				}
-				ls.clear();
-				nowWidth = maxWidth;
-			}
-		}
-		if(!ls.isEmpty()) {										//¶ÔÓÚ×îºóÒ»ĞĞ£¬Ò²ÊÇ×ó¶ÔÆë
-			StringBuilder temp = new StringBuilder();
-			for(int j = 0; j < ls.size(); j++) 
-				temp.append(ls.get(j) + " ");
-			temp.deleteCharAt(temp.length() - 1);
-			char[] ch = new char[nowWidth + 1];
-			Arrays.fill(ch, ' ');
-			temp.append(ch);
-			res.add(temp.toString());
-		}
-		
-		
-		return res;
     }
 
+    public List<String> fullJustify(String[] words, int maxWidth) {
+        int nowWidth = maxWidth;
+        List<String> ls = new ArrayList<>();                //å¯ä»¥ç”¨ä¸¤ä¸ªæŒ‡é’ˆleftå’Œrightä»£æ›¿lsçš„ä½œç”¨
+        List<String> res = new ArrayList<>();
+        for (int i = 0; i < words.length; ) {
+            if (words[i].length() <= nowWidth) {
+                nowWidth = nowWidth - words[i].length() - 1;
+                ls.add(words[i]);
+                i++;
+            } else {
+                StringBuilder temp = new StringBuilder();        //Stringæ”¹ç”¨StringBuilder
+                int size = ls.size();
+                nowWidth += size;
+                if (size == 1) {                                //å¦‚æœåªæœ‰ä¸€ä¸ªï¼Œå·¦å¯¹é½
+                    temp.append(ls.get(0));
+                    char[] ch = new char[nowWidth];
+                    Arrays.fill(ch, ' ');
+                    temp.append(ch);
+                    res.add(temp.toString());
+                } else {
+                    for (int j = 0; j < size - 1; j++) {
+                        temp.append(ls.get(j));
+                        char[] ch = new char[(nowWidth + size - 1 - j - 1) / (size - 1)];
+                        Arrays.fill(ch, ' ');
+                        temp.append(ch);
+                    }
+                    temp.append(ls.get(size - 1));
+                    res.add(temp.toString());
+                }
+                ls.clear();
+                nowWidth = maxWidth;
+            }
+        }
+        StringBuilder temp = new StringBuilder();               //å¯¹äºæœ€åä¸€è¡Œï¼Œä¹Ÿæ˜¯å·¦å¯¹é½
+        for (int j = 0; j < ls.size(); j++)
+            temp.append(ls.get(j) + " ");
+        temp.deleteCharAt(temp.length() - 1);
+        char[] ch = new char[nowWidth + 1];
+        Arrays.fill(ch, ' ');
+        temp.append(ch);
+        res.add(temp.toString());
+
+        return res;
+    }
 }

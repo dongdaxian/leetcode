@@ -25,4 +25,23 @@ public class Test {
         }
         return ret.next;
     }
+
+    public ListNode rotateRight2(ListNode head, int k) {
+        if (head == null)
+            return null;
+        ListNode ptr = head;
+        int count = 1;
+        while (ptr.next != null) {
+            count++;
+            ptr = ptr.next;
+        }
+        ptr.next = head;
+        k = k % count;
+        for (int i = 0; i < count - k; i++) {
+            head = head.next;
+            ptr = ptr.next;
+        }
+        ptr.next = null;
+        return head;
+    }
 }
