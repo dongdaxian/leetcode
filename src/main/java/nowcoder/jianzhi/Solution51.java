@@ -2,12 +2,13 @@ package nowcoder.jianzhi;
 
 import java.util.Arrays;
 
-public class Solution35 {
+public class Solution51 {
 
     public static void main(String[] args) {
-        System.out.print(new Solution35().InversePairs(new int[]{7, 5, 6, 4, 3}));
+        System.out.print(new Solution51().InversePairs(new int[]{7, 5, 6, 4, 3}));
     }
 
+    //暴力方法其实就是选择排序，此处是归并排序
     public int InversePairs(int[] array) {
         if (array.length < 2) {
             return 0;
