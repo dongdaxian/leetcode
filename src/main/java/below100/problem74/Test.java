@@ -1,29 +1,28 @@
 package below100.problem74;
 
 public class Test {
-//    可以分别对行列使用二分查找
-//    也可以只用一次二分查找，此时right = m * n
+
+    public static void main(String[] args) {
+        System.out.println(new Test().searchMatrix(new int[][]{{1,3,5,7},{10,11,16,20},{23,30,34,60}}, 3));
+    }
+
+//  涔熷彲浠ュ垎鍒琛屽垪浣跨敤浜屽垎鏌ユ壘
     public boolean searchMatrix(int[][] matrix, int target) {
-        if (matrix == null || matrix.length == 0 || matrix[0].length == 0 || target < matrix[0][0])
+        if (matrix.length == 0 || matrix[0].length == 0) {
             return false;
-        int[] record = null;
-        for (int i = 0; i < matrix.length; i++) {
-            if (i + 1 == matrix.length || target < matrix[i + 1][0]) {
-                record = matrix[i];
-                break;
-            }
         }
-        if (record == null)
-            return false;
-        int left = 0, right = record.length - 1;
+        int row = matrix.length;
+        int col = matrix[0].length;
+        int left = 0;
+        int right = row * col - 1;
         while (left <= right) {
-            int mid = (left + right) / 2;
-            if (record[mid] == target) {
+            int mid = left + (right - left) / 2;
+            if (matrix[mid / col][mid % col] == target) {
                 return true;
-            } else if (record[mid] < target) {
-                left = mid + 1;
-            } else {
+            } else if (matrix[mid / col][mid % col] > target) {
                 right = mid - 1;
+            } else {
+                left = mid + 1;
             }
         }
         return false;
