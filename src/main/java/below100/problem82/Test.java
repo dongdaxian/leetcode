@@ -19,4 +19,26 @@ public class Test {
         }
         return fn.next;
     }
+
+
+    public ListNode deleteDuplicates2(ListNode head) {
+        ListNode node = new ListNode(0);
+        node.next = head;
+        ListNode left = node;
+        ListNode mid = node.next;
+        ListNode right = node.next;
+        while (right != null) {
+            while (right != null && mid.val == right.val) {
+                right = right.next;
+            }
+            if (mid.next != right) {
+                left.next = right;
+            } else {
+                left = mid;
+            }
+            mid = right;
+        }
+
+        return node.next;
+    }
 }
