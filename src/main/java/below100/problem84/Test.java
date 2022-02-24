@@ -9,16 +9,16 @@ public class Test {
 
     }
 
-    public int largestRectangleArea1(int[] heights) {    //对应42题第二种解法
+    public int largestRectangleArea1(int[] heights) {
         if (heights == null || heights.length == 0) return 0;
         int n = heights.length;
         int[] fromLeft = new int[n];
         int[] fromRight = new int[n];
         fromLeft[0] = -1;
-        fromRight[n - 1] = n;
-        for (int i = 1, j = 0; i < n; i++) {
+        fromRight[n - 1] = n;                               //有点像42题第二种解法，但实质不同
+        for (int i = 1, j = 0; i < n; i++) {                //类似于28题kmp中计算模式串的算法，时间复杂度为O(n)
             j = i - 1;
-            while (j > -1 && heights[i] <= heights[j])    //仍是两层循环，此处用for(;;j--)复杂度不变
+            while (j > -1 && heights[i] <= heights[j])
                 j = fromLeft[j];
             fromLeft[i] = j;
         }
@@ -53,6 +53,7 @@ public class Test {
         return maxArea;
     }
 
+    //时间复杂度O(nlogn)
     public int largestRectangleArea3(int[] heights) {    //分治法
         return getMaxArea(heights, 0, heights.length - 1);
     }
