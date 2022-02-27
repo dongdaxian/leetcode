@@ -1,12 +1,12 @@
 package below100.problem86;
 
 public class Test {
-	public ListNode partition(ListNode head, int x) {
+    public ListNode partition(ListNode head, int x) {
         ListNode l1 = new ListNode(0);
         ListNode l2 = new ListNode(0);
         ListNode temp1 = l1, temp2 = l2;
-        for(ListNode temp = head; temp != null;) {
-            if(temp.val >= x) {
+        for (ListNode temp = head; temp != null; ) {
+            if (temp.val >= x) {
                 temp2.next = temp;
                 temp = temp.next;
                 temp2 = temp2.next;
@@ -21,4 +21,5 @@ public class Test {
         temp1.next = l2.next;
         return l1.next;
     }
+
 }

@@ -4,123 +4,124 @@ import java.util.Arrays;
 
 public class Test {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 //		char[][] matrix = new char[][]{
 //			{'1','0','1','0','0'},
 //			{'1','0','1','1','1'},
 //			{'1','1','1','1','1'},
 //			{'1','0','0','1','0'}};
 //		char[][] matrix = new char[][]{{'1'}};
-		
-		char[][] matrix = new char[][]{
-			{'0','1','1','0','1'},
-			{'1','1','0','1','0'},
-			{'0','1','1','1','0'},
-			{'1','1','1','1','0'},
-			{'1','1','1','1','1'},
-			{'0','0','0','0','0'}};
-			System.out.println(new Test().maximalRectangle2(matrix));
 
-	}
+        char[][] matrix = new char[][]{
+                {'0', '1', '1', '0', '1'},
+                {'1', '1', '0', '1', '0'},
+                {'0', '1', '1', '1', '0'},
+                {'1', '1', '1', '1', '0'},
+                {'1', '1', '1', '1', '1'},
+                {'0', '0', '0', '0', '0'}};
+        System.out.println(new Test().maximalRectangle2(matrix));
 
-	public int maximalRectangle1(char[][] matrix) {	
-		if(matrix == null || matrix.length == 0) return 0;
-		int m = matrix.length, n = matrix[0].length;
-		int[][] rowArea = new int[m][n];
-		for(int i = 0; i < m; i++)
-			if(matrix[i][0] == '1')
-				rowArea[i][0] = 1;
-		for(int i = 0; i < m; i++)
-			for(int j = 1; j < n; j++)
-				if(matrix[i][j] == '1')
-					rowArea[i][j] = rowArea[i][j - 1] + 1;
-		
-		int maxArea = 0;							//´ËÊ±ÒÑ¾­×ª»¯Îªn¸öÎÊÌâ84ÁË
-		for(int j = 0; j < n; j++) {				//Á¬ĞøÈıÁĞµÄ¸ß¶ÈÊÇ1 3 3£¬ÏÔÈ»×î´óÃæ»ıÊÇ6¶ø²»ÊÇ3£¬·ÅÔÚ84ÌâµÄÍ¼ÖĞ¾ÍºÜÈİÒ×Àí½â´íÔÚÄÄÀï(´Ë·½·¨´íÎó)
-			for(int i = 0, min = Integer.MAX_VALUE, len = 0; i < m; i++) {		
-				if(rowArea[i][j] > 0) {
-					min = Math.min(min, rowArea[i][j]);
-					len++;
-					maxArea = Math.max(maxArea, len * min);  
-				} else {
-					len = 0;
-					min = Integer.MAX_VALUE;
-				}
-			}
-		}
-		return maxArea;
-	}
+    }
 
-	public int maximalRectangle2(char[][] matrix) {	
-		if(matrix == null || matrix.length == 0) return 0;
-		int m = matrix.length, n = matrix[0].length;
-		int[][] colArea = new int[m][n];				//°´ÁĞ¼ÆËã£¬·½±ã´«Èëproblem84µÄº¯Êı
-		for(int i = 0; i < n; i++)
-			if(matrix[0][i] == '1')
-				colArea[0][i] = 1;
-		for(int j = 0; j < n; j++)
-			for(int i = 1; i < m; i++)
-				if(matrix[i][j] == '1')
-					colArea[i][j] = colArea[i - 1][j] + 1;
-		
-		int maxArea = 0;	
-		below100.problem84.Test ts = new below100.problem84.Test();
-		for(int i = 0; i < m; i++) 
-			maxArea = Math.max(maxArea, ts.largestRectangleArea1(colArea[i]));
-		
-		return maxArea;
-	}
-	
-	public int maximalRectangle3(char[][] matrix) {	//ÎÒÃÇ¸üĞÂÒ»´Î heights£¬¾ÍÀûÓÃÖ®Ç°µÄËã·¨ÇóÒ»±é leftLessMin[]ºÍ rightLessMin[]
-		    if (matrix.length == 0) return 0;		//ÆäÊµÇó leftLessMin[]ºÍrightLessMin[]¿ÉÒÔÀûÓÃÖ®Ç°µÄÀ´¸üĞÂ±¾´ÎµÄ
-		    
-		    int maxArea = 0;
-		    int cols = matrix[0].length;
-		    int[] leftLessMin = new int[cols];
-		    int[] rightLessMin = new int[cols];
-		    Arrays.fill(leftLessMin, -1); //³õÊ¼»¯Îª -1£¬Ò²¾ÍÊÇ×î×ó±ß
-		    Arrays.fill(rightLessMin, cols); //³õÊ¼»¯Îª cols£¬Ò²¾ÍÊÇ×îÓÒ±ß
-		    int[] heights = new int[cols];
-		    for (int row = 0; row < matrix.length; row++) {
-		        //¸üĞÂËùÓĞleftLessMin¡£Èç¹ûÒª°ÑÕâÖÖ¸üĞÂ·½Ê½Ó¦ÓÃµ½84Ìâ£¬ĞèÒªÒÔÖù×´Í¼ÖĞ×î¸ß¸ß¶È×÷Îªcols£¬Ò»²ãÒ»²ã¸üĞÂÏÂÀ´
-		        int boundary = -1; //¼ÇÂ¼ÉÏ´Î³öÏÖ 0 µÄÎ»ÖÃ
-		        for (int col = 0; col < cols; col++) {
-		            if (matrix[row][col] == '1') {
-		                //ºÍÉÏ´Î³öÏÖ 0 µÄÎ»ÖÃ±È½Ï
-		                leftLessMin[col] = Math.max(leftLessMin[col], boundary);
-		            } else {
-		                //µ±Ç°ÊÇ 0 ´ú±íµ±Ç°¸ß¶ÈÊÇ 0£¬ËùÒÔ³õÊ¼»¯Îª -1£¬·ÀÖ¹¶ÔÏÂ´ÎÑ­»·µÄÓ°Ïì
-		                leftLessMin[col] = -1; 
-		                boundary = col;
-		            }
-		        }
-		        boundary = cols;
-		        for (int col = cols - 1; col >= 0; col--) {
-		            if (matrix[row][col] == '1') {
-		                rightLessMin[col] = Math.min(rightLessMin[col], boundary);
-		            } else {
-		                rightLessMin[col] = cols;
-		                boundary = col;
-		            }
-		        }
+    public int maximalRectangle1(char[][] matrix) {
+        if (matrix == null || matrix.length == 0) return 0;
+        int m = matrix.length, n = matrix[0].length;
+        int[][] rowArea = new int[m][n];
+        for (int i = 0; i < m; i++)
+            if (matrix[i][0] == '1')
+                rowArea[i][0] = 1;
+        for (int i = 0; i < m; i++)
+            for (int j = 1; j < n; j++)
+                if (matrix[i][j] == '1')
+                    rowArea[i][j] = rowArea[i][j - 1] + 1;
 
-		        //¸üĞÂËùÓĞ¸ß¶È
-		        for (int col = 0; col < cols; col++) {
-		            if (matrix[row][col] == '1') {
-		                heights[col]++;
-		            } else {
-		                heights[col] = 0;
-		            }
-		        }
-		        for (int col = cols - 1; col >= 0; col--) {
-		            int area = (rightLessMin[col] - leftLessMin[col] - 1) * heights[col];
-		            maxArea = Math.max(area, maxArea);
-		        }
+        int maxArea = 0;                             //æ­¤æ—¶å·²ç»è½¬åŒ–ä¸ºnä¸ªé—®é¢˜84äº†
+		//è¿ç»­ä¸‰åˆ—çš„é«˜åº¦æ˜¯1 3 3ï¼Œæ˜¾ç„¶æœ€å¤§é¢ç§¯æ˜¯6è€Œä¸æ˜¯3ï¼Œæ”¾åœ¨84é¢˜çš„å›¾ä¸­å°±å¾ˆå®¹æ˜“ç†è§£é”™åœ¨å“ªé‡Œ(æ­¤æ–¹æ³•é”™è¯¯)
+        for (int j = 0; j < n; j++) {
+            for (int i = 0, min = Integer.MAX_VALUE, len = 0; i < m; i++) {
+                if (rowArea[i][j] > 0) {
+                    min = Math.min(min, rowArea[i][j]);
+                    len++;
+                    maxArea = Math.max(maxArea, len * min);
+                } else {
+                    len = 0;
+                    min = Integer.MAX_VALUE;
+                }
+            }
+        }
+        return maxArea;
+    }
 
-		    }
-		    return maxArea;
+    public int maximalRectangle2(char[][] matrix) {
+        if (matrix == null || matrix.length == 0) return 0;
+        int m = matrix.length, n = matrix[0].length;
+        int[][] colArea = new int[m][n];                //æŒ‰åˆ—è®¡ç®—ï¼Œæ–¹ä¾¿ä¼ å…¥problem84çš„å‡½æ•°
+        for (int i = 0; i < n; i++)
+            if (matrix[0][i] == '1')
+                colArea[0][i] = 1;
+        for (int j = 0; j < n; j++)
+            for (int i = 1; i < m; i++)
+                if (matrix[i][j] == '1')
+                    colArea[i][j] = colArea[i - 1][j] + 1;
 
-	}
-	
-	
+        int maxArea = 0;
+        below100.problem84.Test ts = new below100.problem84.Test();
+        for (int i = 0; i < m; i++)
+            maxArea = Math.max(maxArea, ts.largestRectangleArea1(colArea[i]));
+
+        return maxArea;
+    }
+
+    public int maximalRectangle3(char[][] matrix) {    //æˆ‘ä»¬æ›´æ–°ä¸€æ¬¡ heightsï¼Œå°±åˆ©ç”¨ä¹‹å‰çš„ç®—æ³•æ±‚ä¸€é leftLessMin[]å’Œ rightLessMin[]
+        if (matrix.length == 0) return 0;        //å…¶å®æ±‚ leftLessMin[]å’ŒrightLessMin[]å¯ä»¥åˆ©ç”¨ä¹‹å‰çš„æ¥æ›´æ–°æœ¬æ¬¡çš„
+
+        int maxArea = 0;
+        int cols = matrix[0].length;
+        int[] leftLessMin = new int[cols];
+        int[] rightLessMin = new int[cols];
+        Arrays.fill(leftLessMin, -1); //åˆå§‹åŒ–ä¸º -1ï¼Œä¹Ÿå°±æ˜¯æœ€å·¦è¾¹
+        Arrays.fill(rightLessMin, cols); //åˆå§‹åŒ–ä¸º colsï¼Œä¹Ÿå°±æ˜¯æœ€å³è¾¹
+        int[] heights = new int[cols];
+        for (int row = 0; row < matrix.length; row++) {
+            //æ›´æ–°æ‰€æœ‰leftLessMinã€‚å¦‚æœè¦æŠŠè¿™ç§æ›´æ–°æ–¹å¼åº”ç”¨åˆ°84é¢˜ï¼Œéœ€è¦ä»¥æŸ±çŠ¶å›¾ä¸­æœ€é«˜é«˜åº¦ä½œä¸ºcolsï¼Œä¸€å±‚ä¸€å±‚æ›´æ–°ä¸‹æ¥
+            int boundary = -1; //è®°å½•ä¸Šæ¬¡å‡ºç° 0 çš„ä½ç½®
+            for (int col = 0; col < cols; col++) {
+                if (matrix[row][col] == '1') {
+                    //å’Œä¸Šæ¬¡å‡ºç° 0 çš„ä½ç½®æ¯”è¾ƒ
+                    leftLessMin[col] = Math.max(leftLessMin[col], boundary);
+                } else {
+                    //å½“å‰æ˜¯ 0 ä»£è¡¨å½“å‰é«˜åº¦æ˜¯ 0ï¼Œæ‰€ä»¥åˆå§‹åŒ–ä¸º -1ï¼Œé˜²æ­¢å¯¹ä¸‹æ¬¡å¾ªç¯çš„å½±å“
+                    leftLessMin[col] = -1;
+                    boundary = col;
+                }
+            }
+            boundary = cols;
+            for (int col = cols - 1; col >= 0; col--) {
+                if (matrix[row][col] == '1') {
+                    rightLessMin[col] = Math.min(rightLessMin[col], boundary);
+                } else {
+                    rightLessMin[col] = cols;
+                    boundary = col;
+                }
+            }
+
+            //æ›´æ–°æ‰€æœ‰é«˜åº¦
+            for (int col = 0; col < cols; col++) {
+                if (matrix[row][col] == '1') {
+                    heights[col]++;
+                } else {
+                    heights[col] = 0;
+                }
+            }
+            for (int col = cols - 1; col >= 0; col--) {
+                int area = (rightLessMin[col] - leftLessMin[col] - 1) * heights[col];
+                maxArea = Math.max(area, maxArea);
+            }
+
+        }
+        return maxArea;
+
+    }
+
+
 }
