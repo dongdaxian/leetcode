@@ -80,7 +80,7 @@ public class Test {
         return res;
     }
 
-    //采用DFS/回溯的选择
+    //采用DFS/回溯的选择（与选择排序无关）
     public void backtrack_choose(int[] num, List<List<Integer>> res, List<Integer> ls) {
         if (ls.size() == num.length) {
             res.add(new ArrayList<>(ls));
@@ -94,7 +94,7 @@ public class Test {
         }
     }
 
-    //采用DFS/回溯的交换（对应冒泡排序）
+    //采用DFS/回溯的交换
     public void backtrack_swap(int[] num, List<List<Integer>> res, int pos) {
         if (pos == num.length) {
 //			res.add(new ArrayList<>(Arrays.asList(num)));   //int[]数组不支持Arrays.asList(),它认为num是列表中一个元素
