@@ -4,55 +4,54 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Test {
-	public static void main(String[] args) {
-		TreeNode root = new TreeNode(1);
-		root.left = new TreeNode(2);
-		root.right = new TreeNode(2);
-		root.left.left = new TreeNode(3);
-		root.left.right = new TreeNode(3);
-		root.left.left.left = new TreeNode(4);
-		root.left.left.left = new TreeNode(4);
-		System.out.println(new Test().isBalanced2(root));
-	}
-	
-	//¼ÇÒä»¯ËÑË÷µÄ×ÓÎÊÌâ»áÖØ¸´¼ÆËã¶à´Î£¬´Ë´¦Ö»ÊÇµİ¹é£¬Ö»ÊÇÏñ¼ÇÒä»¯ËÑË÷Ò»Ñù°Ñ½á¹û±£´æÁËÆğÀ´£¬Èç¹û²»±£´æ£¬¾ÍÊÇÏÂÃæµÄ·½·¨2
-	//±¾Ìâ·µ»ØµÄ¸ß¶ÈÓëÊÇ·ñÆ½ºâ¿ÉÒÔÍ³Ò»³ÉÒ»ÖÖ¸ñÊ½
-	public boolean isBalanced(TreeNode root) {
-		if(root == null) return true;
-		Map<TreeNode, Integer> map = new HashMap<>();
-		getHeight(root, map);
-		if(map.get(root) < 0) return false;
-		return true;
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(2);
+        root.left.left = new TreeNode(3);
+        root.left.right = new TreeNode(3);
+        root.left.left.left = new TreeNode(4);
+        root.left.left.left = new TreeNode(4);
+        System.out.println(new Test().isBalanced2(root));
     }
-	
-	public void getHeight(TreeNode root, Map<TreeNode, Integer> map) {
-		if(root.left != null) getHeight(root.left, map);
-		if(root.right != null) getHeight(root.right, map);
-		int leftHeight = map.getOrDefault(root.left, 0);
-		int rightHeight = map.getOrDefault(root.right, 0);
-		if(leftHeight == -1 || rightHeight == -1 || Math.abs(leftHeight - rightHeight) > 1)
-			map.put(root, -1);
-		else
-			map.put(root, Math.max(leftHeight, rightHeight) + 1);
-	}
-	
-	//µİ¹é2
-	public boolean isBalanced2(TreeNode root) {
+
+    //è®°å¿†åŒ–æœç´¢çš„å­é—®é¢˜ä¼šé‡å¤è®¡ç®—å¤šæ¬¡ï¼Œæ­¤å¤„æ˜¯é€’å½’ï¼Œåªæ˜¯åƒè®°å¿†åŒ–æœç´¢ä¸€æ ·æŠŠç»“æœä¿å­˜äº†èµ·æ¥
+    //æœ¬é¢˜è¿”å›çš„é«˜åº¦ä¸æ˜¯å¦å¹³è¡¡å¯ä»¥ç»Ÿä¸€æˆä¸€ç§æ ¼å¼
+    public boolean isBalanced(TreeNode root) {
+        if (root == null) return true;
+        Map<TreeNode, Integer> map = new HashMap<>();
+        getHeight(root, map);
+        if (map.get(root) < 0) return false;
+        return true;
+    }
+
+    public void getHeight(TreeNode root, Map<TreeNode, Integer> map) {
+        if (root.left != null) getHeight(root.left, map);
+        if (root.right != null) getHeight(root.right, map);
+        int leftHeight = map.getOrDefault(root.left, 0);
+        int rightHeight = map.getOrDefault(root.right, 0);
+        if (leftHeight == -1 || rightHeight == -1 || Math.abs(leftHeight - rightHeight) > 1)
+            map.put(root, -1);
+        else
+            map.put(root, Math.max(leftHeight, rightHeight) + 1);
+    }
+
+    //é€’å½’2
+    public boolean isBalanced2(TreeNode root) {
 //		if(height(root) >= 0)
 //			return true;
 //		return false;
-		return height(root) >= 0;
+        return height(root) >= 0;
     }
 
-	public int height(TreeNode root) {
-		if(root == null) return 0;
-		int leftHeight = height(root.left);
-		int rightHeight = height(root.right);
-		if(leftHeight == -1 || rightHeight == -1 || Math.abs(leftHeight - rightHeight) > 1) 
-			return -1;
-		return Math.max(leftHeight, rightHeight) + 1;
-	}
-	
-	
-	
+    public int height(TreeNode root) {
+        if (root == null) return 0;
+        int leftHeight = height(root.left);
+        int rightHeight = height(root.right);
+        if (leftHeight == -1 || rightHeight == -1 || Math.abs(leftHeight - rightHeight) > 1)
+            return -1;
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+
+
 }
