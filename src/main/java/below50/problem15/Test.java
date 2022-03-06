@@ -6,90 +6,81 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Test {
-	
-	public static void main(String[] args) {
-		int[] nums = {0, -1, -1, 0, 2};
-        List<List<Integer>> ls = new Test().threeSum2(nums);        
-        for(List<Integer> l:ls){
-        	for(Integer x:l){
-        		System.out.print(x);
-        		System.out.print(" ");
-        	}
-        	System.out.println();
+
+    public static void main(String[] args) {
+        int[] nums = {0, -1, -1, 0, 2};
+        List<List<Integer>> ls = new Test().threeSum2(nums);
+        for (List<Integer> l : ls) {
+            for (Integer x : l) {
+                System.out.print(x);
+                System.out.print(" ");
+            }
+            System.out.println();
         }
-	}
-	
-	public List<List<Integer>> threeSum1(int[] nums) {
-		Arrays.sort(nums);
-		List<List<Integer>> ls = new LinkedList<List<Integer>>();
-		int target;
-	    int beg, end;
-	    for(int i = 0; i < nums.length; i++)
-	    {
+    }
+
+    public List<List<Integer>> threeSum1(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> ls = new LinkedList<>();
+        int target;
+        int beg, end;
+        for (int i = 0; i < nums.length; i++) {
 //	        while(i > 0 && i < nums.length && nums[i] == nums[i - 1]) i++;  
-	    	if(i > 0 && nums[i] == nums[i - 1]) continue;					//½èÖúÍâ²ãÑ­»·²»Ç¶Ì×for/whileµÄ×ö·¨
-	        beg = i + 1;
-	        end = nums.length - 1;
-	        while(beg < end)
-	        {
-	        	target = 0 - nums[i];
-	            if(nums[beg] + nums[end] < target){
-	                beg++;
-	            } 
-	            else if(nums[beg] + nums[end] > target)
-	            {
-	                end--;
-	            } 
-	            else
-	            {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;                    //å€ŸåŠ©å¤–å±‚å¾ªç¯ä¸åµŒå¥—for/whileçš„åšæ³•
+            beg = i + 1;
+            end = nums.length - 1;
+            while (beg < end) {
+                target = 0 - nums[i];
+                if (nums[beg] + nums[end] < target) {
+                    beg++;
+                } else if (nums[beg] + nums[end] > target) {
+                    end--;
+                } else {
 //	                ls.add(Arrays.asList(nums[i], nums[beg], nums[end]));
 //	                beg++;
 //	                end--;
 //	                while(nums[beg] == nums[beg-1] && beg < end) beg++;        
 //	                while(nums[end] == nums[end+1] && beg < end) end--;
-	                
-	                if(beg > i + 1 && nums[beg] == nums[beg-1]) {              //Í¬ÉÏ
-	                	beg++;
-	                	continue;
-	                }
-	                if(end < nums.length - 1 && nums[end] == nums[end+1]) {
-	                	end--;
-	                	continue;
-	                }
-	                ls.add(Arrays.asList(nums[i], nums[beg], nums[end]));
-	                beg++;
-	                end--;
-	            }
-	        }
 
-	    }
-		return ls;
-	}
-	
-	
-	public List<List<Integer>> threeSum2(int[] nums) {	  //Ê¹ÓÃHashSetµÄ×ö·¨£¬Ïàµ±ÓÚ×öÁËn´Î2SumÎÊÌâ
-		Arrays.sort(nums);
-		List<List<Integer>> ls = new LinkedList<List<Integer>>();
-		HashSet<Integer> set = new HashSet<Integer>();
-		int target = 0;
-		for(int i = 0; i < nums.length; i++){
-			if(i > 0  && nums[i] == nums[i - 1]) continue;
-			target = 0 - nums[i];
-			for(int j = i + 1; j < nums.length; j++)
-			{
-				if(set.contains(nums[j])) 
-				{
-					ls.add(Arrays.asList(nums[i], target - nums[j], nums[j]));
-					while(j < nums.length - 1 && nums[j] == nums[j + 1]) j++;      // i Ò²¿ÉÒÔÏñÕâÑù·Åµ½ºóÃæÀ´´¦Àí
-				} 
-				else 
-					set.add(target - nums[j]);
-					
-			}
-			set.clear();
-		}
-		return ls;
-	}
-	
-	
+                    if (beg > i + 1 && nums[beg] == nums[beg - 1]) {              //åŒä¸Š
+                        beg++;
+                        continue;
+                    }
+                    if (end < nums.length - 1 && nums[end] == nums[end + 1]) {
+                        end--;
+                        continue;
+                    }
+                    ls.add(Arrays.asList(nums[i], nums[beg], nums[end]));
+                    beg++;
+                    end--;
+                }
+            }
+
+        }
+        return ls;
+    }
+
+
+    public List<List<Integer>> threeSum2(int[] nums) {      //ä½¿ç”¨HashSetçš„åšæ³•ï¼Œç›¸å½“äºåšäº†næ¬¡2Sumé—®é¢˜
+        Arrays.sort(nums);
+        List<List<Integer>> ls = new LinkedList<>();
+        HashSet<Integer> set = new HashSet<>();
+        int target = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            target = 0 - nums[i];
+            for (int j = i + 1; j < nums.length; j++) {
+                if (set.contains(nums[j])) {
+                    ls.add(Arrays.asList(nums[i], target - nums[j], nums[j]));
+                    while (j < nums.length - 1 && nums[j] == nums[j + 1]) j++;      // i ä¹Ÿå¯ä»¥åƒè¿™æ ·æ”¾åˆ°åé¢æ¥å¤„ç†
+                } else
+                    set.add(target - nums[j]);
+
+            }
+            set.clear();
+        }
+        return ls;
+    }
+
+
 }
