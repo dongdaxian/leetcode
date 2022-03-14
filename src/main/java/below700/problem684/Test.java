@@ -29,6 +29,6 @@ class UnionFind {
     }
 
     public void union(int i, int j) {
-        parent[find(i)] = parent[j];
+        parent[find(i)] = find(j);
     }
 }

@@ -24,7 +24,7 @@ public class Test {
 
         for (int i = 0; i < len; i++) {
             int ancestor = uf.find(i);
-//			if(map.containsKey(ancestor)) {
+//			if (map.containsKey(ancestor)) {
 //				map.get(ancestor).add(i);
 //			} else {
 //				List<Integer> temp = new ArrayList<>();
