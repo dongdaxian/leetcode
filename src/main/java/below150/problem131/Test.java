@@ -1,12 +1,16 @@
 package below150.problem131;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Test {
 
     public static void main(String[] args) {
-        List<List<String>> res = new Test().partition2("ababababababababababababcbabababababababababababa");
+        //List<List<String>> res = new Test().partition2("ababababababababababababcbabababababababababababa");
+        List<List<String>> res = new Test().partition2("aab");
         for (List<String> ls : res) {
             for (String temp : ls)
                 System.out.print(temp + " ");
@@ -65,24 +69,50 @@ public class Test {
                 }
             }
         }
-        partition2(ch, res, ls, 0, dp);
-        return res;
+        return computeRes2(ch, dp);
+        //computeRes(ch, res, ls, 0, dp);
+        //return res;
     }
 
     //此处是回溯，用bfs会比较麻烦
     //这个部分其实也可以用动态规划/记忆化搜索的思想，见132题
-    public void partition2(char[] ch, List<List<String>> res, List<String> ls, int beg, boolean[][] dp) {
+    public void computeRes(char[] ch, List<List<String>> res, List<String> ls, int beg, boolean[][] dp) {
         if (beg == ch.length)
             res.add(new ArrayList<>(ls));
         for (int i = beg; i < ch.length; i++) {
             if (dp[beg][i]) {
                 ls.add(String.valueOf(ch, beg, i - beg + 1));
-                partition2(ch, res, ls, i + 1, dp);
+                computeRes(ch, res, ls, i + 1, dp);
                 ls.remove(ls.size() - 1);
             }
         }
-
     }
 
+    public List<List<String>> computeRes2(char[] ch, boolean[][] dp) {
+        List<List<String>> res = new ArrayList<>();
+        Map<Integer, List<List<String>>> map = new HashMap<>();
+        map.put(ch.length, new ArrayList<>());
+        for (int i = ch.length - 1; i > -1; i--) {
+            for (int j = i; j < ch.length; j++) {
+                if (dp[i][j]) {
+                    List<List<String>> preLs = map.get(j + 1);
+                    List<List<String>> toAddLs = new ArrayList<>();
+                    String tmp = String.valueOf(ch, i, j - i + 1);
+                    if (preLs.isEmpty()) {
+                        toAddLs.add(Arrays.asList(tmp));
+                    } else {
+                        for (List<String> str : preLs) {
+                            List<String> toAdd = new ArrayList<>(str);
+                            toAdd.add(0, tmp);
+                            toAddLs.add(toAdd);
+                        }
+                    }
+                    map.putIfAbsent(i, new ArrayList<>());
+                    map.get(i).addAll(toAddLs);
+                }
+            }
+        }
 
+        return map.get(0);
+    }
 }
