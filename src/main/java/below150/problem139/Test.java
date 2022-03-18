@@ -4,49 +4,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Test {
-	
-	public static void main(String[] args) {
-		List<String> ls = new ArrayList<>();
-		ls.add("leet");
-		ls.add("code");
-		System.out.println(new Test().wordBreak("leetcode", ls));
-	}
-	
-	
-	public boolean wordBreak(String s, List<String> wordDict) {
-		boolean[][] dp = new boolean[s.length()][s.length()];
-		//ÔÚ´Ë×´Ì¬×ªÒÆ·½³ÌÏÂ£¬±ØĞëÓĞÁ½¸öforÑ­»·ÓÃÓÚÏŞÖÆ·¶Î§
-		for(int k = 1; k <= s.length(); k++) {
-			for(int i = 0, j = i + k; j <= s.length(); i++, j++) {
-				if(wordDict.contains(s.substring(i, j))) {
-					dp[i][j - 1] = true;
-				} else {
-					for(int temp = i + 1; temp < j; temp++) {
-						if(dp[i][temp - 1] && dp[temp][j - 1]) {
-							dp[i][j - 1] = true;
-							break;
-						}
-					}
-				}
-			}
-		}
-		return dp[0][s.length() - 1];
+
+    public static void main(String[] args) {
+        List<String> ls = new ArrayList<>();
+        ls.add("leet");
+        ls.add("code");
+        System.out.println(new Test().wordBreak("leetcode", ls));
     }
-	
-	//µ«dp¿ÉÒÔÖ»ÓÃÒ»Î¬£¬ÒòÎªÎÒÃÇÍêÈ«¿ÉÒÔÈÃdp[temp][j - 1]Ö»¶ÔÓ¦Ò»¸öµ¥´Ê
-	public boolean workBreak2(String s, List<String> wordDict) {
-		boolean[] dp = new boolean[s.length() + 1];
-		dp[0] = true;
-		for(int i = 1; i <= s.length(); i++) {
-			for(int j = 0; j < i; j++) {
-				if(dp[j] && wordDict.contains(s.substring(j, i))) {
-					dp[i] = true;
-					break;
-				}
-			}
-		}
-		
-		return dp[s.length()];
-	}
-	
+
+
+    public boolean wordBreak(String s, List<String> wordDict) {
+        boolean[][] dp = new boolean[s.length()][s.length()];
+        //åœ¨æ­¤çŠ¶æ€è½¬ç§»æ–¹ç¨‹ä¸‹ï¼Œå¿…é¡»æœ‰ä¸¤ä¸ªforå¾ªç¯ç”¨äºé™åˆ¶èŒƒå›´
+        for (int k = 1; k <= s.length(); k++) {
+            for (int i = 0, j = i + k; j <= s.length(); i++, j++) {
+                if (wordDict.contains(s.substring(i, j))) {
+                    dp[i][j - 1] = true;
+                } else {
+                    for (int temp = i + 1; temp < j; temp++) {
+                        if (dp[i][temp - 1] && dp[temp][j - 1]) {
+                            dp[i][j - 1] = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return dp[0][s.length() - 1];
+    }
+
+    //ä½†dpå¯ä»¥åªç”¨ä¸€ç»´ï¼Œå› ä¸ºæˆ‘ä»¬å®Œå…¨å¯ä»¥è®©dp[temp][j - 1]åªå¯¹åº”ä¸€ä¸ªå•è¯
+    public boolean workBreak2(String s, List<String> wordDict) {
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (dp[j] && wordDict.contains(s.substring(j, i))) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+
+        return dp[s.length()];
+    }
+
 }
