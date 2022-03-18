@@ -1,4 +1,4 @@
-package nowcoder.alibishi;
+package nowcoder.ali2021;
 
 import java.util.Scanner;
 import java.util.stream.IntStream;
