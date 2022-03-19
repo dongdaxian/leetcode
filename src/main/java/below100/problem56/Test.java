@@ -94,15 +94,14 @@ public class Test {
         return res;
     }
 
-    public int[][] merge3(int[][] intervals) {            //使用List一样可以存储一对数据，且更符合逻辑，因为这两个int并不是key和value的关系，
-        if (intervals.length < 2) return intervals;          //也更方便使用，一是往list中存数组引用，可以直接在外面改数组而不用再通过list把元素取出来，
-        Arrays.sort(intervals, new Comparator<int[]>() {  //二是通过List的toArray转成数组很方便
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return o1[0] - o2[0];
-            }
-        });
+    public int[][] merge3(int[][] intervals) {
+        if (intervals.length < 2) return intervals;
+        /*
+        * 使用List一样可以存储一对数据，且更符合逻辑，因为这两个int并不是key和value的关系，也更方便使用，一是往list中存数组引用，
+        * 可以直接在外面改数组而不用再通过list把元素取出来;二是通过List的toArray转成数组很方便
+        * */
 
+        Arrays.sort(intervals, (o1, o2) -> o1[0] == o2[0] ? o1[1] - o2[1] : o1[0] - o2[0]);
 
         List<int[]> ls = new ArrayList<>();
         int[] pre = intervals[0];
@@ -111,8 +110,7 @@ public class Test {
         for (int i = 1; i < intervals.length; i++) {
             cur = intervals[i];
             if (cur[0] <= pre[1]) {
-                if (cur[1] > pre[1])
-                    pre[1] = cur[1];
+                pre[1] = Math.max(cur[1], pre[1]);
             } else {
                 pre = cur;
                 ls.add(cur);
