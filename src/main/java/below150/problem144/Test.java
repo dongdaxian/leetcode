@@ -27,6 +27,7 @@ public class Test {
         return res;
     }
 
+    //只有前序遍历可以使用这种方法
     public List<Integer> preorderTraversal2(TreeNode root) {
         List<Integer> res = new ArrayList<>();
         Stack<TreeNode> st = new Stack<>();
