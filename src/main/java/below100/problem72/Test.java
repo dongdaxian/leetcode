@@ -20,12 +20,14 @@ public class Test {
         for (int i = 0; i <= word1.length(); i++) {
             dis[i][0] = i;
         }
+        //当word1或word2增加一个字符，新结果一定大于等于原结果
+        //dp[i-1][j]到dp[i][j]对应word1增加字符，所以加1，如果结果小于dp[i-1][j]+1，说明不是增加操作
         for (int i = 1; i <= word1.length(); i++) {
             for (int j = 1; j <= word2.length(); j++) {
                 if (word1.charAt(i - 1) == word2.charAt(j - 1))
-                    dis[i][j] = dis[i - 1][j - 1];
+                    dis[i][j] = Math.min(dis[i - 1][j - 1], Math.min(dis[i][j - 1] + 1, dis[i - 1][j] + 1));
                 else
-                    dis[i][j] = Math.min(dis[i - 1][j - 1], Math.min(dis[i][j - 1], dis[i - 1][j])) + 1;  //replace、insert、delete
+                    dis[i][j] = Math.min(dis[i - 1][j - 1], Math.min(dis[i][j - 1], dis[i - 1][j])) + 1;
             }
         }
         return dis[word1.length()][word2.length()];
