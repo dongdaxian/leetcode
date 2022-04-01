@@ -64,12 +64,12 @@ public class Solution4 {
                 }
             }
             for (int j = 0; j < divisor; j++) {
-                if (valueDp[i][j] == valueDp[i - 1][j]) {
-                    timesDp[i][j] = (timesDp[i][j] + timesDp[i - 1][j]) % 998244353;
-                }
                 int index = ((j + ball[i - 1]) % divisor + divisor) % divisor;
                 if (valueDp[i][index] == valueDp[i - 1][j] + ball[i - 1]) {
                     timesDp[i][index] = (timesDp[i][index] + timesDp[i - 1][j]) % 998244353;
+                }
+                if (valueDp[i][j] == valueDp[i - 1][j]) {
+                    timesDp[i][j] = (timesDp[i][j] + timesDp[i - 1][j]) % 998244353;
                 }
             }
         }
