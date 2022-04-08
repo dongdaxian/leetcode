@@ -3,76 +3,75 @@ package below200.problem164;
 import java.util.Arrays;
 
 public class Test {
-	public static void main(String[] args) {
-		
-	}
-	
-	
-//	»ùÊıÅÅĞò
-	public int maximumGap(int[] nums) {
-		int n = nums.length;
-		int[] buf = new int[n];
-//		Èç¹ûÊÇintĞÍ£¬¿ÉÄÜ»áÔÚwhileÖĞÒ»Ö±Ñ­»·ÏÂÈ¥
-		long exp = 1;
-		int maxNum = Integer.MIN_VALUE;
-		for(int temp: nums)
-			maxNum = Integer.max(maxNum, temp);
-//		ÓÃµÄ²»ÊÇ±ê×¼ÏÈ·ÖÅäÔÙÊÕ¼¯µÄ·½·¨¡£Ö±½ÓÈ·¶¨ÁËÔªËØÏÂÒ»´ÎÊÕ¼¯ºóµÄÎ»ÖÃ£¬Ïàµ±ÓÚÊ¡È¥ÁË·ÖÅäÕâÒ»²½
-		while(exp < maxNum) {
-			int[] cnt = new int[10];
-			for(int i = 0; i < n; i++) {
-				int digit = (nums[i] / (int)exp) % 10;
-				cnt[digit]++;
-			}
-			for(int i = 1; i < 10; i++)
-				cnt[i] += cnt[i - 1];
-			for(int i = n - 1; i > -1; i--) {
-				int digit = (nums[i] / (int)exp) % 10;
-				buf[cnt[digit] - 1] = nums[i];
-				cnt[digit]--;
-			}
-			exp *= 10;
-			System.arraycopy(buf, 0, nums, 0, n);
-		}
-//		»ùÊıÅÅĞò½áÊø
-		int maxGap = 0;
-		for(int i = 1; i < n; i++) {
-			maxGap = Integer.max(maxGap, nums[i] - nums[i - 1]);
-		}
-		return maxGap;
+    public static void main(String[] args) {
+
     }
 
-//	Í°ÅÅĞò
-	public int maximumGap2(int[] nums) {
-		int n = nums.length;
-		if(n < 2)
-			return 0;
-		int maxVal = Arrays.stream(nums).max().getAsInt();
-		int minVal = Arrays.stream(nums).min().getAsInt();
-		int interval = Integer.max(1, (maxVal - minVal) / (n - 1));
-		int bucketSize = (maxVal - minVal) / interval + 1;	//²»Ò»¶¨µÈÓÚn
-//		Ö»ÒªmaxVal!=minVal£¬ÄÇÃ´bucketSize>=2£¬ÄÇÃ´×îĞ¡Öµ×î´óÖµ¿Ï¶¨»á±»·ÅÈë²»Í¬µÄÁ½¸öÍ°ÖĞ£¬¼´Ò»¶¨ÓĞ½á¹û
-		int[][] bucket = new int[bucketSize][2];
-		for(int[] temp: bucket) {
-			temp[0] = Integer.MAX_VALUE;
-			temp[1] = -1;
-		}
-		for(int i = 0; i < n; i++) {
-			int ind = (nums[i] - minVal) / interval;
-			bucket[ind][0] = Integer.min(bucket[ind][0], nums[i]);
-			bucket[ind][1] = Integer.max(bucket[ind][1], nums[i]);
-		}
-		int ret = 0;
-		int pre = -1;
-		for(int i = 0; i < bucketSize; i++) {
-			if(bucket[i][1] == -1)
-				continue;
-			if(pre != -1) {
-				ret = Integer.max(ret, bucket[i][0] - bucket[pre][1]);
-			}
-			pre = i;
-		}
-		return ret;
-	}
+
+    //	åŸºæ•°æ’åº
+    public int maximumGap(int[] nums) {
+        int n = nums.length;
+        int[] buf = new int[n];
+//		å¦‚æœæ˜¯intå‹ï¼Œå¯èƒ½ä¼šåœ¨whileä¸­ä¸€ç›´å¾ªç¯ä¸‹å»
+        long exp = 1;
+        int maxNum = Integer.MIN_VALUE;
+        for (int temp : nums)
+            maxNum = Integer.max(maxNum, temp);
+//		ç”¨çš„ä¸æ˜¯æ ‡å‡†å…ˆåˆ†é…å†æ”¶é›†çš„æ–¹æ³•ã€‚ç›´æ¥ç¡®å®šäº†å…ƒç´ ä¸‹ä¸€æ¬¡æ”¶é›†åçš„ä½ç½®ï¼Œç›¸å½“äºçœå»äº†åˆ†é…è¿™ä¸€æ­¥
+        while (exp < maxNum) {
+            int[] cnt = new int[10];
+            for (int i = 0; i < n; i++) {
+                int digit = (nums[i] / (int) exp) % 10;
+                cnt[digit]++;
+            }
+            for (int i = 1; i < 10; i++)
+                cnt[i] += cnt[i - 1];
+            for (int i = n - 1; i > -1; i--) {
+                int digit = (nums[i] / (int) exp) % 10;
+                buf[cnt[digit] - 1] = nums[i];
+                cnt[digit]--;
+            }
+            exp *= 10;
+            System.arraycopy(buf, 0, nums, 0, n);
+        }
+//		åŸºæ•°æ’åºç»“æŸ
+        int maxGap = 0;
+        for (int i = 1; i < n; i++) {
+            maxGap = Integer.max(maxGap, nums[i] - nums[i - 1]);
+        }
+        return maxGap;
+    }
+
+    //	æ¡¶æ’åº
+    public int maximumGap2(int[] nums) {
+        int n = nums.length;
+        if (n < 2)
+            return 0;
+        int maxVal = Arrays.stream(nums).max().getAsInt();
+        int minVal = Arrays.stream(nums).min().getAsInt();
+        int interval = Integer.max(1, (maxVal - minVal) / (n - 1));
+        int bucketSize = (maxVal - minVal) / interval + 1;    //ä¸ä¸€å®šç­‰äºn
+//		åªè¦maxVal!=minValï¼Œé‚£ä¹ˆbucketSize>=2ï¼Œé‚£ä¹ˆæœ€å°å€¼æœ€å¤§å€¼è‚¯å®šä¼šè¢«æ”¾å…¥ä¸åŒçš„ä¸¤ä¸ªæ¡¶ä¸­ï¼Œå³ä¸€å®šæœ‰ç»“æœ
+        int[][] bucket = new int[bucketSize][2];
+        for (int[] temp : bucket) {
+            Arrays.fill(temp, -1);
+        }
+        for (int i = 0; i < n; i++) {
+            int index = (nums[i] - minVal) / interval;
+            bucket[index][0] = Integer.min(bucket[index][0], nums[i]);
+            bucket[index][1] = Integer.max(bucket[index][1], nums[i]);
+        }
+        int ret = 0;
+        int pre = -1;
+        for (int i = 0; i < bucketSize; i++) {
+            if (bucket[i][0] == -1)
+                continue;
+            if (pre != -1) {
+                ret = Integer.max(ret, bucket[i][0] - bucket[pre][1]);
+            }
+            pre = i;
+        }
+        return ret;
+    }
 
 }

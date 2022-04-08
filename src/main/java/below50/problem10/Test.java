@@ -14,8 +14,8 @@ public class Test {
 
         dp[0][0] = true;
         for (int j = 0; j < p.length(); j++) {
-            if (p.charAt(j) == '*' && dp[0][j - 1])
-                dp[0][j + 1] = true;
+            if (p.charAt(j) == '*')
+                dp[0][j + 1] = dp[0][j - 1];
         }
 
         for (int i = 0; i < s.length(); i++) {
@@ -26,11 +26,13 @@ public class Test {
                     if (p.charAt(j - 1) != s.charAt(i) && p.charAt(j - 1) != '.') {
                         dp[i + 1][j + 1] = dp[i + 1][j - 1];                                      //*表示前元素有0个
                     } else {
-                        dp[i + 1][j + 1] = (dp[i + 1][j - 1] || dp[i + 1][j] || dp[i][j + 1]);    //*表示前元素有0个/前元素有1个/前元素再加1个
+                        //冗余
+                        //dp[i + 1][j + 1] = (dp[i + 1][j - 1] || dp[i + 1][j] || dp[i][j + 1]);    //*表示前元素有0个/前元素有1个/前元素再加1个
+                        dp[i + 1][j + 1] = (dp[i + 1][j - 1] || dp[i][j + 1]);    //*表示前元素有0个/前元素再加1个
                     }
 
                     //法二
-                    //dp[i + 1][j + 1] = dp[i + 1][j] || dp[i + 1][j - 1];
+                    //dp[i + 1][j + 1] = dp[i + 1][j - 1];
                     //if (s.charAt(i) == p.charAt(j - 1) || p.charAt(j - 1) == '.') {
                     //    dp[i + 1][j + 1] = dp[i + 1][j + 1] || dp[i][j + 1];
                     //}
