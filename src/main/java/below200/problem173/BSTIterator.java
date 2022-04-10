@@ -9,8 +9,8 @@ public class BSTIterator {
     public BSTIterator(TreeNode root) {
         Deque<TreeNode> stack = new LinkedList<>();
         List<Integer> ls = new ArrayList<>();
-        while(root != null || !stack.isEmpty()) {
-            if(root != null) {
+        while (root != null || !stack.isEmpty()) {
+            if (root != null) {
                 stack.push(root);
                 root = root.left;
             } else {

@@ -10,8 +10,8 @@ public class Test {
         int num = 1;
         int res = 0;
         int i = 0;
-        while(i++ < 32) {
-            if((num & n) != 0)
+        while (i++ < 32) {
+            if ((num & n) != 0)
                 res++;
             num = num << 1;
         }
