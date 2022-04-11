@@ -3,50 +3,51 @@ package below250.problem204;
 import java.util.Arrays;
 
 public class Test {
-	public static void main(String[] args) {
-		System.out.println((int)Math.sqrt(8));
-	}
-	
-	public int countPrimes(int n) {
+    public static void main(String[] args) {
+        System.out.println((int) Math.sqrt(8));
+    }
+
+    public int countPrimes(int n) {
         int res = 0;
-        for(int i = 2; i < n; i++){
-            if(isPrime(i))
+        for (int i = 2; i < n; i++) {
+            if (isPrime(i))
                 res++;
         }
         return res;
     }
-    public boolean isPrime(int num){
+
+    public boolean isPrime(int num) {
 //        for(int i = 2; i <= (int)Math.sqrt(num); i++){
-    	
-    	//ÕâÑù²ÅÄÜ¹ý
-    	int len = (int)Math.sqrt(num);
-        for(int i = 2; i <= len; i++){
-            if(num % i == 0)
+
+        //è¿™æ ·æ‰èƒ½è¿‡
+        int len = (int) Math.sqrt(num);
+        for (int i = 2; i <= len; i++) {
+            if (num % i == 0)
                 return false;
         }
         return true;
     }
-    
-    
-    //°£Ê½É¸   ºÏÊýÒ»¶¨ÊÇÒ»¸öÖÊÊýµÄ±¶Êý
+
+
+    //åŸƒå¼ç­›   åˆæ•°ä¸€å®šæ˜¯ä¸€ä¸ªè´¨æ•°çš„å€æ•°
     public int countPrimes2(int n) {
-    	int[] isPrime = new int[n];
-    	//1´ú±íÊÇÖÊÊý
-    	Arrays.fill(isPrime, 1);
-    	int res = 0;
-    	for(int i = 2; i < n; i++) {
-    		if(isPrime[i] == 1) {
-    			res++;
-    			//ÅÐ¶ÏÊ±×ªlong·ÀÖ¹Òç³ö£¬ºóÃæ²»ÐèÒª
-    			if((long)i * i < n) {
-    				//´Ói * i¿ªÊ¼±ê×¢£¬ÒòÎª2i¡¢3i¡¢(i - 1)*iÖ®Ç°ÒÑ¾­±»±ê×¢¹ýÁË
-    				for(int j = i * i; j < n; j += i) {
-    					isPrime[j] = 0;
-    				}
-    			}
-    		}
-    	}
-    	return res;
+        boolean[] isPrime = new boolean[n];
+        //1ä»£è¡¨æ˜¯è´¨æ•°
+        Arrays.fill(isPrime, true);
+        int res = 0;
+        for (int i = 2; i < n; i++) {
+            if (isPrime[i]) {
+                res++;
+                //åˆ¤æ–­æ—¶è½¬longé˜²æ­¢æº¢å‡ºï¼ŒåŽé¢ä¸éœ€è¦
+                if ((long) i * i < n) {
+                    //ä»Ži * iå¼€å§‹æ ‡æ³¨ï¼Œå› ä¸º2iã€3iã€(i - 1) * iä¹‹å‰å·²ç»è¢«æ ‡æ³¨è¿‡äº†
+                    for (int j = i * i; j < n; j += i) {
+                        isPrime[j] = false;
+                    }
+                }
+            }
+        }
+        return res;
     }
-	
+
 }
