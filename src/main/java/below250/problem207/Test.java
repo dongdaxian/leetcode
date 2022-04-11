@@ -66,6 +66,7 @@ public class Test {
         return true;
     }
 
+    //检查有无环
     public boolean dfs(List<List<Integer>> adjacency, int[] flags, int i) {
         if (flags[i] == 1) return false;
         if (flags[i] == -1) return true;

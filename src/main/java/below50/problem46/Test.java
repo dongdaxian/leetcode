@@ -1,9 +1,12 @@
 package below50.problem46;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Test {
 
@@ -98,12 +101,10 @@ public class Test {
     public void backtrack_swap(int[] num, List<List<Integer>> res, int pos) {
         if (pos == num.length) {
 //			res.add(new ArrayList<>(Arrays.asList(num)));   //int[]数组不支持Arrays.asList(),它认为num是列表中一个元素
-            List<Integer> ls = new ArrayList<>();
-            for (int i : num)
-                ls.add(i);
-            res.add(ls);
+            res.add(Arrays.stream(num).boxed().collect(Collectors.toList()));
             return;
         }
+        //for (int i = pos; i > -1; i--) {    //也行
         for (int i = pos; i < num.length; i++) {
             int temp = num[i];
             num[i] = num[pos];
@@ -114,6 +115,5 @@ public class Test {
             num[pos] = temp;
         }
     }
-
 
 }
