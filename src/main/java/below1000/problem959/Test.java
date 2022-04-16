@@ -34,7 +34,7 @@ class UnionFind {
     public UnionFind(int n) {
         int len = n * n;
         parent = IntStream.range(0, len * 4).toArray();
-//        采用正向思考的方式也行
+//        閲囩敤姝ｅ悜鎬濊�冪殑鏂瑰紡涔熻
         for(int i = 0; i < len; i++) {
             int x = i / n;
             int y = i % n;

@@ -11,26 +11,27 @@ public class Test {
 
 
     }
+
     public int calculate(char[] ch, int n) {
         int res = 0;
-        while(ptr < n) {
+        while (ptr < n) {
             int flag = 1;
-            if(ch[ptr] == '-') {
+            if (ch[ptr] == '-') {
                 flag = -1;
                 ptr++;
-            } else if(ch[ptr] == '+') {
+            } else if (ch[ptr] == '+') {
                 flag = 1;
                 ptr++;
-            } else if(ch[ptr] == ')') {
+            } else if (ch[ptr] == ')') {
                 ptr++;
                 return res;
             }
-            if(ch[ptr] == '(') {
+            if (ch[ptr] == '(') {
                 ptr++;
                 res += flag * calculate(ch, n);
             } else {
                 int tmp = 0;
-                while(ptr < n && ch[ptr] <= '9' && ch[ptr] >= '0') {
+                while (ptr < n && ch[ptr] <= '9' && ch[ptr] >= '0') {
                     tmp = tmp * 10 + ch[ptr] - '0';
                     ptr++;
                 }
@@ -43,33 +44,33 @@ public class Test {
 
     public int calculate(String s) {
         StringBuilder sb = new StringBuilder();
-        for(char tmp: s.toCharArray()) {
-            if(tmp != ' ')
+        for (char tmp : s.toCharArray()) {
+            if (tmp != ' ')
                 sb.append(tmp);
         }
         return calculate(sb.toString().toCharArray(), sb.length());
     }
 
-//    �൱��ֱ�Ӳ�������
     public int calculate2(String s) {
-        Deque<Integer> ops = new LinkedList<Integer>();
-        ops.push(1);
-        int sign = 1;
+        //对于以括号划分的表达式，ops存储它们起始符号
+        Deque<Boolean> ops = new LinkedList<>();
+        ops.push(true);
 
         int ret = 0;
+        boolean flag = true;
         int n = s.length();
         int i = 0;
         while (i < n) {
             if (s.charAt(i) == ' ') {
                 i++;
             } else if (s.charAt(i) == '+') {
-                sign = ops.peek();
+                flag = ops.peek();
                 i++;
             } else if (s.charAt(i) == '-') {
-                sign = -ops.peek();
+                flag = !ops.peek();
                 i++;
             } else if (s.charAt(i) == '(') {
-                ops.push(sign);
+                ops.push(flag);
                 i++;
             } else if (s.charAt(i) == ')') {
                 ops.pop();
@@ -80,7 +81,7 @@ public class Test {
                     num = num * 10 + s.charAt(i) - '0';
                     i++;
                 }
-                ret += sign * num;
+                ret += (flag ? 1 : -1) * num;
             }
         }
         return ret;
