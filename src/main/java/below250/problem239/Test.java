@@ -9,35 +9,37 @@ import java.util.PriorityQueue;
 import java.util.TreeMap;
 
 public class Test {
-	public static void main(String[] args ) {
-		
+    public static void main(String[] args) {
+
 //		TreeMap<Integer, Integer> map = new TreeMap<>((Integer o1, Integer o2) -> {return o2 - o1;});
 //		map.put(1, 2);
 //		map.put(2, 2);
 //		System.out.println(map.firstKey());
-		List<int[]> ls = new ArrayList<>();
-		ls.add(new int[1]);
-		ls.add(new int[2]);
-		ls.add(new int[3]);
-		int[][] temp = ls.toArray(new int[1][]);
-		System.out.println(temp.length);
-	}
-	
-	//O(nlogk)
-	public int[] maxSlidingWindow(int[] nums, int k) {
-        TreeMap<Integer, Integer> map = new TreeMap<>((Integer o1, Integer o2) -> {return o2 - o1;});
+        List<int[]> ls = new ArrayList<>();
+        ls.add(new int[1]);
+        ls.add(new int[2]);
+        ls.add(new int[3]);
+        int[][] temp = ls.toArray(new int[1][]);
+        System.out.println(temp.length);
+    }
+
+    //O(nlogk)
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        TreeMap<Integer, Integer> map = new TreeMap<>((Integer o1, Integer o2) -> {
+            return o2 - o1;
+        });
         int len = nums.length;
         int[] res = new int[len - k + 1];
         int ptr = 0;
-        for(int i = 0; i < k - 1; i++) {
+        for (int i = 0; i < k - 1; i++) {
             map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
         }
-        for(int i = k - 1; i < len; i++) {
+        for (int i = k - 1; i < len; i++) {
             map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
-            //ÆäÊµÕâÀïptr¾ÍµÈÓÚi - k + 1£¬ËùÒÔ¿ÉÒÔÊ¡µô
+            //å…¶å®è¿™é‡Œptrå°±ç­‰äºi - k + 1ï¼Œæ‰€ä»¥å¯ä»¥çœæ‰
             res[ptr++] = map.firstKey();
             int pre = i - k + 1;
-            if(map.get(nums[pre]) > 1) {
+            if (map.get(nums[pre]) > 1) {
                 map.put(nums[pre], map.get(nums[pre]) - 1);
             } else {
                 map.remove(nums[pre]);
@@ -45,9 +47,9 @@ public class Test {
         }
         return res;
     }
-	
-	//ÔÚ×î»µÇé¿öÏÂ£¬¶ÓÁĞ°üº¬È«²¿ÔªËØ£¬ËùÒÔÊ±¼ä¸´ÔÓ¶ÈÊÇO(log(n!))£¬µ«Õâ²»ÊÇ³£¼ûµÄÊ±¼ä¸´ÔÓ¶È£¬ËùÒÔ½«ËüÔÙÀ©´ó£¬±íÊ¾³ÉO(nlogn)
-	public int[] maxSlidingWindow2(int[] nums, int k) {
+
+    //åœ¨æœ€åæƒ…å†µä¸‹ï¼Œé˜Ÿåˆ—åŒ…å«å…¨éƒ¨å…ƒç´ ï¼Œæ‰€ä»¥æ—¶é—´å¤æ‚åº¦æ˜¯O(log(n!))ï¼Œä½†è¿™ä¸æ˜¯å¸¸è§çš„æ—¶é—´å¤æ‚åº¦ï¼Œæ‰€ä»¥å°†å®ƒå†æ‰©å¤§ï¼Œè¡¨ç¤ºæˆO(nlogn)
+    public int[] maxSlidingWindow2(int[] nums, int k) {
         int n = nums.length;
         PriorityQueue<int[]> pq = new PriorityQueue<int[]>(new Comparator<int[]>() {
             public int compare(int[] pair1, int[] pair2) {
@@ -68,9 +70,9 @@ public class Test {
         }
         return ans;
     }
-	
-	//O(n)£¬¹¹ÔìµÄ¶ÓÁĞÖµµİ¼õ¡¢ÏÂ±êµİÔö
-	public int[] maxSlidingWindow3(int[] nums, int k) {
+
+    //O(n)ï¼Œæ„é€ çš„é˜Ÿåˆ—å€¼é€’å‡ã€ä¸‹æ ‡é€’å¢
+    public int[] maxSlidingWindow3(int[] nums, int k) {
         int n = nums.length;
         Deque<Integer> deque = new LinkedList<Integer>();
         for (int i = 0; i < k; ++i) {
@@ -83,7 +85,7 @@ public class Test {
         int[] ans = new int[n - k + 1];
         ans[0] = nums[deque.peekFirst()];
         for (int i = k; i < n; ++i) {
-//            ÒªÊ¹¶ÓÁĞÖĞÊı×ÖÓĞĞò£¬Èë¶ÓºÍ±È½Ï´óĞ¡¿Ï¶¨ÊÇÔÚÍ¬Ò»¶Ë
+//            è¦ä½¿é˜Ÿåˆ—ä¸­æ•°å­—æœ‰åºï¼Œå…¥é˜Ÿå’Œæ¯”è¾ƒå¤§å°è‚¯å®šæ˜¯åœ¨åŒä¸€ç«¯
             while (!deque.isEmpty() && nums[i] >= nums[deque.peekLast()]) {
                 deque.pollLast();
             }
@@ -95,5 +97,5 @@ public class Test {
         }
         return ans;
     }
-	
+
 }
