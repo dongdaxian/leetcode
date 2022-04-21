@@ -10,17 +10,10 @@ import java.util.TreeMap;
 
 public class Test {
     public static void main(String[] args) {
-
-//		TreeMap<Integer, Integer> map = new TreeMap<>((Integer o1, Integer o2) -> {return o2 - o1;});
-//		map.put(1, 2);
-//		map.put(2, 2);
-//		System.out.println(map.firstKey());
-        List<int[]> ls = new ArrayList<>();
-        ls.add(new int[1]);
-        ls.add(new int[2]);
-        ls.add(new int[3]);
-        int[][] temp = ls.toArray(new int[1][]);
-        System.out.println(temp.length);
+        int[] res = new Test().maxSlidingWindow4(new int[]{1,3,-1,-3,5,3,6,7}, 3);
+        for (int tmp : res) {
+            System.out.println(tmp);
+        }
     }
 
     //O(nlogk)
@@ -98,4 +91,36 @@ public class Test {
         return ans;
     }
 
+
+    public int[] maxSlidingWindow4(int[] nums, int k) {
+        List<Integer> ls = new ArrayList<>();
+        int[] res = new int[nums.length - k + 1];
+        for (int i = 0; i < k - 1; i++) {
+            ls.add(nums[i]);
+        }
+        ls.sort(Comparator.comparingInt(a -> a));
+        for (int i = k - 1; i < nums.length; i++) {
+            int index = binarySearch(ls, nums[i]);
+            ls.add(index, nums[i]);
+            res[i - k + 1] = ls.get(k - 1);
+            index = binarySearch(ls, nums[i - k + 1]);
+            ls.remove(index);
+        }
+        return res;
+    }
+
+    public int binarySearch(List<Integer> ls, int target) {
+        int left = 0, right = ls.size() - 1;
+        while (left <= right) {
+            int mid = (right - left) / 2 + left;
+            if (ls.get(mid) == target) {
+                return mid;
+            } else if (ls.get(mid) < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return left;
+    }
 }

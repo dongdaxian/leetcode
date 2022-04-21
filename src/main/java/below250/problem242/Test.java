@@ -5,25 +5,25 @@ import java.util.Map;
 
 public class Test {
 
-	public boolean isAnagram(String s, String t) {
+    public boolean isAnagram(String s, String t) {
         Map<Character, Integer> map = new HashMap<>();
-        for(int i = 0; i < s.length(); i++){
+        for (int i = 0; i < s.length(); i++) {
             map.put(s.charAt(i), map.getOrDefault(s.charAt(i), 0) + 1);
         }
-        for(int i = 0; i < t.length(); i++){
-            if(!map.containsKey(t.charAt(i)))
+        for (int i = 0; i < t.length(); i++) {
+            if (!map.containsKey(t.charAt(i)))
                 return false;
             map.put(t.charAt(i), map.get(t.charAt(i)) - 1);
         }
-        for(Integer temp: map.values()){
-            if(temp != 0)
+        for (Integer temp : map.values()) {
+            if (temp != 0)
                 return false;
         }
         return true;
     }
-	
-	
-	public boolean isAnagram2(String s, String t) {
+
+
+    public boolean isAnagram2(String s, String t) {
         if (s.length() != t.length()) {
             return false;
         }
@@ -32,7 +32,7 @@ public class Test {
             char ch = s.charAt(i);
             table.put(ch, table.getOrDefault(ch, 0) + 1);
         }
-        //因为比较了长度，所以可以在此处优化
+        //鍥犱负姣旇緝浜嗛暱搴︼紝鎵�浠ュ彲浠ュ湪姝ゅ浼樺寲
         for (int i = 0; i < t.length(); i++) {
             char ch = t.charAt(i);
             table.put(ch, table.getOrDefault(ch, 0) - 1);
