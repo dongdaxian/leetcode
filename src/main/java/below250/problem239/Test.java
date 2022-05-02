@@ -65,6 +65,7 @@ public class Test {
     }
 
     //O(n)，构造的队列值递减、下标递增
+    //单调栈+贪心
     public int[] maxSlidingWindow3(int[] nums, int k) {
         int n = nums.length;
         Deque<Integer> deque = new LinkedList<Integer>();

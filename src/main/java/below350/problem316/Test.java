@@ -11,6 +11,8 @@ public class Test {
         System.out.println(new Test().removeDuplicateLetters("cbacdcbc"));
     }
 
+
+    //需要删除元素来形成有序序列，考虑单调栈+贪心
     public String removeDuplicateLetters(String s) {
         int[] count = new int[26];
         for (char ch : s.toCharArray()) {
@@ -33,7 +35,6 @@ public class Test {
         }
 
         return sb.toString();
-
     }
 
 }
