@@ -22,7 +22,7 @@ public class NestedIterator implements Iterator<Integer> {
         NestedInteger n6 = new MyNestedInteger(1);
         NestedInteger n7 = new MyNestedInteger(Arrays.asList(n5, n6));
         NestedIterator nt = new NestedIterator(Arrays.asList(n3, n4, n7));
-        while(nt.hasNext()) {
+        while (nt.hasNext()) {
             System.out.println(nt.next());
         }
     }
@@ -35,7 +35,7 @@ public class NestedIterator implements Iterator<Integer> {
 
     @Override
     public Integer next() {
-        if(record != null) {
+        if (record != null) {
             int tmp = record.getInteger();
             record = null;
             return tmp;
@@ -43,14 +43,15 @@ public class NestedIterator implements Iterator<Integer> {
         return sub.next();
     }
 
+    //元素NestedInteger可能是空List，所以hasNext预先取出了next()将要返回元素，与平常hasNext逻辑不同
     @Override
     public boolean hasNext() {
-        if(record != null)
+        if (record != null)
             return true;
         boolean flag = (sub == null || !sub.hasNext());
-        while(flag && iterator.hasNext()) {
+        while (flag && iterator.hasNext()) {
             NestedInteger tmp = iterator.next();
-            if(tmp.isInteger()) {
+            if (tmp.isInteger()) {
                 record = tmp;
                 return true;
             }

@@ -26,17 +26,17 @@ public class Test {
         return res;
     }
 
+
     public List<Integer> postorderTraversal2(TreeNode root) {
         Deque<TreeNode> stack1 = new LinkedList<>();
-        Deque<TreeNode> stack2 = new LinkedList<>();
-        List<Integer> res = new ArrayList<>();
+        List<Integer> res = new LinkedList<>();
         if (root == null) {
             return res;
         }
         stack1.push(root);
         while (!stack1.isEmpty()) {
             root = stack1.pop();
-            stack2.push(root);
+            res.add(0, root.val);
             if (root.left != null) {
                 stack1.push(root.left);
             }
@@ -45,9 +45,8 @@ public class Test {
             }
         }
 
-        while (!stack2.isEmpty()) {
-            res.add(stack2.pop().val);
-        }
         return res;
     }
+
+
 }

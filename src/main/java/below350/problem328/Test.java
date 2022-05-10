@@ -1,17 +1,17 @@
 package below350.problem328;
 
 public class Test {
-	public ListNode oddEvenList(ListNode head) {
-		ListNode oddHead = new ListNode(0);
+    public ListNode oddEvenList(ListNode head) {
+        ListNode oddHead = new ListNode(0);
         ListNode evenHead = new ListNode(0);
         ListNode oddTemp = oddHead, evenTemp = evenHead;
         int i = 0;
-        //Ò²¿ÉÒÔ¸Ä³ÉÃ¿´Î·ÅÈëÁ½¸ö½Úµã£¬ÕâÑù¿ÉÒÔ²»ÓÃiÀ´ÅĞ¶ÏÆæÅ¼
-        while(head != null){
-            if(i % 2 == 0){
+        //ä¹Ÿå¯ä»¥æ”¹æˆæ¯æ¬¡æ”¾å…¥ä¸¤ä¸ªèŠ‚ç‚¹ï¼Œè¿™æ ·å¯ä»¥ä¸ç”¨iæ¥åˆ¤æ–­å¥‡å¶
+        while (head != null) {
+            if (i % 2 == 0) {
                 evenTemp.next = head;
                 evenTemp = evenTemp.next;
-            } else{
+            } else {
                 oddTemp.next = head;
                 oddTemp = oddTemp.next;
             }

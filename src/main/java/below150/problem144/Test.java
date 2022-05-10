@@ -27,7 +27,7 @@ public class Test {
         return res;
     }
 
-    //只有前序遍历可以使用这种方法
+    //父节点先于子节点或晚于子节点被输出，如前序、后序遍历，可以使用该方法
     public List<Integer> preorderTraversal2(TreeNode root) {
         List<Integer> res = new ArrayList<>();
         Stack<TreeNode> st = new Stack<>();
