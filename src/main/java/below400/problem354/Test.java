@@ -12,7 +12,7 @@ public class Test {
             if (o1[0] != o2[0]) return o1[0] - o2[0];
             else return o2[1] - o1[1];
         });
-//        变成第300题最长子序列，使用动态规划解法
+//        变成第300题最长递增子序列，使用动态规划解法
         int[] res = new int[n];
         Arrays.fill(res, 1);
         int ret = 1;
