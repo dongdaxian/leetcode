@@ -16,22 +16,22 @@ public:
         }
         int lack = -1;
         for (int i = 0; i < 26; i++) {
-            if(count[i] > 0 && count[i] < k) {
+            if (count[i] > 0 && count[i] < k) {
                 lack = i;
                 break;
             }
         }
-        if(lack == -1)
+        if (lack == -1)
             return r - l + 1;
         int i = l;
         int maxLen = 0;
-        while(i <= r) {
-            while(i <= r && s[i] - 'a' == lack)
+        while (i <= r) {
+            while (i <= r && s[i] - 'a' == lack)
                 i++;
-            if(i > r)
+            if (i > r)
                 break;
             int record = i;
-            while(i <= r && s[i] - 'a' != lack)
+            while (i <= r && s[i] - 'a' != lack)
                 i++;
             maxLen = max(maxLen, dfs(s, record, i - 1, k));
         }
