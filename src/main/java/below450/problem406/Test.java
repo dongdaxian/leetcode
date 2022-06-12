@@ -5,41 +5,47 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Test {
-	public static void main(String[] args) {
-		new Test().reconstructQueue(new int[][] {{7,0},{4,4},{7,1},{5,0},{6,1},{5,2}});
-		
-	}
-	//´ÓĞ¡µ½´óÅÅ
-	public int[][] reconstructQueue(int[][] people) {        
+    public static void main(String[] args) {
+        new Test().reconstructQueue(new int[][]{{7, 0}, {4, 4}, {7, 1}, {5, 0}, {6, 1}, {5, 2}});
+
+    }
+
+    //ä»å°åˆ°å¤§æ’
+    public int[][] reconstructQueue(int[][] people) {
         int[][] res = new int[people.length][2];
-//      int[][] res = new int[people.length][2];	Èç¹ûÕâÑù³õÊ¼»¯£¬ÄÇÃ´res[0] == null,¿ÉÒÔÊ¡È¥³õÊ¼»¯Îª-1µÄ²½Öè
-        for(int[] temp: res)
+//      int[][] res = new int[people.length][2];	å¦‚æœè¿™æ ·åˆå§‹åŒ–ï¼Œé‚£ä¹ˆres[0] == null,å¯ä»¥çœå»åˆå§‹åŒ–ä¸º-1çš„æ­¥éª¤
+        for (int[] temp : res)
             Arrays.fill(temp, -1);
-        Arrays.sort(people, (int[] o1, int[] o2) -> {if(o1[0] != o2[0]) return o1[0] - o2[0]; else return o1[1] - o2[1];});
-        for(int[] temp: people){
+        Arrays.sort(people, (int[] o1, int[] o2) -> {
+            if (o1[0] != o2[0]) return o1[0] - o2[0];
+            else return o1[1] - o2[1];
+        });
+        for (int[] temp : people) {
             int count = 0;
-            int j = 0;
-            for(; j < res.length; j++){
+            for (int j = 0; j < res.length; j++) {
                 int[] arr = res[j];
-                if(arr[0] == -1 && count == temp[1]) {
-                	res[j] = temp;
-                	break;
+                if (arr[0] == -1 && count == temp[1]) {
+                    res[j] = temp;
+                    break;
                 }
-                if(arr[0] == -1 || arr[0] >= temp[0])
+                if (arr[0] == -1 || arr[0] >= temp[0])
                     count++;
             }
-            
+
         }
         return res;
     }
-	
-	//´Ó´óµ½Ğ¡ÅÅ
-	public int[][] reconstructQueue2(int[][] people) {
-		Arrays.sort(people, (int[] o1, int[] o2) -> {if(o1[0] != o2[0]) return o2[0] - o1[0]; else return o1[1] - o2[1];});
-		List<int[]> res = new ArrayList<>();
-		for(int[] temp: people) {
-			res.add(temp[1], temp);
-		}
-		return res.toArray(new int[res.size()][]);
-	}
+
+    //ä»å¤§åˆ°å°æ’
+    public int[][] reconstructQueue2(int[][] people) {
+        Arrays.sort(people, (int[] o1, int[] o2) -> {
+            if (o1[0] != o2[0]) return o2[0] - o1[0];
+            else return o1[1] - o2[1];
+        });
+        List<int[]> res = new ArrayList<>();
+        for (int[] temp : people) {
+            res.add(temp[1], temp);
+        }
+        return res.toArray(new int[res.size()][]);
+    }
 }

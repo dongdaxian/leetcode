@@ -11,16 +11,16 @@ public class Test {
         int[] count = new int[26];
         int sptr = 0, fptr = 0;
         int max = 0;
-        while(fptr < n) {
-            while(fptr < n) {
+        while (fptr < n) {
+            while (fptr < n) {
                 max = Math.max(max, ++count[ch[fptr] - 'A']);
                 fptr++;
-                if(fptr - sptr - max > k) {
+                if (fptr - sptr - max > k) {
                     res = Math.max(res, fptr - sptr - 1);
                     break;
                 }
             }
-            while(fptr - sptr - max > k) {
+            while (fptr - sptr - max > k) {
                 count[ch[sptr] - 'A']--;
                 max = Arrays.stream(count).max().getAsInt();
                 sptr++;

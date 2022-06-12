@@ -1,55 +1,66 @@
 package below450.problem416;
 
+import javafx.util.Pair;
+
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Test {
 
-	public static void main(String[] args) {
-		
+    public static void main(String[] args) {
 
-	}
-	
-	public boolean canPartition(int[] nums) {
-		int sum = 0;
-		Arrays.sort(nums);
-		for(int i: nums)
-			sum += i;
-		if(sum % 2 == 1)
-			return false;
-		return canPartition(nums, 0, 0, sum / 2);
+
     }
-	//»ØËİ»áÖØ¸´¼ÆËã£¬±ÈÈç beg = 4 sum = 10Ê±£¬sumÓĞ¶àÖÖ×éºÏ¿ÉÄÜ£¬ËùÒÔµ±¸Ãº¯Êı·µ»ØfalseÊ±¾Í»á±»µ÷ÓÃ¶à´Î 
-	public boolean canPartition(int[] nums, int beg, int sum, int halfSum) {
-		if(sum > halfSum || beg == nums.length)
-			return false;
-		else if(sum == halfSum)
-			return true;
-		return canPartition(nums, beg + 1, sum + nums[beg], halfSum) || canPartition(nums, beg + 1, sum, halfSum);
-	}
-	
-	public boolean canPartition2(int[] nums) {
-		int sum = 0;
-		Arrays.sort(nums);
-		for(int i: nums)
-			sum += i;
-		if(sum % 2 == 1 || nums.length < 2)
-			return false;
-		sum = sum / 2;
-		boolean[][] canPar = new boolean[nums.length + 1][sum + 1]; 
-		for(int i = 0; i < nums.length + 1; i++) {
-			canPar[i][0] = true;
-		}
-		//´Ë´¦£¬i + 1¶ÔÓ¦×ÅindexÎªi£¬j¶ÔÓ¦×ÅºÍÎªj£¬×îÖÕµÄcanPar[nums.length][sum]¶ÔÓ¦indexÎªnums.length-1£¬ºÍÎªsum
-		for(int i = 0; i < nums.length; i++)
-			for(int j = 1; j < sum + 1; j++) {
-				if(j < nums[i]) {
-					canPar[i + 1][j] = canPar[i][j];
-					continue;
-				}
-				canPar[i + 1][j] = canPar[i][j] || canPar[i][j - nums[i]];
-			}
-		return canPar[nums.length][sum];
+
+    public boolean canPartition(int[] nums) {
+        int sum = 0;
+        Arrays.sort(nums);
+        for (int i : nums)
+            sum += i;
+        if (sum % 2 == 1)
+            return false;
+        return canPartition(nums, 0, 0, sum / 2, new HashSet<>());
     }
-	
+
+    //å›æº¯ä¼šé‡å¤è®¡ç®—ï¼Œæ¯”å¦‚å‚æ•° beg = 4 sum = 10ï¼Œsumæœ‰å¤šç§ç»„åˆå¯èƒ½ï¼Œå³ä½¿è¯¥å‡½æ•°è¿”å›falseä»ä¼šè¢«è°ƒç”¨å¤šæ¬¡
+    //ä½¿ç”¨è®°å¿†åŒ–æœç´¢ï¼Œä¸éœ€è¦Map<Pair<Integer, Integer>, Boolean>ï¼Œå› ä¸ºåªè¦æ˜¯ç¬¬äºŒæ¬¡è®¿é—®ï¼Œè¯æ˜ç¬¬ä¸€æ¬¡è¿”å›ä¸ºfalse
+    public boolean canPartition(int[] nums, int beg, int sum, int halfSum, Set<Pair<Integer, Integer>> set) {
+        if (set.contains(new Pair<>(beg, sum))) {
+            return false;
+        }
+        if (sum > halfSum || beg == nums.length)
+            return false;
+        else if (sum == halfSum)
+            return true;
+        set.add(new Pair<>(beg, sum));
+        return canPartition(nums, beg + 1, sum + nums[beg], halfSum, set) || canPartition(nums, beg + 1, sum, halfSum, set);
+    }
+
+    //åŠ¨æ€è§„åˆ’ï¼Œä½†dp[i]é•¿åº¦å¹¶ä¸æ˜¯nums.length
+    public boolean canPartition2(int[] nums) {
+        int sum = 0;
+        Arrays.sort(nums);
+        for (int i : nums)
+            sum += i;
+        if (sum % 2 == 1 || nums.length < 2)
+            return false;
+        sum = sum / 2;
+        boolean[][] canPar = new boolean[nums.length + 1][sum + 1];
+        for (int i = 0; i < nums.length + 1; i++) {
+            canPar[i][0] = true;
+        }
+        //æ­¤å¤„ï¼Œi + 1å¯¹åº”ç€indexä¸ºiï¼Œjå¯¹åº”ç€å’Œä¸ºjï¼Œæœ€ç»ˆçš„canPar[nums.length][sum]å¯¹åº”indexä¸ºnums.length-1ï¼Œå’Œä¸ºsum
+        for (int i = 0; i < nums.length; i++)
+            for (int j = 1; j < sum + 1; j++) {
+                if (j < nums[i]) {
+                    canPar[i + 1][j] = canPar[i][j];
+                    continue;
+                }
+                canPar[i + 1][j] = canPar[i][j] || canPar[i][j - nums[i]];
+            }
+        return canPar[nums.length][sum];
+    }
+
 
 }

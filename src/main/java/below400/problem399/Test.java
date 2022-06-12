@@ -92,12 +92,13 @@ public class Test {
             val[index2][index1] = 1 / values[i];
         }
         for (int k = 0; k < size; k++) {
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
                     if (val[i][k] > 0 && val[k][j] > 0) {
                         val[i][j] = val[i][k] * val[k][j];
                     }
                 }
+            }
         }
         index = 0;
         for (List<String> ls : queries) {

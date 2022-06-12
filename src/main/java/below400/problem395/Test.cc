@@ -11,7 +11,7 @@ class Solution {
 public:
     int dfs(const string &s, int l, int r, int k) {
         int count[26] = {0};
-        for (int i = l; i <= r;  i++) {
+        for (int i = l; i <= r; i++) {
             count[s[i] - 'a']++;
         }
         int lack = -1;
