@@ -5,13 +5,16 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Test {
-	
-	public static void main(String[] args) {
-		System.out.println(new Test().findMinArrowShots(new int[][] {{-2147483646,-2147483645},{2147483646,2147483647}}));
-	}
-	
-	public int findMinArrowShots(int[][] points) {
-        Arrays.sort(points, (int[] o1, int[] o2) -> {if(o1[0] <= o2[0])return -1;else return 1;});
+
+    public static void main(String[] args) {
+        System.out.println(new Test().findMinArrowShots(new int[][]{{-2147483646, -2147483645}, {2147483646, 2147483647}}));
+    }
+
+    public int findMinArrowShots(int[][] points) {
+        Arrays.sort(points, (int[] o1, int[] o2) -> {
+            if (o1[0] <= o2[0]) return -1;
+            else return 1;
+        });
 //        List<int[]> ls = new ArrayList<>();
 //        for(int[] temp: points){
 //            if(ls.size() == 0){
@@ -27,31 +30,35 @@ public class Test {
 //            }
 //        }
 //        return ls.size();
-        
-        //lsµÄ×÷ÓÃÊÇ±£´æÉÏÒ»¸öÊı×éºÍ¼ÇÂ¼Êı×é×ÜÊı£¬¿ÉÒÔÓÃÒ»¸öint[]ºÍint±äÁ¿ÆğÏàÍ¬×÷ÓÃ£¬¶ø±£´æintÊı×é¿ÉÒÔÓÅ»¯Îª±£´æintÖµ
-        int bound = Integer.MAX_VALUE; 
+
+        //lsçš„ä½œç”¨æ˜¯ä¿å­˜ä¸Šä¸€ä¸ªæ•°ç»„å’Œè®°å½•æ•°ç»„æ€»æ•°ï¼Œå¯ä»¥ç”¨ä¸€ä¸ªint[]å’Œintå˜é‡èµ·ç›¸åŒä½œç”¨ï¼Œè€Œä¿å­˜intæ•°ç»„å¯ä»¥ä¼˜åŒ–ä¸ºä¿å­˜intå€¼
+        int bound = Integer.MAX_VALUE;
         int res = 1;
-        for(int[] temp: points) {
-        	if(temp[0] <= bound) {
-        		bound = Math.min(bound, temp[1]);
-        	} else {
-        		bound = temp[1];
-        		res++;
-        	}
+        for (int[] temp : points) {
+            if (temp[0] <= bound) {
+                bound = Math.min(bound, temp[1]);
+            } else {
+                bound = temp[1];
+                res++;
+            }
         }
         return res;
     }
-	//Èç¹ûÊ¹ÓÃÓÒ¶ËÅÅĞò£¬¾Í¶Å¾øÁË×ó±ßÊı×éÍêÈ«°üº¬ÓÒ±ßÊı×éµÄÇé¿ö£¬´ËÊ±²»ÔÙĞèÒªÈ¡×îĞ¡Öµ
-	public int findMinArrowShots2(int[][] points) {
-		Arrays.sort(points, (int[] o1, int[] o2) -> {if(o1[1] <= o2[1])return -1;else return 1;});
-		int bound = Integer.MIN_VALUE;
-		int res = 0;
-		for(int[] temp: points) {
-			if(temp[0] > bound) {
-				bound = temp[1];
-				res++;
-			}
-		}
-		return res;
-	}
+
+    //å¦‚æœä½¿ç”¨å³ç«¯æ’åºï¼Œå°±æœç»äº†å·¦è¾¹æ•°ç»„å®Œå…¨åŒ…å«å³è¾¹æ•°ç»„çš„æƒ…å†µï¼Œæ­¤æ—¶ä¸å†éœ€è¦å–æœ€å°å€¼
+    public int findMinArrowShots2(int[][] points) {
+        Arrays.sort(points, (int[] o1, int[] o2) -> {
+            if (o1[1] <= o2[1]) return -1;
+            else return 1;
+        });
+        int bound = Integer.MIN_VALUE;
+        int res = 0;
+        for (int[] temp : points) {
+            if (temp[0] > bound) {
+                bound = temp[1];
+                res++;
+            }
+        }
+        return res;
+    }
 }
