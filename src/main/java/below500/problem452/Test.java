@@ -45,7 +45,7 @@ public class Test {
         return res;
     }
 
-    //如果使用右端排序，就杜绝了左边数组完全包含右边数组的情况，此时不再需要取最小值
+    //使用右端排序
     public int findMinArrowShots2(int[][] points) {
         Arrays.sort(points, (int[] o1, int[] o2) -> {
             if (o1[1] <= o2[1]) return -1;
@@ -58,6 +58,7 @@ public class Test {
                 bound = temp[1];
                 res++;
             }
+            //else相当于执行了 bound = Math.min(bound, temp[1])
         }
         return res;
     }
