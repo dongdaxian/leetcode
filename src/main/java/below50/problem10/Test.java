@@ -23,19 +23,11 @@ public class Test {
                 if (p.charAt(j) == '.' || s.charAt(i) == p.charAt(j)) {
                     dp[i + 1][j + 1] = dp[i][j];                                //如果数组维度没有多申请1，应是dp[i][j]=dp[i-1][j-1]，需要处理i=0和j=0的情况
                 } else if (p.charAt(j) == '*') {
-                    if (p.charAt(j - 1) != s.charAt(i) && p.charAt(j - 1) != '.') {
-                        dp[i + 1][j + 1] = dp[i + 1][j - 1];                                      //*表示前元素有0个
-                    } else {
-                        //冗余
-                        //dp[i + 1][j + 1] = (dp[i + 1][j - 1] || dp[i + 1][j] || dp[i][j + 1]);    //*表示前元素有0个/前元素有1个/前元素再加1个
-                        dp[i + 1][j + 1] = (dp[i + 1][j - 1] || dp[i][j + 1]);    //*表示前元素有0个/前元素再加1个
-                    }
-
-                    //法二
                     //dp[i + 1][j + 1] = dp[i + 1][j - 1];
-                    //if (s.charAt(i) == p.charAt(j - 1) || p.charAt(j - 1) == '.') {
-                    //    dp[i + 1][j + 1] = dp[i + 1][j + 1] || dp[i][j + 1];
-                    //}
+                    dp[i + 1][j + 1] = dp[i + 1][j - 1] || dp[i + 1][j];
+                    if (s.charAt(i) == p.charAt(j - 1) || p.charAt(j - 1) == '.') {
+                        dp[i + 1][j + 1] = dp[i + 1][j + 1] || dp[i][j + 1];
+                    }
                 }
             }
         }

@@ -6,7 +6,7 @@ public class Test {
 
     public static void main(String[] args) {
         int[] height = new int[]{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
-        System.out.println(new Test().trap2(height));
+        System.out.println(new Test().trap3(height));
     }
 
     public int trap1(int[] height) {
@@ -58,25 +58,7 @@ public class Test {
     }
 
 
-    public int trap2(int[] height) {            //动态规划的思想，此处不是标记每一个凹槽的左右坐标，而是对于每一个坐标它的左右墙壁的高度
-        if (height.length < 3) return 0;
-        int n = height.length;
-        int[] leftMax = new int[n];//leftMax[i]表示对于坐标i，他的左墙壁高度
-        int[] rightMax = new int[n];
-        for (int i = 1; i < n - 1; i++) leftMax[i] = Math.max(leftMax[i - 1], height[i - 1]);
-        for (int i = n - 2; i > 0; i--) rightMax[i] = Math.max(rightMax[i + 1], height[i + 1]);
-
-        int sum = 0;
-        for (int i = 1; i < n - 1; i++) {
-            int temp = Math.min(leftMax[i], rightMax[i]);
-            if (height[i] < temp)
-                sum += temp - height[i];
-        }
-
-        return sum;
-    }
-
-    public int trap2_new(int[] height) {
+    public int trap2(int[] height) {           //动态规划的思想，此处不是标记每一个凹槽的左右坐标，而是对于每一个坐标它的左右墙壁的高度
         if (height.length < 3) return 0;
         int n = height.length;
         int[] leftMax = new int[n];//leftMax[i]表示对于坐标i，他的左墙壁高度
@@ -146,7 +128,7 @@ public class Test {
                     i--;
                     continue;
                 }
-                sum += (Math.min(height[st.peek()], height[i]) - temp) * (i - st.peek() - 1);
+                sum += (Math.min(height[st.peek()], height[i])   - temp) * (i - st.peek() - 1);
                 i--;
             }
         }

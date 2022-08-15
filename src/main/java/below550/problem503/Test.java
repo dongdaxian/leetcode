@@ -5,7 +5,7 @@ import java.util.Stack;
 
 public class Test {
     public int[] nextGreaterElements(int[] nums) {
-        if(nums.length == 0)
+        if (nums.length == 0)
             return new int[0];
         int n = nums.length;
         boolean[] ifUsed = new boolean[n];
@@ -13,16 +13,16 @@ public class Test {
         Stack<Integer> stack = new Stack<>();
         int i = 0;
         int maxRecord = Integer.MIN_VALUE;
-        while(!ifUsed[i] || !stack.isEmpty()) {
-            while(!stack.isEmpty() && nums[stack.peek()] < nums[i]) {
+        while (!ifUsed[i] || !stack.isEmpty()) {
+            while (!stack.isEmpty() && nums[stack.peek()] < nums[i]) {
                 ret[stack.pop()] = nums[i];
             }
-            if(!ifUsed[i]) {
-                stack.add(i);
+            if (!ifUsed[i]) {
+                stack.push(i);
                 ifUsed[i] = true;
                 maxRecord = Integer.max(maxRecord, nums[i]);
             } else {
-                if(!stack.isEmpty() && nums[stack.peek()] == maxRecord) {
+                if (!stack.isEmpty() && nums[stack.peek()] == maxRecord) {
                     ret[stack.pop()] = -1;
                 }
             }
@@ -45,7 +45,6 @@ public class Test {
         }
         return ret;
     }
-
 
 
 }

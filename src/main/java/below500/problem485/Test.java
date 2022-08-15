@@ -4,8 +4,8 @@ public class Test {
     public int findMaxConsecutiveOnes(int[] nums) {
         int maxLen = 0;
         int tmpLen = 0;
-        for(int tmp: nums) {
-            if(tmp == 1) {
+        for (int tmp : nums) {
+            if (tmp == 1) {
                 tmpLen++;
             } else {
                 maxLen = Integer.max(maxLen, tmpLen);
