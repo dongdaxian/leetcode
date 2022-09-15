@@ -22,7 +22,7 @@ public class Test {
             set.add(i);
         }
         int circles = 0;
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             if (set.contains(i)) {
                 dfs(set, i, isConnected);
                 circles++;
@@ -33,8 +33,8 @@ public class Test {
 
     public void dfs(Set<Integer> set, int i, int[][] con) {
         set.remove(i);
-        for(int j = 0; j < con.length; j++) {
-            if(con[i][j] == 1 && set.contains(j)) {
+        for (int j = 0; j < con.length; j++) {
+            if (con[i][j] == 1 && set.contains(j)) {
                 dfs(set, j, con);
             }
         }

@@ -8,8 +8,6 @@ public class Test {
 
     public static void main(String[] args) {
         System.out.println(new Test().calculate("(1+(4 +5+ 2) -3)+(6+8)"));
-
-
     }
 
     public int calculate(char[] ch, int n) {

@@ -31,6 +31,8 @@ public class Solution3 {
             }
         }
         System.out.println(sum1 * sum2);
+
+        StringBuilder sb = new StringBuilder();
     }
 
 }
