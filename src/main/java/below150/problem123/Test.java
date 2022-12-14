@@ -33,8 +33,8 @@ public class Test {
         profit[0][0][1] = -prices[0];
         for (int i = 1; i < prices.length; i++) {
             for (int j = 1; j > -1; j--) {
-                profit[i][j][1] = Math.max(profit[i - 1][j + 1][0] - prices[i], profit[i - 1][j][1]);
                 profit[i][j][0] = Math.max(profit[i - 1][j][1] + prices[i], profit[i - 1][j][0]);
+                profit[i][j][1] = Math.max(profit[i - 1][j + 1][0] - prices[i], profit[i - 1][j][1]);
             }
         }
         return profit[prices.length - 1][0][0];

@@ -15,7 +15,7 @@ public class QuickSort {
         if (nums == null || nums.length == 0) {
             return;
         }
-        quickSort2(nums, 0, nums.length - 1);
+        quickSort(nums, 0, nums.length - 1);
     }
 
     public void quickSort(int[] nums, int left, int right) {
@@ -31,11 +31,9 @@ public class QuickSort {
             while (i < j && nums[i] <= midNum) {
                 i++;
             }
-            if (i < j) {
-                int tmp = nums[i];
-                nums[i] = nums[j];
-                nums[j] = tmp;
-            }
+            int tmp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = tmp;
         }
         nums[left] = nums[i];
         nums[i] = midNum;

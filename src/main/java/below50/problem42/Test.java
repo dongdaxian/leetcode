@@ -99,7 +99,7 @@ public class Test {
         return sum;
     }
 
-    public int trap4(int[] height) {                //方法三的改进版，把对应处理过程合在一起了
+    public int trap3_1(int[] height) {                //方法三的改进版，把对应处理过程合在一起了
         if (height.length < 3) return 0;
         int sum = 0;
         int i = 0, j = height.length - 1;
@@ -115,7 +115,7 @@ public class Test {
         return sum;
     }
 
-    public int trap5(int[] height) {                //思路是计算每个能盛水的空处
+    public int trap4(int[] height) {                //思路是计算每个能盛水的空处
         if (height.length < 3) return 0;             //这里使用栈
         int sum = 0;
         Stack<Integer> st = new Stack<>();

@@ -48,13 +48,13 @@ public class Solution7 {
         TreeNode root = new TreeNode(pre[0]);
         TreeNode cur = root;
         for (int i = 1, j = 0; i < pre.length; i++) {
-            // 在前序遍历中相邻的两个数字：要么后一个是前一个的左节点；要么后一个是前一个的右节点或者其祖先的右节点
+            // 在前序遍历中相邻的两个数字：要么后一个是前一个的左子节点；要么后一个是前一个的右子节点或者其祖先的右子节点
             if (cur.val != in[j]) {
-                // 后一个是前一个的左节点
+                // 后一个是前一个的左子节点
                 stack.push(cur);
                 cur = cur.left = new TreeNode(pre[i]);
             } else {
-                // 后一个是前一个的右节点或者其祖先的右节点
+                // 后一个是前一个的右子节点或者其祖先的右子节点
                 j++;
                 // 利用中序来弹出栈中节点，直至找到pre[i]父节点
                 while (!stack.empty() && stack.peek().val == in[j]) {
