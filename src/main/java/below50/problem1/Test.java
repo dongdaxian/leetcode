@@ -16,7 +16,7 @@ public class Test {
     }
 
     public int[] Two_Sum1(int[] nums, int target) {
-        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> map = new HashMap<>();
         int[] result = new int[2];
         for (int i = 0; i < nums.length; i++) {
             map.put(target - nums[i], i);
@@ -33,7 +33,7 @@ public class Test {
     }
 
     public int[] Two_Sum2(int[] nums, int target) {
-        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> map = new HashMap<>();
         int[] result = new int[2];
         for (int i = 0; i < nums.length; i++) {
             Integer index = map.get(target - nums[i]);

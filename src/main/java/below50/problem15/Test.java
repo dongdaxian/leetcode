@@ -8,8 +8,8 @@ import java.util.List;
 public class Test {
 
     public static void main(String[] args) {
-        int[] nums = {0, -1, -1, 0, 2};
-        List<List<Integer>> ls = new Test().threeSum2(nums);
+        int[] nums = {-6, 3, 3, 3, 3};
+        List<List<Integer>> ls = new Test().threeSum1(nums);
         for (List<Integer> l : ls) {
             for (Integer x : l) {
                 System.out.print(x);
@@ -29,27 +29,32 @@ public class Test {
             if (i > 0 && nums[i] == nums[i - 1]) continue;                    //借助外层循环不嵌套for/while的做法
             beg = i + 1;
             end = nums.length - 1;
+            target = -nums[i];
             while (beg < end) {
-                target = 0 - nums[i];
+                if (beg > i + 1 && nums[beg] == nums[beg - 1]) {              //同上
+                    beg++;
+                    continue;
+                }
+                if (end < nums.length - 1 && nums[end] == nums[end + 1]) {
+                    end--;
+                    continue;
+                }
+
+//                while (beg > i + 1 && beg < end && nums[beg] == nums[beg - 1]) {
+//                    beg++;
+//                }
+//                while (end < nums.length - 1 && beg < end && nums[end] == nums[end + 1]) {
+//                    end--;
+//                }
+//                if (beg >= end) {
+//                    break;
+//                }
+
                 if (nums[beg] + nums[end] < target) {
                     beg++;
                 } else if (nums[beg] + nums[end] > target) {
                     end--;
                 } else {
-//	                ls.add(Arrays.asList(nums[i], nums[beg], nums[end]));
-//	                beg++;
-//	                end--;
-//	                while(nums[beg] == nums[beg-1] && beg < end) beg++;        
-//	                while(nums[end] == nums[end+1] && beg < end) end--;
-
-                    if (beg > i + 1 && nums[beg] == nums[beg - 1]) {              //同上
-                        beg++;
-                        continue;
-                    }
-                    if (end < nums.length - 1 && nums[end] == nums[end + 1]) {
-                        end--;
-                        continue;
-                    }
                     ls.add(Arrays.asList(nums[i], nums[beg], nums[end]));
                     beg++;
                     end--;
@@ -68,7 +73,7 @@ public class Test {
         int target = 0;
         for (int i = 0; i < nums.length; i++) {
             if (i > 0 && nums[i] == nums[i - 1]) continue;
-            target = 0 - nums[i];
+            target = -nums[i];
             for (int j = i + 1; j < nums.length; j++) {
                 if (set.contains(nums[j])) {
                     ls.add(Arrays.asList(nums[i], target - nums[j], nums[j]));
